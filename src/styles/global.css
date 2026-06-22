@@ -1,8 +1,464 @@
 @import "tailwindcss";
 
+/* ===========================================================================
+   TEMPO — Design tokens (mapped from DESIGN.md / Vercel design analysis)
+   Light mode is the documented basis; dark mode is our (necessary) extension.
+   Accent #50E3C2 is reserved strictly for live/active timer states.
+   =========================================================================== */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* ---- Color: ink / canvas ---- */
+  --color-ink: #171717;            /* primary CTA, headings, body text (light) */
+  --color-on-ink: #ffffff;         /* text on ink surfaces */
+  --color-canvas: #ffffff;         /* card surface */
+  --color-canvas-soft: #fafafa;    /* page background */
+  --color-canvas-soft-2: #f5f5f5;  /* deeper inset */
+
+  /* ---- Text / borders ---- */
+  --color-body: #4d4d4d;           /* secondary text */
+  --color-mute: #888888;           /* placeholder, fine print */
+  --color-hairline: #ebebeb;       /* 1px dividers, borders */
+  --color-hairline-strong: #a1a1a1;
+
+  /* ---- Accent (live/active timer states only) ---- */
+  --color-accent: #50e3c2;
+  --color-accent-deep: #29bc9b;
+
+  /* ---- Semantic ---- */
+  --color-link: #0070f3;
+  --color-link-deep: #0761d1;
+  --color-success: #0070f3;
+  --color-error: #ee0000;
+  --color-error-soft: #f7d4d6;
+  --color-warning: #f5a623;
+  --color-warning-soft: #ffefcf;
+
+  /* ---- Brand gradient stops (hero mesh only) ---- */
+  --color-grad-dev-start: #007cf0;
+  --color-grad-dev-end: #00dfd8;
+  --color-grad-prev-start: #7928ca;
+  --color-grad-prev-end: #ff0080;
+  --color-grad-ship-start: #ff4d4d;
+  --color-grad-ship-end: #f9cb28;
+
+  /* ---- Typography ---- */
+  --font-sans: "Geist", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale */
+  --text-display-xl: 48px;
+  --text-display-xl--line-height: 48px;
+  --text-display-xl--letter-spacing: -2.4px;
+  --text-display-lg: 32px;
+  --text-display-lg--line-height: 40px;
+  --text-display-lg--letter-spacing: -1.28px;
+  --text-display-md: 24px;
+  --text-display-md--line-height: 32px;
+  --text-display-md--letter-spacing: -0.96px;
+  --text-display-sm: 20px;
+  --text-display-sm--line-height: 28px;
+  --text-display-sm--letter-spacing: -0.6px;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--letter-spacing: -0.28px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-code: 13px;
+  --text-code--line-height: 20px;
+
+  /* ---- Radius ---- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;     /* nav buttons, inputs */
+  --radius-md: 8px;     /* cards */
+  --radius-lg: 12px;    /* pricing / large cards */
+  --radius-xl: 16px;    /* hero caps */
+  --radius-pill: 100px; /* marketing CTAs */
+  --radius-full: 9999px;
+
+  /* ---- Spacing (4px base) ---- */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 96px;
+  --spacing-6xl: 128px;
+  --spacing-section: 192px;
+
+  /* ---- Breakpoints ---- */
+  --breakpoint-tablet: 600px;
+  --breakpoint-desktop: 960px;
+  --breakpoint-wide: 1200px;
+  --breakpoint-ultra: 1400px;
+
+  /* ---- Page width ---- */
+  --container-page: 1200px;
+  --container-wide: 1400px;
+}
+
+/* ===========================================================================
+   Dark mode token override (our extension — DESIGN.md has no site-wide dark).
+   Strategy: keep semantic token *names* stable via CSS variables on :root,
+   flip their values under [data-theme="dark"]. Components reference these vars.
+   =========================================================================== */
+
+:root {
+  --surface-page: var(--color-canvas-soft);
+  --surface-card: var(--color-canvas);
+  --surface-inset: var(--color-canvas-soft-2);
+  --text-primary: var(--color-ink);
+  --text-secondary: var(--color-body);
+  --text-tertiary: var(--color-mute);
+  --border-hairline: var(--color-hairline);
+  --border-hairline-strong: var(--color-hairline-strong);
+  --cta-bg: var(--color-ink);
+  --cta-fg: var(--color-on-ink);
+  --selection-bg: #171717;
+  --selection-fg: #f2f2f2;
+}
+
+[data-theme="dark"] {
+  --surface-page: #0a0a0a;
+  --surface-card: #111111;
+  --surface-inset: #1a1a1a;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1a1;
+  --text-tertiary: #6b6b6b;
+  --border-hairline: #262626;
+  --border-hairline-strong: #404040;
+  --cta-bg: #fafafa;
+  --cta-fg: #0a0a0a;
+  --selection-bg: #fafafa;
+  --selection-fg: #0a0a0a;
+}
+
+/* ===========================================================================
+   Base styles
+   =========================================================================== */
+
+* {
+  border-color: var(--border-hairline);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+[data-theme="dark"] html,
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 html,
 body {
-	margin: 0;
-	width: 100%;
-	min-height: 100%;
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
 }
+
+body {
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* Selection */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+/* Headings inherit body family; negative tracking + balance applied per-use */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  text-wrap: balance;
+  color: var(--text-primary);
+}
+
+/* Tabular numerals anywhere digits cluster (timer displays, tables, stats) */
+.timer-digits,
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ===========================================================================
+   Accessibility utilities
+   =========================================================================== */
+
+/* Visible focus only for keyboard users (not click) */
+:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: var(--spacing-md);
+  top: -100px;
+  z-index: 100;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+  transition: top 150ms ease;
+}
+.skip-link:focus {
+  top: var(--spacing-md);
+}
+
+/* Screen-reader-only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================================================================
+   Component primitives (Tailwind @layer components)
+   =========================================================================== */
+
+@layer components {
+  /* Page container */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--spacing-md);
+  }
+  @media (min-width: 768px) {
+    .container-page { padding-inline: var(--spacing-lg); }
+  }
+
+  /* Marketing CTA — black ink pill, 100px radius, button-lg typography */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    font-size: var(--text-body-md);
+    font-weight: 500;
+    line-height: 24px;
+    padding: 0 var(--spacing-md);
+    height: 44px;
+    border-radius: var(--radius-pill);
+    transition: transform 150ms ease, opacity 150ms ease, background-color 150ms ease;
+    cursor: pointer;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Secondary — inverted polarity */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    font-size: var(--text-body-md);
+    font-weight: 500;
+    line-height: 24px;
+    padding: 0 var(--spacing-md);
+    height: 44px;
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    transition: transform 150ms ease, border-color 150ms ease;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: var(--border-hairline-strong); }
+  .btn-secondary:active { transform: scale(0.98); }
+
+  /* Small button (nav / in-app scale, 6px radius — NOT paired with 100px pills) */
+  .btn-sm {
+    height: 36px;
+    padding: 0 var(--spacing-sm);
+    font-size: var(--text-body-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Nav ghost pill link */
+  .nav-link {
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-inset);
+  }
+  .nav-link[aria-current="page"] {
+    color: var(--text-primary);
+  }
+
+  /* Marketing card — canvas bg, inset hairline ring, soft-stack shadow */
+  .card {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow:
+      inset 0 0 0 1px var(--border-hairline),
+      0 2px 2px rgba(0, 0, 0, 0.04),
+      0 8px 8px -8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .card-hover:hover {
+    box-shadow:
+      inset 0 0 0 1px var(--border-hairline-strong),
+      0 2px 2px rgba(0, 0, 0, 0.04),
+      0 8px 16px -4px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Soft surface card */
+  .card-soft {
+    background: var(--surface-inset);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+  }
+
+  /* Tab-ghost pill (preset chips, mode toggles) */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    height: 36px;
+    padding: 0 var(--spacing-md);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  }
+  .chip:hover {
+    color: var(--text-primary);
+    border-color: var(--border-hairline-strong);
+  }
+  .chip[aria-pressed="true"],
+  .chip[data-active="true"] {
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    border-color: var(--cta-bg);
+  }
+
+  /* Form input */
+  .input {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-sm);
+    height: 40px;
+    padding: 0 var(--spacing-md);
+    font-size: var(--text-body-sm);
+    font-family: var(--font-mono);
+    transition: border-color 150ms ease;
+    width: 100%;
+  }
+  .input::placeholder { color: var(--text-tertiary); }
+  .input:focus {
+    border-color: var(--color-link);
+    outline: none;
+  }
+  .input:focus-visible {
+    outline: 2px solid var(--color-link);
+    outline-offset: 1px;
+  }
+
+  /* Eyebrow / mono caption */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--text-tertiary);
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  /* Section heading */
+  .heading-display {
+    font-size: var(--text-display-lg);
+    line-height: var(--text-display-lg--line-height);
+    letter-spacing: var(--text-display-lg--letter-spacing);
+    font-weight: 600;
+  }
+  @media (min-width: 768px) {
+    .heading-display {
+      font-size: var(--text-display-xl);
+      line-height: var(--text-display-xl--line-height);
+      letter-spacing: var(--text-display-xl--letter-spacing);
+    }
+  }
+}
+
+/* ===========================================================================
+   Utilities
+   =========================================================================== */
+
+/* Brand mesh gradient — hero scale only */
+.bg-mesh {
+  background:
+    radial-gradient(60% 80% at 20% 20%, var(--color-grad-dev-start) 0%, transparent 60%),
+    radial-gradient(60% 80% at 80% 30%, var(--color-grad-prev-end) 0%, transparent 60%),
+    radial-gradient(60% 80% at 50% 90%, var(--color-grad-ship-start) 0%, transparent 60%);
+  filter: saturate(1.1);
+}
+
+/* Hide scrollbars on horizontal chip rows without losing scroll */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Safe-area padding for fullscreen / mobile */
+.safe-area {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Flip-clock card flip animation is defined per-component; reduced-motion above. */
