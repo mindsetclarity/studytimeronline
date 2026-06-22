@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import '../styles/global.css';
 
 interface Props {
 	title?: string;
@@ -17,6 +18,7 @@ const { title = 'Food Nutrition Calculator' } = Astro.props;
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 	</head>
 	<body class="bg-gray-50 min-h-screen overflow-x-hidden flex flex-col">
 		<Header />
