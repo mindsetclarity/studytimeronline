@@ -2,12 +2,12 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
+import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://studytimeronline.com',
-  adapter: vercel(),
+  adapter: cloudflare(),
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
