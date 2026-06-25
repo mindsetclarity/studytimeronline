@@ -10,9 +10,10 @@ const isHome = isCurrent(pathname, "/");
 const PAGE_LABELS: Record<string, string> = {
   "/study-planner": "Planner",
   "/study-stats": "Stats",
-  "/privacy": "Privacy",
-  "/terms": "Terms",
-  "/contact": "Contact",
+  "/about": "About Us",
+  "/privacy": "Privacy Policy",
+  "/terms": "Terms & Conditions",
+  "/contact": "Contact Us",
 };
 const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Study";
 ---

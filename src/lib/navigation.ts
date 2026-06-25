@@ -33,9 +33,10 @@ export const TOOLS: NavLink[] = STUDY_TOOLS;
 export const NAV_LINKS: NavLink[] = PRIMARY_NAV;
 
 export const TRUST_LINKS: NavLink[] = [
-  { label: "Privacy", href: "/privacy", description: "How this no-account timer site treats data." },
-  { label: "Terms", href: "/terms", description: "Simple terms for using Study Timer Online." },
-  { label: "Contact", href: "/contact", description: "Send feedback or request a study feature." },
+  { label: "About Us", href: "/about", description: "The mission and story behind Study Timer Online." },
+  { label: "Privacy Policy", href: "/privacy", description: "How this no-account timer site treats data." },
+  { label: "Terms & Conditions", href: "/terms", description: "Simple terms for using Study Timer Online." },
+  { label: "Contact Us", href: "/contact", description: "Send feedback or request a study feature." },
 ];
 
 /** Match a pathname against a link, handling trailing slashes. */

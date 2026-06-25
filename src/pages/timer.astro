@@ -98,7 +98,7 @@ import Layout from "../layouts/Layout.astro";
 
     .compact-progress-fill {
       height: 100%;
-      background: var(--gradient-primary, linear-gradient(to right, #4ade80, #2dd4bf));
+      background: var(--gradient-primary, linear-gradient(to right, #5eead4, #2dd4bf));
       width: 0%;
       transition: width 1s linear;
     }
@@ -132,9 +132,9 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .compact-chip[aria-pressed="true"]:not(:disabled) {
-      background: rgba(74, 222, 128, 0.1);
-      border-color: rgba(74, 222, 128, 0.4);
-      color: #4ade80;
+      background: rgba(45, 212, 191, 0.1);
+      border-color: rgba(45, 212, 191, 0.4);
+      color: #2dd4bf;
     }
 
     .compact-chip:disabled {
@@ -153,11 +153,11 @@ import Layout from "../layouts/Layout.astro";
       height: 36px;
     }
     .compact-chip-custom:focus-within {
-      border-color: rgba(74, 222, 128, 0.4);
-      background: rgba(74, 222, 128, 0.1);
+      border-color: rgba(45, 212, 191, 0.4);
+      background: rgba(45, 212, 191, 0.1);
     }
     .compact-chip-custom:focus-within label {
-      color: #4ade80 !important;
+      color: #2dd4bf !important;
     }
 
     /* Override Fullscreen Styles slightly to prevent breaking layout */
@@ -233,12 +233,12 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .voice-switch:focus-visible {
-      box-shadow: 0 0 0 2px #4ade80;
+      box-shadow: 0 0 0 2px #2dd4bf;
     }
 
     .voice-switch[aria-checked="true"] {
-      background: rgba(74, 222, 128, 0.15);
-      border-color: rgba(74, 222, 128, 0.3);
+      background: rgba(45, 212, 191, 0.15);
+      border-color: rgba(45, 212, 191, 0.3);
     }
 
     .voice-switch-ball {
@@ -254,7 +254,7 @@ import Layout from "../layouts/Layout.astro";
 
     .voice-switch[aria-checked="true"] .voice-switch-ball {
       transform: translateX(18px);
-      background: #4ade80;
+      background: #2dd4bf;
     }
   </style>
 
@@ -283,7 +283,7 @@ import Layout from "../layouts/Layout.astro";
         </div>
 
         <div style="margin-bottom: 8px;">
-          <span class="timer-cockpit__state" data-session-state style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #4ade80; border: 1px solid currentColor; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">Ready</span>
+          <span class="timer-cockpit__state" data-session-state style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #2dd4bf; border: 1px solid currentColor; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">Ready</span>
         </div>
 
         <div class="study-timer-stage__clock" aria-live="polite" style="width: 100%;">

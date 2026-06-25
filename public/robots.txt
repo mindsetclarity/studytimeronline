@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://studytimeronline.com/sitemap.xml
 Sitemap: https://studytimeronline.com/sitemap-index.xml

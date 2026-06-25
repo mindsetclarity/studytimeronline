@@ -1,0 +1,140 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { BRAND } from "../lib/brand";
+
+interface Props {
+  error?: unknown;
+}
+---
+
+<Layout
+  title="500: Server Error"
+  description="An unexpected server error occurred. Please try refreshing the page or return to Study Timer Online."
+  canonicalPath="/500"
+>
+  <style>
+    .error-section {
+      min-height: calc(100vh - 180px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+    }
+
+    .error-card {
+      background: linear-gradient(145deg, rgba(11, 18, 32, 0.8), rgba(7, 17, 26, 0.9));
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: 32px;
+      padding: clamp(3rem, 8vw, 5rem) clamp(2rem, 6vw, 4rem);
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 10;
+      animation: errorFloatUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes errorFloatUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .error-code {
+      font-family: var(--font-mono, monospace);
+      font-size: clamp(4.5rem, 14vw, 7.5rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #e11d48 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.05em;
+      display: inline-block;
+      filter: drop-shadow(0 4px 28px rgba(244, 63, 94, 0.25));
+    }
+
+    .error-title {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .error-description {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: #94a3b8;
+      line-height: 1.7;
+      margin: 0 0 2.5rem 0;
+      max-width: 480px;
+      margin-inline: auto;
+    }
+
+    .error-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .error-actions > button,
+    .error-actions > a {
+      min-width: 160px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .error-decoration {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.12) 0%, rgba(5, 8, 15, 0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .error-card {
+        animation: none;
+      }
+    }
+  </style>
+
+  <section class="error-section" aria-labelledby="error-heading-500">
+    <div class="error-decoration" aria-hidden="true"></div>
+    <article class="error-card">
+      <div class="error-code" aria-hidden="true">500</div>
+      <h1 id="error-heading-500" class="error-title">Server Error</h1>
+      <p class="error-description">
+        Something went wrong on our end. Even our timers need a restorative break sometimes. Please try refreshing the page or return to your dashboard.
+      </p>
+      <div class="error-actions" role="group" aria-label="Error recovery actions">
+        <button id="refresh-page-500" type="button" class="btn-primary">Try Again</button>
+        <a id="return-home-500" class="btn-secondary" href="/">Return Home</a>
+      </div>
+    </article>
+  </section>
+
+  <script>
+    const refreshBtn = document.getElementById("refresh-page-500");
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
+    }
+  </script>
+</Layout>

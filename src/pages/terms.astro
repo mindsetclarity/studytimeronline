@@ -2,18 +2,39 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Terms" description="Simple terms for using Study Timer Online." canonicalPath="/terms">
-  <section class="page-band">
-    <div class="container-page legal-copy">
-      <p class="eyebrow">terms</p>
-      <h1>Terms.</h1>
-      <p>Study Timer Online provides browser-based timing tools for planning, studying, presenting, and focusing. Use the tools responsibly and verify critical timing needs in your own environment.</p>
-      <h2>No warranty</h2>
-      <p>The site is provided as-is. Browser behavior, device sleep settings, permissions, and operating system constraints can affect alarms, notifications, fullscreen mode, and audio.</p>
-      <h2>No emergency use</h2>
-      <p>Do not rely on this site for safety-critical, medical, legal, or emergency timing.</p>
-      <h2>Acceptable use</h2>
-      <p>Do not misuse the website, attempt to disrupt it, or present it as your own service without permission.</p>
+<Layout title="Terms & Conditions" description="Terms & Conditions for Study Timer Online. Review our guidelines for acceptable browser timer use, disclaimers, and local-first productivity tool policies." canonicalPath="/terms">
+  <section class="page-band" style="padding-block: 3rem 6rem;">
+    <div class="container-page" style="max-width: 860px; margin: 0 auto;">
+      <article class="card legal-copy" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
+        <header style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(45, 212, 191, 0.15); padding-bottom: 2rem;">
+          <p class="eyebrow" style="color: #F59E0B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 0.5rem;">terms of service</p>
+          <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: #F8FAFC; margin: 0; line-height: 1.2;">Terms & Conditions</h1>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 1.75rem; color: #94A3B8; font-size: 1.05rem;">
+          <p style="font-size: 1.1rem; color: #F8FAFC;">By accessing Study Timer Online, you agree to comply with these Terms & Conditions. Our platform provides browser-based timing tools for academic study, Pomodoro intervals, and focus management.</p>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">1. Acceptable Use Policy</h2>
+            <p style="margin: 0;">You are permitted to utilize Study Timer Online for personal, educational, and professional productivity. You may not attempt to reverse engineer, scrape, or disrupt our web servers.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">2. Disclaimer of Warranties</h2>
+            <p style="margin: 0;">The site and its timer tools are provided "as is" without warranty of any kind. Because timing precision relies on client browser execution, OS sleep states, and battery saver settings, alarms or audio cues may occasionally be paused by your device.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">3. No Emergency or Medical Reliance</h2>
+            <p style="margin: 0;">Do not rely on Study Timer Online for safety-critical, medical, scientific lab countdowns, or emergency situations where timing failure could cause personal injury or property damage.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">4. Intellectual Property</h2>
+            <p style="margin: 0;">The aesthetic design, UI layout, typography hierarchy, and codebase of Study Timer Online are protected by intellectual property laws. All rights reserved.</p>
+          </section>
+        </div>
+      </article>
     </div>
   </section>
 </Layout>

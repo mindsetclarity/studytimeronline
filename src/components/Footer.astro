@@ -1,6 +1,15 @@
 ---
 import { BRAND } from "../lib/brand";
-import { TRUST_LINKS } from "../lib/navigation";
+import { TRUST_LINKS, isCurrent } from "../lib/navigation";
+
+const pathname = Astro.url.pathname;
+
+const isFooterActive = (href: string) => {
+  if (isCurrent(pathname, href)) return true;
+  if (href === "/privacy" && pathname.includes("privacy")) return true;
+  if (href === "/terms" && pathname.includes("terms")) return true;
+  return false;
+};
 ---
 
 <footer class="site-footer">
@@ -12,9 +21,20 @@ import { TRUST_LINKS } from "../lib/navigation";
 
     <nav class="site-footer__nav" aria-label="Footer">
       <ul class="site-footer__legal">
-        {TRUST_LINKS.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
-        ))}
+        {TRUST_LINKS.map((link) => {
+          const active = isFooterActive(link.href);
+          return (
+            <li>
+              <a
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                class:list={[{ "is-active": active }]}
+              >
+                {link.label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>

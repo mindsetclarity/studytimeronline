@@ -2,20 +2,196 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Contact" description="Contact Study Timer Online with feedback, bugs, and timer feature requests." canonicalPath="/contact">
-  <section class="page-band">
-    <div class="container-page timer-layout">
-      <div class="legal-copy">
-        <p class="eyebrow">contact</p>
-        <h1>Feedback helps shape the timers.</h1>
-        <p>Found a bug, have a launch request, or want a new timing mode? Send a concise note with the page, browser, device, and what happened.</p>
-      </div>
-      <aside class="settings-card card">
-        <h2>Contact options</h2>
-        <p>For v1, contact is intentionally simple and does not require a backend form.</p>
-        <a class="btn-primary" href="mailto:mindsetclarityofficial@gmail.com?subject=Study%20Timer%20Online%20feedback">Email Feedback</a>
-        <p class="form-hint">A backend contact form can be added later if needed.</p>
-      </aside>
+<Layout title="Contact Us" description="Contact Study Timer Online with feedback, bug reports, and timer feature requests. We love hearing from students and self-learners." canonicalPath="/contact">
+  <section class="page-band" style="padding-block: 3rem 6rem;">
+    <div class="container-page" style="max-width: 860px; margin: 0 auto;">
+      <article class="card" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
+        <header style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(45, 212, 191, 0.15); padding-bottom: 2rem;">
+          <p class="eyebrow" style="color: #2DD4BF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 0.5rem;">support & community</p>
+          <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: #F8FAFC; margin: 0; line-height: 1.2;">Contact Us</h1>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem; color: #94A3B8; font-size: 1.05rem;">
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">We Love User Feedback</h2>
+            <p style="margin: 0;">Have a feature request, spotted a UI bug, or want a specialized countdown mode for your study routine? Your feedback directly dictates our development roadmap.</p>
+          </section>
+
+          <aside class="settings-card" style="background: rgba(5, 8, 15, 0.6) !important; border: 1px solid rgba(45, 212, 191, 0.25) !important; padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; gap: 1.25rem;">
+            <h3 style="color: #F8FAFC; font-size: 1.25rem; font-weight: 700; margin: 0;">Direct Email Support</h3>
+            <p style="margin: 0; font-size: 1rem;">To keep our site local-first and lightweight without bloated database forms, simply reach out via email. Please include your browser name and device OS if reporting an issue.</p>
+            
+            <div id="open-btn-wrapper">
+              <button id="open-support-draft" class="btn-primary" type="button" style="cursor: pointer; font-family: inherit; font-size: 1rem; border: none;">Email Support Team</button>
+            </div>
+
+            <form id="support-draft-form" style="display: none; flex-direction: column; gap: 1.25rem; margin-top: 0.5rem;" novalidate>
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="contact-email" style="color: #F8FAFC; font-weight: 600; font-size: 0.95rem;">Your Email <span style="color: #2DD4BF;">*</span></label>
+                <input id="contact-email" name="email" type="email" required placeholder="you@example.com" style="background: #05080F; border: 1px solid rgba(45, 212, 191, 0.3); border-radius: 12px; padding: 0.75rem 1rem; color: #F8FAFC; font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
+                <span id="error-email" style="color: #F87171; font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter a valid email address.</span>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="contact-country" style="color: #F8FAFC; font-weight: 600; font-size: 0.95rem;">Your Country <span style="color: #2DD4BF;">*</span></label>
+                <input id="contact-country" name="country" type="text" required placeholder="India" style="background: #05080F; border: 1px solid rgba(45, 212, 191, 0.3); border-radius: 12px; padding: 0.75rem 1rem; color: #F8FAFC; font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
+                <span id="error-country" style="color: #F87171; font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter your country.</span>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="contact-feedback" style="color: #F8FAFC; font-weight: 600; font-size: 0.95rem;">Your Feedback <span style="color: #2DD4BF;">*</span></label>
+                <textarea id="contact-feedback" name="feedback" required rows="4" placeholder="Tell us what you need help with…" style="background: #05080F; border: 1px solid rgba(45, 212, 191, 0.3); border-radius: 12px; padding: 0.75rem 1rem; color: #F8FAFC; font-family: inherit; font-size: 1rem; outline: none; resize: vertical; transition: border-color 0.2s;"></textarea>
+                <span id="error-feedback" style="color: #F87171; font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter your feedback message.</span>
+              </div>
+
+              <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 0.25rem;">
+                <button id="send-support-email" class="btn-primary" type="submit" style="display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; font-family: inherit; font-size: 1rem; border: none;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  <span>Send</span>
+                </button>
+                <button id="cancel-support-draft" class="btn-secondary" type="button" style="padding: 0.65rem 1.25rem; font-family: inherit; font-size: 0.95rem; cursor: pointer; border: 1px solid rgba(148, 163, 184, 0.25); background: transparent; color: #94A3B8; border-radius: 12px;">Cancel</button>
+              </div>
+            </form>
+
+            <div id="support-success-message" style="display: none; background: rgba(45, 212, 191, 0.1) !important; border: 1px solid rgba(45, 212, 191, 0.35) !important; padding: 1.5rem; border-radius: 16px; margin-top: 0.5rem; color: #F8FAFC; font-size: 1.025rem; line-height: 1.6; align-items: center; gap: 0.75rem;">
+              <span style="color: #2DD4BF; font-size: 1.4rem; line-height: 1;">✓</span>
+              <span>Thank you for your feedback. We truly appreciate you taking the time to help us improve Study Timer Online.</span>
+            </div>
+          </aside>
+
+          <div style="font-size: 0.95rem; color: #64748B;">
+            <p style="margin: 0;">Response time is generally within 24 to 48 hours.</p>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
+
+  <script>
+    const openBtn = document.getElementById("open-support-draft");
+    const cancelBtn = document.getElementById("cancel-support-draft");
+    const form = document.getElementById("support-draft-form");
+    const openWrapper = document.getElementById("open-btn-wrapper");
+    const successEl = document.getElementById("support-success-message");
+
+    if (openBtn && cancelBtn && form && openWrapper) {
+      openBtn.addEventListener("click", () => {
+        openWrapper.style.display = "none";
+        form.style.display = "flex";
+        if (successEl) successEl.style.display = "none";
+        const firstInput = document.getElementById("contact-email");
+        if (firstInput) firstInput.focus();
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        form.style.display = "none";
+        openWrapper.style.display = "block";
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const emailEl = document.getElementById("contact-email");
+        const countryEl = document.getElementById("contact-country");
+        const feedbackEl = document.getElementById("contact-feedback");
+
+        const errEmail = document.getElementById("error-email");
+        const errCountry = document.getElementById("error-country");
+        const errFeedback = document.getElementById("error-feedback");
+
+        if (!emailEl || !countryEl || !feedbackEl || !errEmail || !errCountry || !errFeedback) return;
+
+        const email = emailEl.value.trim();
+        const country = countryEl.value.trim();
+        const feedback = feedbackEl.value.trim();
+
+        let valid = true;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          errEmail.style.display = "block";
+          emailEl.style.borderColor = "#F87171";
+          valid = false;
+        } else {
+          errEmail.style.display = "none";
+          emailEl.style.borderColor = "rgba(45, 212, 191, 0.3)";
+        }
+
+        if (!country) {
+          errCountry.style.display = "block";
+          countryEl.style.borderColor = "#F87171";
+          valid = false;
+        } else {
+          errCountry.style.display = "none";
+          countryEl.style.borderColor = "rgba(45, 212, 191, 0.3)";
+        }
+
+        if (!feedback) {
+          errFeedback.style.display = "block";
+          feedbackEl.style.borderColor = "#F87171";
+          valid = false;
+        } else {
+          errFeedback.style.display = "none";
+          feedbackEl.style.borderColor = "rgba(45, 212, 191, 0.3)";
+        }
+
+        if (!valid) return;
+
+        const submitBtn = document.getElementById("send-support-email");
+        const submitSpan = submitBtn?.querySelector("span");
+        if (submitBtn && submitSpan) {
+          (submitBtn as HTMLButtonElement).disabled = true;
+          submitBtn.style.opacity = "0.7";
+          submitSpan.textContent = "Sending...";
+        }
+
+        const destination = "mindsetclarityofficial@gmail.com";
+        const endpoint = `https://formsubmit.co/ajax/${destination}`;
+
+        fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            _subject: "Study Timer Online Support Request",
+            _captcha: "false",
+            User_Email: email,
+            User_Country: country,
+            Feedback_Message: feedback
+          })
+        })
+          .then((res) => res.json())
+          .then(() => {
+            form.style.display = "none";
+            if (successEl) successEl.style.display = "flex";
+          })
+          .catch(() => {
+            form.style.display = "none";
+            if (successEl) successEl.style.display = "flex";
+          })
+          .finally(() => {
+            if (submitBtn && submitSpan) {
+              (submitBtn as HTMLButtonElement).disabled = false;
+              submitBtn.style.opacity = "1";
+              submitSpan.textContent = "Send";
+            }
+          });
+      });
+
+      ["contact-email", "contact-country", "contact-feedback"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("input", () => {
+            const err = document.getElementById(`error-${id.replace("contact-", "")}`);
+            if (err && el.value.trim().length > 0) {
+              err.style.display = "none";
+              el.style.borderColor = "rgba(45, 212, 191, 0.3)";
+            }
+          });
+        }
+      });
+    }
+  </script>
 </Layout>

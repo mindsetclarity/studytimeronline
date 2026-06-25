@@ -2,20 +2,39 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Privacy" description="Privacy details for Study Timer Online, a no-account browser timer site." canonicalPath="/privacy">
-  <section class="page-band">
-    <div class="container-page legal-copy">
-      <p class="eyebrow">privacy</p>
-      <h1>Privacy.</h1>
-      <p>Study Timer Online is built for instant use. The v1 site does not require an account, does not run a backend timer service, and does not need personal information to operate.</p>
-      <h2>Local preferences</h2>
-      <p>Timer preferences such as theme, Pomodoro settings, study task text, and flip clock options may be stored in your browser using localStorage. They stay on your device unless you clear them.</p>
-      <h2>Share links</h2>
-      <p>Countdown, Pomodoro, and event countdown links may include setup details in the URL query string, such as duration, task text, event name, or date. Only share links that contain information you are comfortable sharing.</p>
-      <h2>Notifications and audio</h2>
-      <p>Browser notifications and sounds only run after you interact with the page and grant permission where required by your browser.</p>
-      <h2>Analytics</h2>
-      <p>The launch plan assumes no analytics by default. If privacy-friendly analytics are added later, this page should be updated before deployment.</p>
+<Layout title="Privacy Policy" description="Privacy Policy for Study Timer Online. Learn how our local-first browser timer protects your personal data without sign-ups or server tracking." canonicalPath="/privacy">
+  <section class="page-band" style="padding-block: 3rem 6rem;">
+    <div class="container-page" style="max-width: 860px; margin: 0 auto;">
+      <article class="card legal-copy" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
+        <header style="margin-bottom: 2.5rem; border-bottom: 1px solid rgba(45, 212, 191, 0.15); padding-bottom: 2rem;">
+          <p class="eyebrow" style="color: #2DD4BF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; margin-bottom: 0.5rem;">data protection</p>
+          <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: #F8FAFC; margin: 0; line-height: 1.2;">Privacy Policy</h1>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 1.75rem; color: #94A3B8; font-size: 1.05rem;">
+          <p style="font-size: 1.1rem; color: #F8FAFC;">Study Timer Online is architected from the ground up for instantaneous, secure productivity. Our website operates without user accounts, backend database timers, or personal information collection.</p>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">1. Local Browser Storage (localStorage)</h2>
+            <p style="margin: 0;">Timer preferences—including Pomodoro durations, active theme selection, planner tasks, and custom countdown parameters—are saved directly within your device browser using standard Web Storage APIs (`localStorage`). This data never leaves your computer or mobile phone unless you explicitly clear your browser cache.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">2. Shareable Links & Query Strings</h2>
+            <p style="margin: 0;">When generating shareable countdown links or study group room URLs, configuration parameters (such as minute targets or task names) are encoded into the URL query string. We do not store these shared links on any central server.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">3. Audio & Notifications Permissions</h2>
+            <p style="margin: 0;">Browser desktop notifications and chime sound effects execute strictly on your client device after you initiate a timer session and grant explicit permission via your operating system prompt.</p>
+          </section>
+
+          <section>
+            <h2 style="color: #F8FAFC; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">4. Analytics & Telemetry</h2>
+            <p style="margin: 0;">We prioritize a zero-telemetry environment. We do not sell, rent, or distribute any user metrics to third-party data brokers.</p>
+          </section>
+        </div>
+      </article>
     </div>
   </section>
 </Layout>

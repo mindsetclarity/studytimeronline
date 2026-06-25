@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { BRAND } from "../lib/brand";
+---
+
+<Layout
+  title="404: Page Not Found"
+  description="The page you are looking for does not exist or has been moved. Return to Study Timer Online to continue your distraction-free focus sessions."
+  canonicalPath="/404"
+>
+  <style>
+    .error-section {
+      min-height: calc(100vh - 180px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+    }
+
+    .error-card {
+      background: linear-gradient(145deg, rgba(11, 18, 32, 0.8), rgba(7, 17, 26, 0.9));
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      border-radius: 32px;
+      padding: clamp(3rem, 8vw, 5rem) clamp(2rem, 6vw, 4rem);
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 10;
+      animation: errorFloatUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes errorFloatUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .error-code {
+      font-family: var(--font-mono, monospace);
+      font-size: clamp(4.5rem, 14vw, 7.5rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #5eead4 0%, #2dd4bf 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.05em;
+      display: inline-block;
+      filter: drop-shadow(0 4px 28px rgba(45, 212, 191, 0.25));
+    }
+
+    .error-title {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .error-description {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: #94a3b8;
+      line-height: 1.7;
+      margin: 0 0 2.5rem 0;
+      max-width: 480px;
+      margin-inline: auto;
+    }
+
+    .error-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .error-actions > a {
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .error-decoration {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, rgba(5, 8, 15, 0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .error-card {
+        animation: none;
+      }
+    }
+  </style>
+
+  <section class="error-section" aria-labelledby="error-heading">
+    <div class="error-decoration" aria-hidden="true"></div>
+    <article class="error-card">
+      <div class="error-code" aria-hidden="true">404</div>
+      <h1 id="error-heading" class="error-title">Page Not Found</h1>
+      <p class="error-description">
+        Oops! It seems you've wandered out of your focus zone. The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="error-actions" role="navigation" aria-label="Error recovery navigation">
+        <a id="return-home-404" class="btn-primary" href="/">Return Home</a>
+        <a id="start-timer-404" class="btn-secondary" href="/timer">Start Focus</a>
+      </div>
+    </article>
+  </section>
+</Layout>

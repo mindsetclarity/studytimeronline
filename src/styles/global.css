@@ -114,35 +114,35 @@
    =========================================================================== */
 
 :root {
-  --surface-page: #020617;
-  --surface-card: rgba(255, 255, 255, 0.015);
-  --surface-inset: rgba(255, 255, 255, 0.03);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #475569;
-  --border-hairline: rgba(255, 255, 255, 0.06);
-  --border-hairline-strong: rgba(255, 255, 255, 0.1);
-  --cta-bg: linear-gradient(135deg, #6366f1, #4f46e5);
-  --cta-fg: #ffffff;
-  --selection-bg: rgba(99, 102, 241, 0.5);
-  --selection-fg: #ffffff;
-  --accent: #6366f1;
+  --surface-page: #05080F;
+  --surface-card: #0B1220;
+  --surface-inset: #07111A;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --border-hairline: rgba(45, 212, 191, 0.12);
+  --border-hairline-strong: rgba(45, 212, 191, 0.28);
+  --cta-bg: linear-gradient(135deg, #5EEAD4, #2DD4BF);
+  --cta-fg: #05080F;
+  --selection-bg: rgba(45, 212, 191, 0.35);
+  --selection-fg: #F8FAFC;
+  --accent: #2DD4BF;
 }
 
 [data-theme="dark"] {
-  --surface-page: #020617;
-  --surface-card: rgba(255, 255, 255, 0.015);
-  --surface-inset: rgba(255, 255, 255, 0.03);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #475569;
-  --border-hairline: rgba(255, 255, 255, 0.06);
-  --border-hairline-strong: rgba(255, 255, 255, 0.1);
-  --cta-bg: linear-gradient(135deg, #6366f1, #4f46e5);
-  --cta-fg: #ffffff;
-  --selection-bg: rgba(99, 102, 241, 0.5);
-  --selection-fg: #ffffff;
-  --accent: #6366f1;
+  --surface-page: #05080F;
+  --surface-card: #0B1220;
+  --surface-inset: #07111A;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --border-hairline: rgba(45, 212, 191, 0.12);
+  --border-hairline-strong: rgba(45, 212, 191, 0.28);
+  --cta-bg: linear-gradient(135deg, #5EEAD4, #2DD4BF);
+  --cta-fg: #05080F;
+  --selection-bg: rgba(45, 212, 191, 0.35);
+  --selection-fg: #F8FAFC;
+  --accent: #2DD4BF;
 }
 
 /* ===========================================================================
@@ -9218,15 +9218,15 @@ button:disabled {
 }
 /* Sunset luxury homepage pass */
 :root {
-  --sunset-ink: #050713;
-  --sunset-graphite: #111827;
-  --sunset-cream: #fff7e8;
-  --sunset-muted: #d8c9b7;
-  --sunset-orange: #ff7a18;
-  --sunset-ember: #ff3d00;
-  --sunset-rose: #9f1239;
-  --sunset-teal: #18d6c4;
-  --sunset-aqua: #67e8f9;
+  --sunset-ink: #05080F;
+  --sunset-graphite: #0B1220;
+  --sunset-cream: #F8FAFC;
+  --sunset-muted: #94A3B8;
+  --sunset-orange: #FB923C;
+  --sunset-ember: #F59E0B;
+  --sunset-rose: #0D9488;
+  --sunset-teal: #2DD4BF;
+  --sunset-aqua: #5EEAD4;
 }
 
 .site-header {
@@ -10659,4 +10659,251 @@ footer,
     width: calc(100vw - 20px);
     right: 10px;
   }
+}
+
+/* ===========================================================================
+   FINAL COLOR-GRADING POLISH PASS
+   Mood: Calm focus, premium productivity, golden-hour study mood, cinematic dark UI
+   Palette: #05080F (bg), #0B1220 (card), #2DD4BF (accent), #F8FAFC (text)
+   =========================================================================== */
+
+/* 1. Background Depth & Harmony */
+body, .page-shell, .layout-main {
+  background-color: #05080F !important;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45, 212, 191, 0.08), transparent),
+    radial-gradient(ellipse 60% 50% at 85% 90%, rgba(11, 22, 32, 0.8), transparent),
+    linear-gradient(180deg, #05080F 0%, #07111A 50%, #0B1620 100%) !important;
+  background-attachment: fixed !important;
+  color: #F8FAFC !important;
+}
+
+.study-cockpit-page,
+.planner-dashboard,
+.compact-stats,
+.plan-dashboard,
+.today-shell {
+  background: transparent !important;
+}
+
+/* Strict Home Page Rule: Sunset Image Must Remain Clean & Clearly Visible */
+.home-focus-hero,
+.home-focus-hero--sunset {
+  background: #05080F !important;
+  position: relative;
+}
+
+.home-focus-hero__image,
+.home-focus-hero--sunset .home-focus-hero__image {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.home-focus-hero::before,
+.home-focus-hero--sunset::before,
+.home-focus-hero::after,
+.home-focus-hero--sunset::after,
+.home-focus-hero__grid::before,
+.home-focus-hero__grid::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.home-focus-hero__copy,
+.home-focus-hero--sunset .home-focus-hero__copy {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.home-focus-hero__copy .eyebrow {
+  background: #0B1220 !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  color: #F59E0B !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.home-focus-hero__proof li {
+  background: #0B1220 !important;
+  border: 1px solid rgba(45, 212, 191, 0.25) !important;
+  color: #94A3B8 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 2. Premium Cards System */
+.card,
+.panel,
+.glass-card,
+.glass-panel,
+.timer-panel-compact,
+.settings-card,
+.settings-grid,
+.study-session-summary,
+.task-column,
+.planner-task-column,
+.analytics-panel {
+  background: linear-gradient(145deg, #0B1220 0%, #07111A 100%) !important;
+  border: 1px solid rgba(45, 212, 191, 0.15) !important;
+  box-shadow:
+    0 16px 36px -12px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(45, 212, 191, 0.12) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.timer-panel-compact.study-timer-stage {
+  background: linear-gradient(145deg, #0B1220 0%, #08121C 100%) !important;
+  border: 1px solid rgba(45, 212, 191, 0.22) !important;
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.8),
+    0 0 40px -15px rgba(45, 212, 191, 0.15),
+    inset 0 1px 0 rgba(45, 212, 191, 0.2) !important;
+}
+
+/* 3. Consistent Mint/Teal Accent Branding */
+.btn-primary,
+button.btn-primary,
+a.btn-primary,
+.btn-nav-focus,
+.home-focus-hero__primary,
+.compact-btn-primary,
+.timer-cockpit__start {
+  background: linear-gradient(135deg, #5EEAD4 0%, #2DD4BF 100%) !important;
+  color: #05080F !important;
+  border: 1px solid rgba(94, 234, 212, 0.7) !important;
+  box-shadow: 0 8px 24px -6px rgba(45, 212, 191, 0.38) !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+.btn-primary:hover:not(:disabled),
+button.btn-primary:hover:not(:disabled),
+a.btn-primary:hover,
+.btn-nav-focus:hover,
+.home-focus-hero__primary:hover,
+.compact-btn-primary:hover:not(:disabled),
+.timer-cockpit__start:hover {
+  background: linear-gradient(135deg, #99F6E4 0%, #2DD4BF 100%) !important;
+  box-shadow: 0 14px 32px -6px rgba(45, 212, 191, 0.55) !important;
+  transform: translateY(-2px);
+  color: #05080F !important;
+}
+
+.btn-secondary,
+button.btn-secondary,
+a.btn-secondary,
+.compact-btn-secondary,
+.home-focus-hero__secondary,
+.mobile-menu-button {
+  background: #0B1220 !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(45, 212, 191, 0.3) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  font-weight: 600 !important;
+}
+
+.btn-secondary:hover:not(:disabled),
+button.btn-secondary:hover:not(:disabled),
+a.btn-secondary:hover,
+.compact-btn-secondary:hover:not(:disabled),
+.home-focus-hero__secondary:hover,
+.mobile-menu-button:hover {
+  background: rgba(45, 212, 191, 0.12) !important;
+  color: #5EEAD4 !important;
+  border-color: #2DD4BF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -4px rgba(45, 212, 191, 0.28) !important;
+}
+
+/* Navigation & Active States */
+.nav-link[aria-current="page"],
+.mobile-menu__link[aria-current="page"],
+.site-footer__legal a[aria-current="page"],
+.site-footer__legal a.is-active {
+  color: #5EEAD4 !important;
+  background: rgba(45, 212, 191, 0.12) !important;
+  border-color: rgba(45, 212, 191, 0.35) !important;
+  box-shadow: 0 0 14px -4px rgba(45, 212, 191, 0.3) !important;
+}
+
+.nav-link:hover,
+.mobile-menu__link:hover,
+.site-footer__legal a:hover {
+  color: #2DD4BF !important;
+}
+
+/* 4. Text Hierarchy */
+h1, h2, .section-title, .timer-display, .timer-digits, [data-planner-minutes] {
+  color: #F8FAFC !important;
+}
+
+p, h3, h4, .subtitle, .study-timer-stage__detail {
+  color: #94A3B8 !important;
+}
+
+small, .mute, .setting-label, .form-hint, .rhythm-label {
+  color: #64748B !important;
+}
+
+/* 5. Progress Bars & Pills */
+.progress-track,
+.compact-progress-track {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.progress-fill,
+.compact-progress-fill {
+  background: linear-gradient(90deg, #2DD4BF 0%, #5EEAD4 100%) !important;
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.45) !important;
+}
+
+.timer-cockpit__state,
+[data-session-state],
+#phase-badge,
+#cycle-badge,
+.today-dashboard-badge {
+  background: #0B1220 !important;
+  border: 1px solid rgba(45, 212, 191, 0.35) !important;
+}
+
+#cycle-badge {
+  color: #94A3B8 !important;
+  border-color: rgba(148, 163, 184, 0.25) !important;
+}
+
+.voice-switch[aria-checked="true"] {
+  background: rgba(45, 212, 191, 0.18) !important;
+  border-color: rgba(45, 212, 191, 0.45) !important;
+}
+
+.voice-switch[aria-checked="true"] .voice-switch-ball {
+  background: #2DD4BF !important;
+  box-shadow: 0 0 8px rgba(45, 212, 191, 0.6) !important;
+}
+
+/* Mobile & Header Polish */
+.site-header {
+  background: rgba(5, 8, 15, 0.85) !important;
+  border-bottom: 1px solid rgba(45, 212, 191, 0.12) !important;
+}
+
+.mobile-menu {
+  background: #07111A !important;
+  border: 1px solid rgba(45, 212, 191, 0.2) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+}
+
+.mobile-menu__link {
+  color: #F8FAFC !important;
 }
