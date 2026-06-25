@@ -16,12 +16,23 @@ export async function requestFullscreen(el: Element): Promise<boolean> {
       requestFullscreen?: () => Promise<void>;
       webkitRequestFullscreen?: () => Promise<void> | void;
     };
+    let success = false;
     if (anyEl.requestFullscreen) {
       await anyEl.requestFullscreen();
-      return true;
-    }
-    if (anyEl.webkitRequestFullscreen) {
+      success = true;
+    } else if (anyEl.webkitRequestFullscreen) {
       await Promise.resolve(anyEl.webkitRequestFullscreen());
+      success = true;
+    }
+    
+    if (success) {
+      try {
+        if (screen.orientation && typeof screen.orientation.lock === "function") {
+          await screen.orientation.lock("landscape");
+        }
+      } catch {
+        // Ignore unsupported or blocked orientation lock.
+      }
       return true;
     }
   } catch {
@@ -32,6 +43,12 @@ export async function requestFullscreen(el: Element): Promise<boolean> {
 
 export async function exitFullscreen(): Promise<void> {
   try {
+    try {
+      screen.orientation?.unlock?.();
+    } catch {
+      // Ignore unsupported unlock.
+    }
+
     const anyDoc = document as Document & {
       webkitExitFullscreen?: () => Promise<void> | void;
     };

@@ -1,0 +1,465 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Today's Plan" description="Plan your study queue and start the next task." canonicalPath="/study-planner">
+  <style is:global>
+    .planner-dashboard {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+      color: #f8fafc;
+      font-family: var(--font-sans, system-ui, sans-serif);
+    }
+    .planner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .planner-header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      color: #f8fafc;
+    }
+    .planner-header p {
+      color: #64748b;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    .planner-header__actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn-outline, .btn-add-top {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      box-sizing: border-box;
+      border: 1px solid rgba(45, 212, 191, 0.25);
+      color: #2dd4bf;
+      background: transparent;
+      padding: 0 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .btn-outline:hover, .btn-add-top:hover {
+      background: rgba(45, 212, 191, 0.1);
+      border-color: rgba(45, 212, 191, 0.4);
+    }
+    
+    .grid-overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.5), rgba(9, 14, 23, 0.8));
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100px;
+    }
+    .stat-card:hover {
+      border-color: rgba(45, 212, 191, 0.25);
+      box-shadow: 0 8px 25px rgba(45, 212, 191, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    .stat-card span {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card strong {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2dd4bf;
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    .planner-workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .details-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .panel {
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+    
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .today-studio-empty {
+      color: #64748b;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* Up Next Card */
+    .up-next-card {
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-left: 4px solid #2dd4bf;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+    .up-next-card .task-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+    .up-next-card .task-meta {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+    }
+
+    /* Queue Task Row */
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .task-row {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 12px 14px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .task-row:hover {
+      background: rgba(15, 23, 42, 0.5);
+      border-color: rgba(45, 212, 191, 0.15);
+    }
+    .task-info { flex: 1; }
+    .task-row .task-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #f8fafc;
+      margin-bottom: 2px;
+    }
+    .task-row .task-meta {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    /* Actions & Buttons */
+    .task-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .btn-start {
+      background: rgba(45, 212, 191, 0.1);
+      color: #2dd4bf;
+      border: 1px solid rgba(45, 212, 191, 0.25);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-start:hover {
+      background: rgba(45, 212, 191, 0.2);
+      border-color: rgba(45, 212, 191, 0.4);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-ghost:hover {
+      color: #f8fafc;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .btn-delete {
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+    .btn-delete:hover {
+      color: #f8fafc;
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.8);
+    }
+
+    /* Add Task Panel */
+    .add-task-panel label {
+      display: block;
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .input-compact {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #f8fafc;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .input-compact::placeholder {
+      color: #64748b;
+    }
+    .subject-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .chip-compact {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip-compact:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .chip-compact[aria-pressed="true"] {
+      background: rgba(45, 212, 191, 0.1);
+      color: #2dd4bf;
+      border-color: rgba(45, 212, 191, 0.25);
+    }
+    
+    .btn-add {
+      background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+      color: #020617;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .btn-add:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Finished section */
+    .finished-section {
+      margin-top: 1rem;
+    }
+    .finished-header {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .finished-header:hover {
+      color: #f8fafc;
+    }
+    .finished-list {
+      display: none;
+      margin-top: 1rem;
+    }
+    .finished-list.is-expanded {
+      display: grid;
+    }
+
+    @media (max-width: 900px) {
+      .grid-overview { grid-template-columns: repeat(2, 1fr); }
+      .grid-overview .stat-card:last-child { grid-column: span 2; }
+      .planner-workspace-grid { grid-template-columns: 1fr; }
+      .add-task-panel { display: none; margin-bottom: 1.5rem; }
+      .add-task-panel.is-expanded { display: block; }
+      .planner-col-right { order: -1; }
+    }
+    @media (max-width: 600px) {
+      .planner-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .planner-header__actions { width: 100%; justify-content: flex-start; }
+      .task-row { flex-direction: column; align-items: flex-start; }
+      .task-actions { width: 100%; flex-wrap: wrap; margin-top: 8px; }
+      .btn-start { flex: 1 1 100%; text-align: center; justify-content: center; }
+      .up-next-card .task-actions { flex-wrap: wrap; }
+    }
+  </style>
+
+  <section class="planner-dashboard" data-study-planner>
+    <header class="planner-header">
+      <div>
+        <h1>Today's Plan</h1>
+        <p>Plan your study queue and start the next task. &middot; <span style="opacity: 0.8;">Local only</span></p>
+      </div>
+      <div class="planner-header__actions">
+        <button class="btn-add-top" id="toggle-add-task">+ Add Task</button>
+        <a class="btn-outline" href="/study-stats">Open Stats</a>
+      </div>
+    </header>
+
+    <div class="grid-overview">
+      <div class="stat-card">
+        <span>Planned</span>
+        <div><strong class="tabular" data-planner-minutes>0</strong> <strong style="font-size:1rem;">min</strong></div>
+      </div>
+      <div class="stat-card">
+        <span>In Queue</span>
+        <strong class="tabular" data-planner-active-count>0</strong>
+      </div>
+      <div class="stat-card">
+        <span>Done</span>
+        <strong class="tabular" data-planner-done-count>0</strong>
+      </div>
+    </div>
+
+    <div class="planner-workspace-grid">
+      <div class="details-column planner-col-left">
+        <div id="up-next-container">
+          <h2 class="section-title">Up Next</h2>
+          <p class="today-studio-empty" data-planner-empty>No tasks yet. Add your first study task.</p>
+          <div id="up-next-render-target" data-up-next-render-target></div>
+        </div>
+
+        <div id="queue-container" style="display: none;">
+          <h2 class="section-title" style="margin-top: 1rem;">Queue</h2>
+          <ul data-planner-list class="task-list"></ul>
+        </div>
+      </div>
+
+      <div class="details-column planner-col-right">
+        <div class="panel add-task-panel" id="add-task-form" data-planner-form-container>
+          <h2 class="section-title">Add Task</h2>
+          <form data-planner-form>
+            <label>Subject</label>
+            <input class="input-compact" name="subject" type="text" placeholder="e.g. Mathematics" data-planner-subject />
+            
+            <div class="subject-chips">
+              <button type="button" class="chip-compact" data-subject-chip="Mathematics">Mathematics</button>
+              <button type="button" class="chip-compact" data-subject-chip="Science">Science</button>
+              <button type="button" class="chip-compact" data-subject-chip="Reading">Reading</button>
+              <button type="button" class="chip-compact" data-subject-chip="Writing">Writing</button>
+              <button type="button" class="chip-compact" data-subject-chip="Exam Review">Exam Review</button>
+            </div>
+            
+            <label>Task</label>
+            <input class="input-compact" name="task" type="text" placeholder="e.g. Revise integration notes" required data-planner-task />
+            
+            <label>Minutes</label>
+            <div style="display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap;">
+               <button type="button" class="chip-compact" onclick="document.querySelector('[data-planner-minutes-input]').value='25'">25</button>
+               <button type="button" class="chip-compact" aria-pressed="true" onclick="document.querySelector('[data-planner-minutes-input]').value='45'">45</button>
+               <button type="button" class="chip-compact" onclick="document.querySelector('[data-planner-minutes-input]').value='60'">60</button>
+               <button type="button" class="chip-compact" onclick="document.querySelector('[data-planner-minutes-input]').value='90'">90</button>
+               <input class="input-compact" name="minutes" type="number" min="1" max="360" value="45" data-planner-minutes-input style="width: 80px; margin: 0; padding: 4px 8px;" />
+            </div>
+
+            <button class="btn-add" type="submit">Add Task</button>
+          </form>
+        </div>
+
+        <div class="panel finished-section" data-finished-section style="display: none;">
+          <div class="finished-header" id="toggle-finished">
+            <span>Finished Today (<span data-planner-done-count-label>0</span>)</span>
+            <span id="finished-chevron">▼</span>
+          </div>
+          <p class="today-studio-empty" data-planner-finished-empty style="display: none; margin-top: 1rem;"></p>
+          <ul class="finished-list task-list" id="finished-list" data-planner-finished></ul>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-planner-live></p>
+  </section>
+
+  <script>
+    import "../scripts/study-planner";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleAdd = document.getElementById("toggle-add-task");
+      const addForm = document.getElementById("add-task-form");
+      const plannerTaskInput = document.querySelector("[data-planner-task]") as HTMLInputElement;
+
+      if (toggleAdd && addForm) {
+        toggleAdd.addEventListener("click", () => {
+          addForm.classList.toggle("is-expanded");
+          if (addForm.classList.contains("is-expanded") && plannerTaskInput) {
+            plannerTaskInput.focus();
+          }
+        });
+      }
+
+      const toggleFinished = document.getElementById("toggle-finished");
+      const finishedList = document.getElementById("finished-list");
+      const finishedChevron = document.getElementById("finished-chevron");
+      if (toggleFinished && finishedList && finishedChevron) {
+        toggleFinished.addEventListener("click", () => {
+          finishedList.classList.toggle("is-expanded");
+          finishedChevron.textContent = finishedList.classList.contains("is-expanded") ? "▲" : "▼";
+        });
+      }
+      
+      // Minute chip active state toggle
+      document.querySelectorAll('.chip-compact[onclick*="data-planner-minutes-input"]').forEach(chip => {
+        chip.addEventListener('click', (e) => {
+           document.querySelectorAll('.chip-compact[onclick*="data-planner-minutes-input"]').forEach(c => c.setAttribute('aria-pressed', 'false'));
+           (e.target as HTMLElement).setAttribute('aria-pressed', 'true');
+        });
+      });
+    });
+  </script>
+</Layout>

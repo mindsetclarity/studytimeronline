@@ -1,0 +1,21 @@
+---
+import { BRAND } from "../lib/brand";
+import { TRUST_LINKS } from "../lib/navigation";
+---
+
+<footer class="site-footer">
+  <div class="container-page site-footer__grid site-footer__grid--simple">
+    <section class="site-footer__brand" aria-labelledby="footer-brand">
+      <h2 id="footer-brand" translate="no">{BRAND}</h2>
+      <p>A calm study timer for focused students.</p>
+    </section>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__legal">
+        {TRUST_LINKS.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</footer>

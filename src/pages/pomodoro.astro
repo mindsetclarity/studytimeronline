@@ -1,0 +1,670 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Pomodoro"
+  description="A simple, premium Pomodoro timer."
+  canonicalPath="/pomodoro"
+>
+  <style>
+    /* COMPACT TIMER OVERRIDES */
+    .timer-panel-compact {
+      background: var(--surface-glass, rgba(30, 30, 30, 0.4));
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      border-radius: 24px;
+      padding: 32px;
+      margin: 0 auto 2rem auto;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    @media (max-width: 600px) {
+      .timer-panel-compact {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+    }
+
+    .timer-text-responsive {
+      font-size: clamp(56px, 14vw, 110px);
+      font-weight: 700;
+      line-height: 1;
+      margin: 8px 0;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 4px 32px rgba(0,0,0,0.3);
+      color: var(--text-primary, #fff);
+      transition: font-size 0.2s ease-out;
+    }
+
+    .compact-controls-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      width: 100%;
+    }
+
+    .compact-btn-primary {
+      height: 52px;
+      padding: 0 24px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 14px;
+      flex-grow: 1;
+      min-width: 140px;
+      max-width: 260px;
+    }
+
+    .compact-btn-secondary {
+      height: 48px;
+      padding: 0 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 12px;
+      background: transparent;
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+      color: var(--text-secondary, #aaa);
+      transition: all 0.2s ease;
+    }
+
+    .compact-btn-secondary:hover:not(:disabled) {
+      border-color: var(--text-primary, #fff);
+      color: var(--text-primary, #fff);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .compact-btn-secondary:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .compact-progress-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin: 12px 0 0 0;
+      overflow: hidden;
+    }
+
+    .compact-progress-fill {
+      height: 100%;
+      background: var(--gradient-primary, linear-gradient(to right, #4ade80, #2dd4bf));
+      width: 0%;
+      transition: width 0.25s linear;
+    }
+
+    .study-timer-stage[data-fullscreen="true"] {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center !important;
+      max-width: none !important;
+      margin: 0 !important;
+      border: none !important;
+      border-radius: 0 !important;
+      background: #0a0a0a !important; /* Premium deep dark for fullscreen */
+      padding: 24px !important;
+      min-height: 100dvh !important;
+      width: 100vw !important;
+    }
+
+    /* FULLSCREEN MOBILE LANDSCAPE */
+    @media (orientation: landscape) {
+      .study-timer-stage[data-fullscreen="true"] .timer-text-responsive {
+        font-size: clamp(7rem, 18vw, 18rem) !important;
+        margin: 4px 0 !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] .compact-controls-wrapper {
+        margin-top: 12px !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] {
+        padding: 12px 24px !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] .voice-toggle-wrapper {
+        top: 16px !important;
+        right: 24px !important;
+      }
+    }
+
+    /* VOICE TOGGLE */
+    .voice-toggle-wrapper {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    @media (max-width: 600px) {
+      .voice-toggle-wrapper {
+        top: 16px;
+        right: 16px;
+      }
+    }
+
+    .voice-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary, #888);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .voice-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      outline: none;
+      padding: 0;
+    }
+
+    .voice-switch:focus-visible {
+      box-shadow: 0 0 0 2px #4ade80;
+    }
+
+    .voice-switch[aria-checked="true"] {
+      background: rgba(74, 222, 128, 0.15);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .voice-switch-ball {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: var(--text-secondary, #888);
+      border-radius: 50%;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s ease;
+    }
+
+    .voice-switch[aria-checked="true"] .voice-switch-ball {
+      transform: translateX(18px);
+      background: #4ade80;
+    }
+
+    /* COMPACT SETTINGS */
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+    }
+    
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    
+    .setting-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary, #888);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    
+    .duration-chips-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    
+    .compact-chip {
+      height: 32px;
+      min-width: 44px;
+      padding: 0 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+      color: var(--text-secondary, #999);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .compact-chip:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary, #ddd);
+    }
+    
+    .compact-chip[aria-pressed="true"]:not(:disabled) {
+      background: rgba(74, 222, 128, 0.1);
+      border-color: rgba(74, 222, 128, 0.4);
+      color: #4ade80;
+    }
+    
+    .compact-chip:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 600px) {
+      .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .duration-chips-row {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+
+  <section class="study-cockpit-page" id="pomodoro-engine">
+    <div class="container-page" style="padding: 2rem 1rem 4rem 1rem;">
+      
+      <header style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 1.5rem; margin-bottom: 0.25rem; font-weight: 600;">Pomodoro</h1>
+      </header>
+
+      <!-- MAIN COMPACT TIMER PANEL -->
+      <section class="timer-panel-compact study-timer-stage" id="study-stage" aria-labelledby="study-stage-title">
+        
+        <div class="voice-toggle-wrapper">
+          <span class="voice-label" id="voice-toggle-label">Voice</span>
+          <button 
+            type="button" 
+            class="voice-switch" 
+            role="switch" 
+            aria-checked="true" 
+            aria-labelledby="voice-toggle-label"
+            id="voice-toggle"
+          >
+            <span class="voice-switch-ball"></span>
+          </button>
+        </div>
+
+        <div style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;">
+          <span class="timer-cockpit__state" id="phase-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #4ade80; border: 1px solid currentColor; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">Focus</span>
+          <span class="timer-cockpit__state" id="cycle-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary, #888); padding: 0.2rem 0;">Cycle 1 of 4</span>
+        </div>
+
+        <div class="study-timer-stage__clock" aria-live="polite" style="width: 100%;">
+          <div class="study-timer-stage__aura" aria-hidden="true"></div>
+          
+          <div class="timer-text-responsive timer-display timer-digits timer-digits-modern" id="timer-display">25:00</div>
+          
+          <p class="study-timer-stage__detail" id="detail-text" style="color: var(--text-secondary, #888); font-size: 0.9rem; margin: 0;">25 min focus · 5 min break</p>
+          
+          <div class="compact-progress-track progress-track" aria-hidden="true">
+            <div class="compact-progress-fill progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="compact-controls-wrapper" aria-label="Study timer controls">
+          <button class="btn-primary compact-btn-primary" type="button" id="start-btn">Start Focus</button>
+          <button class="btn-primary compact-btn-primary" type="button" id="pause-btn" style="display: none;">Pause</button>
+          <button class="btn-primary compact-btn-primary" type="button" id="resume-btn" style="display: none;">Resume</button>
+          
+          <button class="compact-btn-secondary" type="button" id="reset-btn" disabled>Reset</button>
+          <button class="compact-btn-secondary" type="button" id="fullscreen-btn" aria-label="Enter fullscreen">Fullscreen</button>
+        </div>
+      </section>
+
+      <!-- POMODORO SETTINGS -->
+      <div style="max-width: 520px; margin: 0 auto; padding: 0 1rem;" id="pomodoro-settings">
+        <div class="settings-grid">
+          <div class="setting-row">
+            <span class="setting-label">Focus</span>
+            <div class="duration-chips-row" data-setting="focus">
+              <button class="compact-chip chip" data-val="15">15</button>
+              <button class="compact-chip chip" data-val="25" aria-pressed="true">25</button>
+              <button class="compact-chip chip" data-val="30">30</button>
+              <button class="compact-chip chip" data-val="45">45</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Short Break</span>
+            <div class="duration-chips-row" data-setting="shortBreak">
+              <button class="compact-chip chip" data-val="5" aria-pressed="true">5</button>
+              <button class="compact-chip chip" data-val="10">10</button>
+              <button class="compact-chip chip" data-val="15">15</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Long Break</span>
+            <div class="duration-chips-row" data-setting="longBreak">
+              <button class="compact-chip chip" data-val="15" aria-pressed="true">15</button>
+              <button class="compact-chip chip" data-val="20">20</button>
+              <button class="compact-chip chip" data-val="30">30</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <span class="setting-label">Long Break After</span>
+            <div class="duration-chips-row" data-setting="longBreakEvery">
+              <button class="compact-chip chip" data-val="2">2</button>
+              <button class="compact-chip chip" data-val="3">3</button>
+              <button class="compact-chip chip" data-val="4" aria-pressed="true">4</button>
+              <button class="compact-chip chip" data-val="5">5</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    import { CountdownEngine, type TickDetail, type StateDetail } from "../lib/timerEngine";
+    import { formatHms, formatTabTitle } from "../lib/formatTime";
+    import { Alarm } from "../lib/alarm";
+    import { toggleFullscreen, isFullscreen, exitFullscreen } from "../lib/fullscreen";
+    import { BRAND } from "../lib/brand";
+    import { showNotification } from "../lib/notification";
+    import { cancelSpeech, isVoiceSupported, speakTimerMessage } from "../lib/voice";
+    import { read, write } from "../lib/storage";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const engine = new CountdownEngine();
+      const alarm = new Alarm();
+      
+      const phaseBadge = document.getElementById("phase-badge")!;
+      const cycleBadge = document.getElementById("cycle-badge")!;
+      const timerDisplay = document.getElementById("timer-display")!;
+      const detailText = document.getElementById("detail-text")!;
+      const progressFill = document.getElementById("progress-fill")!;
+      
+      const startBtn = document.getElementById("start-btn") as HTMLButtonElement;
+      const pauseBtn = document.getElementById("pause-btn") as HTMLButtonElement;
+      const resumeBtn = document.getElementById("resume-btn") as HTMLButtonElement;
+      const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+      const fullscreenBtn = document.getElementById("fullscreen-btn") as HTMLButtonElement;
+      const studyStage = document.getElementById("study-stage")!;
+
+      const voiceToggle = document.getElementById("voice-toggle") as HTMLButtonElement;
+      let voiceEnabled = read<boolean>("studyCockpitVoice", true);
+      const spokenEvents = new Set<string>();
+
+      if (voiceToggle && !isVoiceSupported()) {
+        voiceToggle.hidden = true;
+      } else if (voiceToggle) {
+        voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
+        voiceToggle.addEventListener("click", () => {
+          voiceEnabled = !voiceEnabled;
+          write("studyCockpitVoice", voiceEnabled);
+          voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
+          if (!voiceEnabled) cancelSpeech();
+        });
+      }
+
+      function getOrdinal(n: number): string {
+        const s = ["th", "st", "nd", "rd"];
+        const v = n % 100;
+        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+      }
+
+      type Phase = "focus" | "shortBreak" | "longBreak";
+      let phase: Phase = "focus";
+      let completedFocusSessions = 0;
+      
+      // Default settings
+      let config = {
+        focus: 25,
+        shortBreak: 5,
+        longBreak: 15,
+        longBreakEvery: 4
+      };
+
+      // Read from URL params if present
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("focus")) config.focus = parseInt(params.get("focus") || "25", 10);
+      else if (params.has("minutes")) config.focus = parseInt(params.get("minutes") || "25", 10);
+      if (params.has("break")) config.shortBreak = parseInt(params.get("break") || "5", 10);
+      if (params.has("longBreak")) config.longBreak = parseInt(params.get("longBreak") || "15", 10);
+      if (params.has("longBreakEvery")) config.longBreakEvery = parseInt(params.get("longBreakEvery") || "4", 10);
+
+      let transitionTimeout: number | null = null;
+      let originalTitle = document.title;
+
+      function updateUIForIdle() {
+        let currentDuration = 0;
+        if (phase === "focus") currentDuration = config.focus;
+        if (phase === "shortBreak") currentDuration = config.shortBreak;
+        if (phase === "longBreak") currentDuration = config.longBreak;
+
+        timerDisplay.textContent = formatHms(currentDuration * 60 * 1000);
+        progressFill.style.width = "0%";
+
+        if (phase === "focus") {
+          phaseBadge.textContent = "Focus";
+          phaseBadge.style.color = "#4ade80";
+          detailText.textContent = `${config.focus} min focus · ${config.shortBreak} min break`;
+          startBtn.textContent = "Start Focus";
+        } else if (phase === "shortBreak") {
+          phaseBadge.textContent = "Short Break";
+          phaseBadge.style.color = "#38bdf8"; // Light blue
+          detailText.textContent = "Take a short break";
+          startBtn.textContent = "Start Break";
+        } else if (phase === "longBreak") {
+          phaseBadge.textContent = "Long Break";
+          phaseBadge.style.color = "#a78bfa"; // Purple
+          detailText.textContent = "Take a long break";
+          startBtn.textContent = "Start Long Break";
+        }
+
+        cycleBadge.textContent = `Cycle ${completedFocusSessions + 1} of ${config.longBreakEvery}`;
+        
+        startBtn.style.display = "block";
+        pauseBtn.style.display = "none";
+        resumeBtn.style.display = "none";
+        
+        // Disable duration changes only if running/paused
+        updateSettingsDisabledState(false);
+      }
+
+      function applyPhaseTransition() {
+        if (phase === "focus") {
+          completedFocusSessions++;
+          if (completedFocusSessions >= config.longBreakEvery) {
+            phase = "longBreak";
+            showNotification(`${BRAND} Pomodoro`, "Focus complete. Time for a long break.");
+          } else {
+            phase = "shortBreak";
+            showNotification(`${BRAND} Pomodoro`, "Focus complete. Time for a short break.");
+          }
+        } else if (phase === "shortBreak" || phase === "longBreak") {
+          if (phase === "longBreak") {
+            completedFocusSessions = 0;
+          }
+          phase = "focus";
+          showNotification(`${BRAND} Pomodoro`, "Break complete. Next focus ready.");
+        }
+        
+        engine.clear();
+        updateUIForIdle();
+
+        // Auto-start after a short delay
+        detailText.textContent = phase === "focus" ? "Next focus starting soon..." : "Break starting soon...";
+        transitionTimeout = window.setTimeout(() => {
+          let duration = phase === "focus" ? config.focus : (phase === "shortBreak" ? config.shortBreak : config.longBreak);
+          engine.start(duration * 60 * 1000);
+        }, 2000);
+      }
+
+      function updateSettingsDisabledState(disabled: boolean) {
+        document.querySelectorAll(".compact-chip").forEach(btn => {
+          (btn as HTMLButtonElement).disabled = disabled;
+        });
+      }
+
+      // Settings binding
+      ["focus", "shortBreak", "longBreak", "longBreakEvery"].forEach(setting => {
+        const row = document.querySelector(`[data-setting="${setting}"]`);
+        if (!row) return;
+        
+        // update initial aria-pressed based on config
+        row.querySelectorAll(".compact-chip").forEach(btn => {
+          const val = parseInt((btn as HTMLElement).dataset.val || "0", 10);
+          btn.setAttribute("aria-pressed", (val === (config as any)[setting]).toString());
+          
+          btn.addEventListener("click", () => {
+            if (engine.getState() !== "idle") return; // blocked if not idle
+            
+            row.querySelectorAll(".compact-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
+            btn.setAttribute("aria-pressed", "true");
+            (config as any)[setting] = val;
+
+            // update URL
+            const url = new URL(window.location.href);
+            if (setting === "shortBreak") url.searchParams.set("break", val.toString());
+            else url.searchParams.set(setting, val.toString());
+            window.history.replaceState(null, "", url.toString());
+
+            // instantly reflect in UI if idle
+            if (engine.getState() === "idle") {
+               updateUIForIdle();
+            }
+          });
+        });
+      });
+
+      startBtn.addEventListener("click", () => {
+        alarm.unlock();
+        if (transitionTimeout) clearTimeout(transitionTimeout);
+        let duration = phase === "focus" ? config.focus : (phase === "shortBreak" ? config.shortBreak : config.longBreak);
+        engine.start(duration * 60 * 1000);
+      });
+
+      pauseBtn.addEventListener("click", () => engine.pause());
+      resumeBtn.addEventListener("click", () => engine.resume());
+      
+      resetBtn.addEventListener("click", () => {
+        if (transitionTimeout) clearTimeout(transitionTimeout);
+        engine.clear();
+        phase = "focus";
+        completedFocusSessions = 0;
+        resetBtn.disabled = true;
+        document.title = originalTitle;
+        
+        cancelSpeech();
+        spokenEvents.clear();
+
+        updateUIForIdle();
+      });
+
+      function handleFullscreenChange() {
+        const isFull = Boolean(document.fullscreenElement);
+        if (isFull) {
+          studyStage.dataset.fullscreen = "true";
+        } else {
+          studyStage.removeAttribute("data-fullscreen");
+          try {
+            screen.orientation?.unlock?.();
+          } catch {}
+        }
+        fullscreenBtn.textContent = isFull ? "Exit" : "Fullscreen";
+        fullscreenBtn.setAttribute("aria-label", isFull ? "Exit fullscreen" : "Enter fullscreen");
+      }
+
+      fullscreenBtn.addEventListener("click", async () => {
+        if (document.fullscreenElement) {
+          await exitFullscreen();
+        } else {
+          await toggleFullscreen(studyStage);
+        }
+      });
+
+      document.addEventListener("fullscreenchange", handleFullscreenChange);
+      handleFullscreenChange();
+
+      engine.addEventListener("tick", (e: any) => {
+        const tick = e.detail as TickDetail;
+        timerDisplay.textContent = formatHms(tick.remainingMs);
+        progressFill.style.width = `${tick.progress * 100}%`;
+        if (engine.getState() === "running") {
+           document.title = formatTabTitle(tick.remainingMs, "Pomodoro");
+        }
+      });
+
+      engine.addEventListener("state", (e: any) => {
+        const state = (e.detail as StateDetail).state;
+        
+        resetBtn.disabled = (state === "idle");
+        updateSettingsDisabledState(state !== "idle");
+
+        if (state === "running") {
+          startBtn.style.display = "none";
+          pauseBtn.style.display = "block";
+          resumeBtn.style.display = "none";
+          if (phase === "focus") {
+            detailText.textContent = "Focusing...";
+            if (voiceEnabled) {
+              const currentSession = completedFocusSessions + 1;
+              const key = `focus-start-${currentSession}`;
+              if (!spokenEvents.has(key)) {
+                speakTimerMessage(`Session ${currentSession} started.`);
+                spokenEvents.add(key);
+              }
+            }
+          } else {
+            detailText.textContent = "On Break";
+          }
+        } else if (state === "paused") {
+          startBtn.style.display = "none";
+          pauseBtn.style.display = "none";
+          resumeBtn.style.display = "block";
+          detailText.textContent = "Paused";
+          document.title = "Paused · Pomodoro";
+        }
+      });
+
+      engine.addEventListener("finish", () => {
+        alarm.play();
+        
+        if (voiceEnabled) {
+          if (phase === "focus") {
+            const currentSession = completedFocusSessions + 1;
+            speakTimerMessage(`${getOrdinal(currentSession)} session completed.`);
+
+            // In our infinite repeating model, longBreakEvery acts as the end of a cycle.
+            if (currentSession === config.longBreakEvery) {
+              speakTimerMessage("You successfully completed all the sessions.");
+            } else {
+              speakTimerMessage(`${config.shortBreak} minutes break started.`);
+            }
+          } else {
+            speakTimerMessage("Break ended.");
+          }
+        }
+
+        applyPhaseTransition();
+      });
+
+      // Init
+      updateUIForIdle();
+
+      window.addEventListener("pagehide", () => {
+        engine.destroy();
+        void exitFullscreen();
+        document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      });
+    });
+  </script>
+</Layout>

@@ -1,0 +1,1388 @@
+{
+  "generatedAt": "2026-06-24T05:07:26.942Z",
+  "base": "http://127.0.0.1:4322",
+  "competitor": "https://groupstudytimer.in/",
+  "screenshots": [
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-home-desktop.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-planner-desktop.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-stats-desktop.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-exam-desktop.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-home-mobile.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-planner-mobile.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\our-exam-mobile.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\competitor-home-desktop.png",
+    "C:\\studytimeronline.com\\.codex\\phase10-screenshots\\competitor-home-mobile.png"
+  ],
+  "checks": [
+    {
+      "name": "Our homepage first viewport has study positioning",
+      "pass": true,
+      "detail": {
+        "h1": [
+          "A calm study timer for focused students."
+        ]
+      }
+    },
+    {
+      "name": "Our homepage includes a usable timer before scroll",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "Our homepage SEO metadata is complete",
+      "pass": true,
+      "detail": {
+        "title": "Study Timer Online",
+        "description": "A calm study timer for focused students. Start a focused block, plan today's study, and keep progress local-first.",
+        "canonical": "https://studytimeronline.com/",
+        "ogImage": "https://studytimeronline.com/assets/phase-8/cinematic-study-hero.jpg",
+        "twitterCard": "summary_large_image"
+      }
+    },
+    {
+      "name": "Our homepage images avoid CLS",
+      "pass": true,
+      "detail": [
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/cinematic-study-hero.jpg",
+          "alt": "",
+          "width": "1807",
+          "height": "870",
+          "loading": "eager",
+          "complete": true,
+          "naturalWidth": 1807,
+          "naturalHeight": 870
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/app-mockup-overview.png",
+          "alt": "Study Timer Online live focus timer with a Today Studio preview",
+          "width": "652",
+          "height": "638",
+          "loading": "eager",
+          "complete": true,
+          "naturalWidth": 652,
+          "naturalHeight": 638
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/app-mockup-overview.png",
+          "alt": "Study Timer Online app overview with focus timer and study preview",
+          "width": "652",
+          "height": "638",
+          "loading": "lazy",
+          "complete": true,
+          "naturalWidth": 652,
+          "naturalHeight": 638
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/timer-cockpit-preview.png",
+          "alt": "Study Timer Online focus cockpit with a large calm timer and session controls",
+          "width": "724",
+          "height": "762",
+          "loading": "lazy",
+          "complete": true,
+          "naturalWidth": 724,
+          "naturalHeight": 762
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/planner-preview.png",
+          "alt": "Study Timer Online planner preview with today's study queue and add task panel",
+          "width": "1152",
+          "height": "638",
+          "loading": "lazy",
+          "complete": true,
+          "naturalWidth": 1152,
+          "naturalHeight": 638
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/stats-preview.png",
+          "alt": "Study Timer Online stats preview with weekly rhythm, subject focus, and local session history",
+          "width": "1200",
+          "height": "2210",
+          "loading": "lazy",
+          "complete": true,
+          "naturalWidth": 1200,
+          "naturalHeight": 2210
+        },
+        {
+          "src": "http://127.0.0.1:4322/assets/phase-8/screenshots/exam-mode-preview.png",
+          "alt": "Study Timer Online exam mode preview with a large exam clock, warning markers, and section timeline",
+          "width": "718",
+          "height": "965",
+          "loading": "lazy",
+          "complete": true,
+          "naturalWidth": 718,
+          "naturalHeight": 965
+        }
+      ]
+    },
+    {
+      "name": "Our timer starts from homepage without account wall",
+      "pass": true,
+      "detail": {
+        "beforeTimer": "25:00",
+        "afterTimer": "24:58",
+        "status": "Study session running."
+      }
+    },
+    {
+      "name": "Route / has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Study Timer Online",
+        "description": "A calm study timer for focused students. Start a focused block, plan today's study, and keep progress local-first.",
+        "canonical": "https://studytimeronline.com/"
+      }
+    },
+    {
+      "name": "Route / has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route / has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nTODAY\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nstudy command center\n\nA calm study timer "
+      }
+    },
+    {
+      "name": "Route / visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "25 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "45 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "60 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "90 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Start Focus",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Pause",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reset",
+          "ariaLabel": "",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route / visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "home-study-intention",
+          "id": "home-study-task",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "home-study-minutes",
+          "id": "home-study-min",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /today has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Today | Study Timer Online",
+        "description": "Plan today's study, begin a focused timer, and review calm progress from one private, local-first dashboard.",
+        "canonical": "https://studytimeronline.com/today"
+      }
+    },
+    {
+      "name": "Route /today has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /today has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nTODAY\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ntoday · wednesday, june 24\n\nWhat will you"
+      }
+    },
+    {
+      "name": "Route /today visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "25 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "45 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "60 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "90 min",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Start Focus",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Pause",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reset",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Fullscreen",
+          "ariaLabel": "",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /today visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "study-intention",
+          "id": "today-study-task",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "study-minutes",
+          "id": "today-study-min",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /study-timer has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Study Timer | Study Timer Online",
+        "description": "A luxury multi-mode study timer with Count Up, Countdown, Pomodoro, Exam Practice, session notes, fullscreen focus, and calm completion summaries.",
+        "canonical": "https://studytimeronline.com/study-timer"
+      }
+    },
+    {
+      "name": "Route /study-timer has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /study-timer has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nSTUDY TIMER\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nflagship study cockpit\n\nFocus start"
+      }
+    },
+    {
+      "name": "Route /study-timer visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "01 Count Up Open-ended study",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "02 Countdown Focused time block",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "03 Pomodoro Focus, then break",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "04 Exam Practice Timed paper simulation",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Start Focus",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Pause",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Finish",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reset",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Focus Fullscreen",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "25",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "45",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "60",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "90",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Start Another Session",
+          "ariaLabel": "",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "Route /study-timer visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "focus-intention",
+          "id": "cockpit-intention",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "duration-minutes",
+          "id": "cockpit-duration",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "textarea",
+          "type": "",
+          "name": "session-notes",
+          "id": "cockpit-notes",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /pomodoro-timer has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Pomodoro Timer | Study Timer Online",
+        "description": "A calm Pomodoro timer with focus sessions, short and long breaks, tasks, ambient sound, and shareable setup links.",
+        "canonical": "https://studytimeronline.com/pomodoro-timer"
+      }
+    },
+    {
+      "name": "Route /pomodoro-timer has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /pomodoro-timer has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nPOMODORO\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\npomodoro timer\n\nFocus cycles without f"
+      }
+    },
+    {
+      "name": "Route /pomodoro-timer visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "Start Focus",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Pause",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reset",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Fullscreen",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Enable Notifications",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Copy Share Link",
+          "ariaLabel": "",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /pomodoro-timer visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "task",
+          "id": "pomo-task",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "focus-minutes",
+          "id": "focus-min",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "short-break-minutes",
+          "id": "short-min",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "long-break-minutes",
+          "id": "long-min",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "long-break-every",
+          "id": "long-every",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "select",
+          "type": "",
+          "name": "ambient",
+          "id": "ambient",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "auto-start",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "alarm",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /exam-timer has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Exam Mode | Study Timer Online",
+        "description": "A serious global exam practice timer with title, duration, start and finish times, fullscreen presentation, sections, and warning markers.",
+        "canonical": "https://studytimeronline.com/exam-timer"
+      }
+    },
+    {
+      "name": "Route /exam-timer has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /exam-timer has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nEXAM MODE\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nexam mode\n\nPractice under real exam t"
+      }
+    },
+    {
+      "name": "Route /exam-timer visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "Start Exam",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Pause",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reset",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Fullscreen",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Add Section",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reading",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Writing",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Review",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Custom",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Remove",
+          "ariaLabel": "Remove Reading",
+          "visible": true
+        },
+        {
+          "text": "Remove",
+          "ariaLabel": "Remove Writing",
+          "visible": true
+        },
+        {
+          "text": "Remove",
+          "ariaLabel": "Remove Review",
+          "visible": true
+        },
+        {
+          "text": "Enable Notifications",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Copy Share Link",
+          "ariaLabel": "",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /exam-timer visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "exam-title",
+          "id": "exam-title",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "hours",
+          "id": "exam-hours",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "minutes",
+          "id": "exam-minutes",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "section-name",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "section-minutes",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "section-name",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "section-minutes",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "section-name",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "section-minutes",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "alarm",
+          "id": "",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /study-planner has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Today Studio | Study Timer Online",
+        "description": "Plan today's study queue with subject chips, quick tasks, estimates, and one-click focus sessions.",
+        "canonical": "https://studytimeronline.com/study-planner"
+      }
+    },
+    {
+      "name": "Route /study-planner has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /study-planner has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nPLANNER\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ntoday studio\n\nWhat are you studying fir"
+      }
+    },
+    {
+      "name": "Route /study-planner visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        },
+        {
+          "text": "Review flashcards",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Practice problems",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Summarize notes",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Timed answer",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Done",
+          "ariaLabel": "Done for Review chemistry reactions",
+          "visible": true
+        },
+        {
+          "text": "Skip",
+          "ariaLabel": "Skip for Review chemistry reactions",
+          "visible": true
+        },
+        {
+          "text": "Later",
+          "ariaLabel": "Later for Review chemistry reactions",
+          "visible": true
+        },
+        {
+          "text": "Done",
+          "ariaLabel": "Done for Timed algebra practice",
+          "visible": true
+        },
+        {
+          "text": "Skip",
+          "ariaLabel": "Skip for Timed algebra practice",
+          "visible": true
+        },
+        {
+          "text": "Queue",
+          "ariaLabel": "Queue for Timed algebra practice",
+          "visible": true
+        },
+        {
+          "text": "Queue Again",
+          "ariaLabel": "Queue Again for Read literature notes",
+          "visible": true
+        },
+        {
+          "text": "Mathematics",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Science",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Reading",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Writing",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Exam Review",
+          "ariaLabel": "",
+          "visible": true
+        },
+        {
+          "text": "Add Study Task",
+          "ariaLabel": "",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /study-planner visible form controls are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "subject",
+          "id": "planner-subject",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "task",
+          "id": "planner-task",
+          "hasLabel": true,
+          "autocomplete": "off",
+          "visible": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "minutes",
+          "id": "planner-minutes",
+          "hasLabel": true,
+          "autocomplete": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "Route /study-stats has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Study Stats | Study Timer Online",
+        "description": "Review calm local study analytics: today studied time, weekly total, subject breakdown, consistency, and session history.",
+        "canonical": "https://studytimeronline.com/study-stats"
+      }
+    },
+    {
+      "name": "Route /study-stats has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /study-stats has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nSTATS\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ncalm analytics\n\nYour rhythm is forming.\n\n"
+      }
+    },
+    {
+      "name": "Route /study-stats visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "Route /study-stats visible form controls are labeled",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Route /privacy has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Privacy | Study Timer Online",
+        "description": "Privacy details for Study Timer Online, a no-account browser timer site.",
+        "canonical": "https://studytimeronline.com/privacy"
+      }
+    },
+    {
+      "name": "Route /privacy has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /privacy has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nFOCUS\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nprivacy\n\nPrivacy.\n\nStudy Timer Online is "
+      }
+    },
+    {
+      "name": "Route /privacy visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "Route /privacy visible form controls are labeled",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Route /terms has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Terms | Study Timer Online",
+        "description": "Simple terms for using Study Timer Online.",
+        "canonical": "https://studytimeronline.com/terms"
+      }
+    },
+    {
+      "name": "Route /terms has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /terms has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nFOCUS\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nterms\n\nTerms.\n\nStudy Timer Online provide"
+      }
+    },
+    {
+      "name": "Route /terms visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "Route /terms visible form controls are labeled",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Route /contact has metadata",
+      "pass": true,
+      "detail": {
+        "title": "Contact | Study Timer Online",
+        "description": "Contact Study Timer Online with feedback, bugs, and timer feature requests.",
+        "canonical": "https://studytimeronline.com/contact"
+      }
+    },
+    {
+      "name": "Route /contact has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440
+      }
+    },
+    {
+      "name": "Route /contact has no placeholder launch copy",
+      "pass": true,
+      "detail": {
+        "sample": "Skip to main content\nST\nStudy Timer Online\nFOCUS\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ncontact\n\nFeedback helps shape the timers."
+      }
+    },
+    {
+      "name": "Route /contact visible buttons are labeled",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": true
+        },
+        {
+          "text": "Menu",
+          "ariaLabel": "",
+          "visible": false
+        },
+        {
+          "text": "Switch Theme",
+          "ariaLabel": "Switch color theme",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "Route /contact visible form controls are labeled",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Planner supports useful local task queue",
+      "pass": true,
+      "detail": {
+        "excerpt": "Skip to main content\nST\nStudy Timer Online\nPLANNER\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ntoday studio\n\nWhat are you studying first?\n\nShape a short, realistic queue for today, then start the next task without turning planning into another project.\n\nStart Focus\n140\nacti"
+      }
+    },
+    {
+      "name": "Stats show local progress, subjects, history, and privacy",
+      "pass": true,
+      "detail": {
+        "excerpt": "Skip to main content\nST\nStudy Timer Online\nSTATS\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\ncalm analytics\n\nYour rhythm is forming.\n\nPrivate study signals that help you return with clarity: today, this week, subjects, and the sessions that shaped them.\n\nStart Focus\nPlan Today\nLocal-only analytics\n\nstudy rhythm\n\n4 steady days\nYour rhythm is forming. Keep the next session small, clear, and easy to begin.\n\ntoday studied time\n\nPrivate on this device\n1 hr 45 min\n\nDeep work is taking shape today.\n\nWeekly total\n3 hr 30 min\n5 calm sessions this week\nSessions\n5\nFinished focus blocks\nAverage\n42 min\nTypical session length\nConsistency\n4 steady days\nNo public scores, just rhythm.\nCurrent pace\nSettled into focus\nMost studied\nScience / 1 hr 25 min\nNext return\nRepeat the clearest subject.\n\nweekly rhythm\n\nLast 7 Days\nJun 18 - Jun 24\n0\nThu\n0\nFri\n0\nSat\n35\nSun\n40\nMon\n30\nTue\n105\nWe"
+      }
+    },
+    {
+      "name": "Exam mode has global serious timing features",
+      "pass": true,
+      "detail": {
+        "excerpt": "Skip to main content\nST\nStudy Timer Online\nEXAM MODE\nToday\nStudy Timer\nPomodoro\nExam Mode\nPlanner\nStats\nTheme\nStart Focus\n\nexam mode\n\nPractice under real exam timing.\n\nSet the paper, divide it into sections, and keep start, finish, and warning markers visible without clutter.\n\nGLOBAL PRACTICE TIMER\n02:00:00\nReading\nWriting\nReview\n\npractice paper\n\nPractice Paper\nSection 1 of 3 - Reading\nReady\n0% complete\nCurrent section: Reading\n2 hr practice\n02:00:00\n\nReady. Set the paper and sections, then start.\n\nCurrent time\n10:07:54 AM\nStart time\n--\nFinish time\n12:07:54 PM\nHalfway\n01:00:00\n15 min left\n00:15:00\n5 min left\n00:05:00\n\nsection timeline\n\nReading, Writing, Review\n2 hr planned / matches timer\nReading\n30 min\nWriting\n1 hr 15 min\nReview\n15 min\nStart Exam\nPause\nReset\nFullscreen\n\nsession setup\n\nExam Settings\nExam Title\nHours\nMinutes\nCurrent\n10:07:54 AM\nStart\n--\nFinish\n12:07:54 PM\n\nsections\n\nPaper"
+      }
+    },
+    {
+      "name": "Our mobile home has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 390,
+        "viewportWidth": 390
+      }
+    },
+    {
+      "name": "Our mobile bottom action bar is present",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "Our mobile drawer opens with primary nav and CTA",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "Planner mobile has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 390,
+        "viewportWidth": 390
+      }
+    },
+    {
+      "name": "Exam mobile has no horizontal overflow",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 390,
+        "viewportWidth": 390
+      }
+    },
+    {
+      "name": "Competitor inspected for side-by-side baseline",
+      "pass": true,
+      "detail": {
+        "h1": [
+          "Free Online Study Timer for Students"
+        ],
+        "mentions": {
+          "leaderboards": true,
+          "aiAnalytics": true,
+          "antiCheat": true,
+          "signIn": true,
+          "indiaSpecific": true
+        }
+      }
+    },
+    {
+      "name": "Competitor start flow is account/marketing gated",
+      "pass": true,
+      "detail": {
+        "excerpt": "⏱ Group Study Timer\nStart Free\n✦ FREE STUDY TIMER & POMODORO\nFree Online Study Timer for Students\nBest Group Study Timer for Students\n\nThe best study timer, online study timer, and study timer for PC for students. Track study hours, build streaks, and compete using our group study timer. 100% free. No downloads. No premium locks.\n\nStart Free Timer →\nTry Demo\n1,000+\nACTIVE STUDENTS\n50,000+\nHOURS TRACKED\n100+\nCOUNTRIES\n1,000+\nSTUDY GROUPS\n4.9★\nUSER RATING\n1,000+\nACTIVE STUDENTS\n50,000+\nHOURS TRACK"
+      }
+    },
+    {
+      "name": "Competitor mobile inspected for comparison",
+      "pass": true,
+      "detail": {
+        "h1": [
+          "Free Online Study Timer for Students"
+        ],
+        "timing": {
+          "domContentLoaded": 967,
+          "load": 2574,
+          "resources": 19,
+          "transferSize": 1609180
+        }
+      }
+    },
+    {
+      "name": "Sitemap is served by production preview",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "sample": "This XML file does not appear to have any style information associated with it. The document tree is shown below.\n\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<sitemap>\n<loc>htt"
+      }
+    },
+    {
+      "name": "Robots file is served and references sitemap",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "sample": "User-agent: *\nAllow: /\n\nSitemap: https://studytimeronline.com/sitemap-index.xml"
+      }
+    }
+  ],
+  "comparison": {
+    "ourHome": {
+      "h1": [
+        "A calm study timer for focused students."
+      ],
+      "navLinks": [
+        "Today",
+        "Study Timer",
+        "Pomodoro",
+        "Exam Mode",
+        "Planner",
+        "Stats",
+        "Today Open the study dashboard for the next focused block.",
+        "Study Timer Start a calm timed study block with a clear intention.",
+        "Pomodoro Run focus and break cycles with task context.",
+        "Exam Mode Practice timed exams with sections, markers, and presentation view.",
+        "Planner Shape today's study queue before starting a focused block.",
+        "Stats Review calm study progress and consistency signals.",
+        "Start Focus",
+        "Today",
+        "Focus",
+        "Plan",
+        "Stats",
+        "Privacy",
+        "Terms",
+        "Contact"
+      ],
+      "timing": {
+        "domContentLoaded": 42,
+        "load": 45,
+        "resources": 17,
+        "transferSize": 5100
+      }
+    },
+    "competitorHome": {
+      "h1": [
+        "Free Online Study Timer for Students"
+      ],
+      "navLinks": [
+        "⏱ Group Study Timer",
+        "Demo"
+      ],
+      "timing": {
+        "domContentLoaded": 1492,
+        "load": 3296,
+        "resources": 17,
+        "transferSize": 1609180
+      },
+      "mentions": {
+        "leaderboards": true,
+        "aiAnalytics": true,
+        "antiCheat": true,
+        "signIn": true,
+        "indiaSpecific": true
+      }
+    },
+    "verdict": {
+      "firstImpression": "Our first viewport opens with a working study timer and clear Start Focus / Plan Today actions; competitor opens as feature-heavy marketing.",
+      "startSpeed": "Our timer starts immediately in-browser; competitor Start Free exposes an account/sign-in gate before the timer.",
+      "structure": "Our primary IA is Today, Study Timer, Pomodoro, Exam Mode, Planner, Stats; competitor mixes timer, groups, AI, leaderboards, anti-cheat, and pricing proof in one long page.",
+      "privacy": "Our core progress is local-first with no sign-up; competitor promises cloud saving, sign-in, groups, AI analysis, rankings, and anti-cheat."
+    }
+  }
+}

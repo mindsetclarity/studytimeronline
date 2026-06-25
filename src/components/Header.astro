@@ -1,0 +1,54 @@
+---
+import { BRAND } from "../lib/brand";
+import { NAV_LINKS, isCurrent } from "../lib/navigation";
+
+const pathname = Astro.url.pathname;
+const normalize = (path: string) => (path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path);
+const normalizedPathname = normalize(pathname);
+const activeLink = NAV_LINKS.find((link) => isCurrent(pathname, link.href));
+const isHome = isCurrent(pathname, "/");
+const PAGE_LABELS: Record<string, string> = {
+  "/study-planner": "Planner",
+  "/study-stats": "Stats",
+  "/privacy": "Privacy",
+  "/terms": "Terms",
+  "/contact": "Contact",
+};
+const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Study";
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-header__inner">
+    <div class="site-header__left">
+      {!isHome && (
+        <a class="site-back-link" href="/" aria-label="Go back" data-back-link>
+          <span aria-hidden="true">&larr;</span>
+        </a>
+      )}
+  
+      <a class="brand-mark" href="/" aria-label={`${BRAND} home`} translate="no">
+        <span class="brand-mark__glyph" aria-hidden="true">ST</span>
+        <span class="brand-mark__text">
+          <strong>{BRAND}</strong>
+          <span>{activeLabel}</span>
+        </span>
+      </a>
+    </div>
+
+
+    <div class="site-header__actions">
+      <button class="btn-secondary btn-sm mobile-menu-button" type="button" data-menu-button aria-controls="mobile-menu" aria-expanded="false">
+        <span class="mobile-menu-button__icon" aria-hidden="true"><span></span><span></span></span>
+        <span class="mobile-menu-button__text">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" data-mobile-menu hidden>
+    {NAV_LINKS.map((link) => (
+      <a class="mobile-menu__link" href={link.href} aria-current={isCurrent(pathname, link.href) ? "page" : undefined}>
+        <span>{link.label}</span>
+      </a>
+    ))}
+  </nav>
+</header>

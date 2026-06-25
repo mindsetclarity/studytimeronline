@@ -1,0 +1,359 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Timer"
+  description="A clean countdown timer for focused study."
+  canonicalPath="/timer"
+>
+  <style>
+    /* COMPACT TIMER OVERRIDES */
+    .timer-panel-compact {
+      background: var(--surface-glass, rgba(30, 30, 30, 0.4));
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+      border-radius: 24px;
+      padding: 32px;
+      margin: 0 auto 2rem auto;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    @media (max-width: 600px) {
+      .timer-panel-compact {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+    }
+
+    .timer-text-responsive {
+      font-size: clamp(56px, 14vw, 110px);
+      font-weight: 700;
+      line-height: 1;
+      margin: 8px 0;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 4px 32px rgba(0,0,0,0.3);
+      color: var(--text-primary, #fff);
+      transition: font-size 0.2s ease-out;
+    }
+
+    /* DYNAMIC CONTROLS - Hide disabled Start/Pause so they swap cleanly */
+    .compact-controls-wrapper button[data-start]:disabled,
+    .compact-controls-wrapper button[data-pause]:disabled {
+      display: none !important;
+    }
+
+    .compact-controls-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      width: 100%;
+    }
+
+    .compact-btn-primary {
+      height: 52px;
+      padding: 0 24px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 14px;
+      flex-grow: 1;
+      min-width: 140px;
+      max-width: 260px;
+    }
+
+    .compact-btn-secondary {
+      height: 48px;
+      padding: 0 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 12px;
+      background: transparent;
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+      color: var(--text-secondary, #aaa);
+      transition: all 0.2s ease;
+    }
+
+    .compact-btn-secondary:hover:not(:disabled) {
+      border-color: var(--text-primary, #fff);
+      color: var(--text-primary, #fff);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .compact-progress-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin: 12px 0 0 0;
+      overflow: hidden;
+    }
+
+    .compact-progress-fill {
+      height: 100%;
+      background: var(--gradient-primary, linear-gradient(to right, #4ade80, #2dd4bf));
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    /* DURATION CHIPS */
+    .duration-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .compact-chip {
+      height: 36px;
+      padding: 0 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+      color: var(--text-secondary, #999);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .compact-chip:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary, #ddd);
+    }
+
+    .compact-chip[aria-pressed="true"]:not(:disabled) {
+      background: rgba(74, 222, 128, 0.1);
+      border-color: rgba(74, 222, 128, 0.4);
+      color: #4ade80;
+    }
+
+    .compact-chip:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .compact-chip-custom {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      border: 1px solid transparent;
+      padding-right: 8px;
+      transition: all 0.2s ease;
+      height: 36px;
+    }
+    .compact-chip-custom:focus-within {
+      border-color: rgba(74, 222, 128, 0.4);
+      background: rgba(74, 222, 128, 0.1);
+    }
+    .compact-chip-custom:focus-within label {
+      color: #4ade80 !important;
+    }
+
+    /* Override Fullscreen Styles slightly to prevent breaking layout */
+    .study-timer-stage[data-fullscreen="true"] {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center !important;
+      max-width: none !important;
+      margin: 0 !important;
+      border: none !important;
+      border-radius: 0 !important;
+      background: #0a0a0a !important; /* Premium deep dark for fullscreen */
+      padding: 24px !important;
+      min-height: 100dvh !important;
+      width: 100vw !important;
+    }
+
+    /* FULLSCREEN MOBILE LANDSCAPE */
+    @media (orientation: landscape) {
+      .study-timer-stage[data-fullscreen="true"] .timer-text-responsive {
+        font-size: clamp(7rem, 18vw, 18rem) !important;
+        margin: 4px 0 !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] .compact-controls-wrapper {
+        margin-top: 12px !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] {
+        padding: 12px 24px !important;
+      }
+      .study-timer-stage[data-fullscreen="true"] .voice-toggle-wrapper {
+        top: 16px !important;
+        right: 24px !important;
+      }
+    }
+
+    /* VOICE TOGGLE */
+    .voice-toggle-wrapper {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    @media (max-width: 600px) {
+      .voice-toggle-wrapper {
+        top: 16px;
+        right: 16px;
+      }
+    }
+
+    .voice-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary, #888);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .voice-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      outline: none;
+      padding: 0;
+    }
+
+    .voice-switch:focus-visible {
+      box-shadow: 0 0 0 2px #4ade80;
+    }
+
+    .voice-switch[aria-checked="true"] {
+      background: rgba(74, 222, 128, 0.15);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .voice-switch-ball {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: var(--text-secondary, #888);
+      border-radius: 50%;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s ease;
+    }
+
+    .voice-switch[aria-checked="true"] .voice-switch-ball {
+      transform: translateX(18px);
+      background: #4ade80;
+    }
+  </style>
+
+  <section class="study-cockpit-page" data-study-cockpit data-study-fixed-mode="countdown">
+    <div class="container-page" style="padding: 2rem 1rem 4rem 1rem;">
+      
+      <header style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 1.5rem; margin-bottom: 0.25rem; font-weight: 600;">Study Timer</h1>
+      </header>
+
+      <!-- MAIN COMPACT TIMER PANEL -->
+      <section class="timer-panel-compact study-timer-stage" aria-labelledby="study-stage-title" data-study-stage data-display-card>
+        
+        <div class="voice-toggle-wrapper">
+          <span class="voice-label" id="voice-toggle-label">Voice</span>
+          <button 
+            type="button" 
+            class="voice-switch" 
+            role="switch" 
+            aria-checked="true" 
+            aria-labelledby="voice-toggle-label"
+            data-voice-toggle
+          >
+            <span class="voice-switch-ball"></span>
+          </button>
+        </div>
+
+        <div style="margin-bottom: 8px;">
+          <span class="timer-cockpit__state" data-session-state style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #4ade80; border: 1px solid currentColor; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">Ready</span>
+        </div>
+
+        <div class="study-timer-stage__clock" aria-live="polite" style="width: 100%;">
+          <div class="study-timer-stage__aura" aria-hidden="true"></div>
+          
+          <div class="timer-text-responsive timer-display timer-digits timer-digits-modern" data-timer-display>45:00</div>
+          
+          <p class="study-timer-stage__detail" data-session-detail style="color: var(--text-secondary, #888); font-size: 0.9rem; margin: 0;">45 minute study timer</p>
+          
+          <div class="compact-progress-track progress-track" data-progress-wrap aria-hidden="true">
+            <div class="compact-progress-fill progress-fill" data-progress-fill></div>
+          </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="compact-controls-wrapper" aria-label="Study timer controls">
+          <!-- Primary Actions (Swap automatically via CSS disabled states) -->
+          <button class="btn-primary compact-btn-primary" type="button" data-start>Start Timer</button>
+          <button class="btn-primary compact-btn-primary" type="button" data-pause disabled>Pause</button>
+          
+          <!-- Secondary Actions -->
+          <button class="compact-btn-secondary" type="button" data-reset disabled>Reset</button>
+          <button class="compact-btn-secondary" type="button" data-fullscreen aria-label="Enter fullscreen">Fullscreen</button>
+        </div>
+      </section>
+
+      <!-- TIME SELECTION -->
+      <div style="max-width: 520px; margin: 0 auto; text-align: center; padding: 0 1rem;" data-duration-setup>
+        <p style="font-size: 0.75rem; color: var(--text-secondary, #888); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Time</p>
+        <div class="duration-chips-row" aria-label="Select time" style="margin-top: 0;">
+          <button class="compact-chip chip" type="button" data-preset-minutes="15">15 min</button>
+          <button class="compact-chip chip" type="button" data-preset-minutes="25">25 min</button>
+          <button class="compact-chip chip" type="button" data-preset-minutes="30">30 min</button>
+          <button class="compact-chip chip" type="button" data-preset-minutes="45">45 min</button>
+          <button class="compact-chip chip" type="button" data-preset-minutes="60">60 min</button>
+          
+          <div class="compact-chip-custom">
+            <input 
+              id="cockpit-duration" 
+              name="duration-minutes" 
+              type="number" 
+              min="1" 
+              max="360"
+              value="45" 
+              data-duration 
+              aria-label="Custom time"
+              style="background: transparent; border: none; color: var(--text-primary, #fff); width: 44px; text-align: center; height: 100%; font-size: 0.85rem; font-weight: 600; padding: 0; outline: none;"
+            />
+            <label for="cockpit-duration" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary, #999); cursor: text; margin-left: -4px; transition: color 0.2s ease;">min</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLETED SESSION SUMMARY -->
+      <section class="timer-panel-compact study-session-summary" aria-labelledby="study-summary-title" data-session-summary hidden tabindex="-1" style="margin-top: 2rem;">
+        <div style="margin-bottom: 1.5rem;">
+          <p style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary, #888); letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600;">Timer Complete</p>
+          <h2 id="study-summary-title" style="font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--text-primary, #fff);">Good work. Take a short break.</h2>
+        </div>
+
+        <div class="compact-controls-wrapper" style="margin-top: 0;">
+          <button class="btn-primary compact-btn-primary" type="button" data-start-another>Start Again</button>
+          <button class="compact-btn-secondary" type="button" onclick="document.querySelector('[data-reset]')?.click()">Reset</button>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <script>
+    import "../scripts/study-cockpit";
+  </script>
+</Layout>

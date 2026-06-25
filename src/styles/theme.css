@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core Colors */
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-400: #94a3b8;
+  
+  /* Neon Accents */
+  --color-neon-purple: #a855f7;
+  --color-neon-blue: #3b82f6;
+  --color-neon-cyan: #06b6d4;
+  --color-neon-green: #22c55e;
+  
+  /* Modern Typography */
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body.modern-theme {
+    @apply bg-slate-900 text-slate-100 font-sans antialiased selection:bg-neon-purple selection:text-white transition-colors duration-300;
+  }
+  
+  .modern-theme h1, .modern-theme h2, .modern-theme h3, .modern-theme h4, .modern-theme h5, .modern-theme h6 {
+    @apply tracking-tight font-semibold text-white;
+  }
+}
+
+@layer components {
+  /* Glassmorphism primitives */
+  .glass-panel {
+    @apply bg-slate-800/60 backdrop-blur-md border border-slate-700/50 rounded-2xl shadow-xl;
+  }
+  
+  .glass-card {
+    @apply bg-slate-800/60 backdrop-blur-md border border-slate-700/50 rounded-[24px] shadow-xl p-6 transition-all duration-500 cursor-pointer overflow-hidden relative;
+  }
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .glass-card::after {
+    content: '';
+    position: absolute;
+    inset: -150%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg) translateY(-50%);
+    transition: left 0.7s ease;
+    left: -150%;
+    pointer-events: none;
+  }
+  .glass-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.4);
+  }
+  .glass-card:hover::before {
+    opacity: 1;
+  }
+  .glass-card:hover::after {
+    left: 150%;
+  }
+
+  /* Modern Buttons */
+  .btn-modern-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-neon-purple to-neon-blue text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-neon-purple/25 cursor-pointer;
+  }
+  
+  .btn-modern-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 text-slate-200 font-medium rounded-full border border-slate-700 transition-all duration-300 hover:bg-slate-700 hover:text-white active:scale-[0.98] cursor-pointer;
+  }
+
+  /* Timer Display */
+  .timer-digits-modern {
+    @apply font-mono text-[clamp(4rem,10vw,8rem)] leading-none font-bold tracking-tighter tabular-nums bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400;
+  }
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px theme('colors.neon-purple')); }
+  50% { opacity: 0.8; filter: drop-shadow(0 0 2px theme('colors.neon-purple')); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ═══════════ BACKGROUND SYSTEM ═══════════ */
+.svg-bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4) 0%, transparent 100%);
+}
+
+.svg-bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+  mask-image: radial-gradient(circle at 50% 50%, black 10%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 10%, transparent 80%);
+  pointer-events: none;
+}
+
+.float-icon {
+  position: absolute;
+  will-change: transform;
+  opacity: 0.12;
+  color: #8b5cf6;
+  filter: drop-shadow(0 0 15px currentColor);
+}
+
+.float-icon svg { width: 100%; height: 100%; }
+
+.fi-1 { width: 140px; left: 10%; bottom: -20%; animation: floatUp 15s linear infinite -5s; color: #8b5cf6; }
+.fi-2 { width: 220px; left: 35%; bottom: -30%; animation: floatUp 22s linear infinite -12s; color: #06b6d4; }
+.fi-3 { width: 100px; right: 20%; bottom: -15%; animation: floatUp 18s linear infinite -2s; color: #a855f7; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-130vh) rotate(360deg); }
+}
+
+/* Immersive Focus Mode */
+body {
+  transition: background-color 0.8s ease;
+}
+
+body.is-focusing {
+  @apply bg-black;
+}
+
+body.is-focusing .site-header,
+body.is-focusing .site-footer,
+body.is-focusing .study-mode-selector,
+body.is-focusing .study-cockpit-heading,
+body.is-focusing .study-session-column {
+  opacity: 0.03;
+  pointer-events: none;
+  filter: blur(4px);
+  transition: opacity 1.5s ease, filter 1.5s ease;
+}
+
+.site-header, .site-footer, .study-mode-selector, .study-cockpit-heading, .study-session-column {
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+body.is-focusing .study-timer-stage__clock {
+  transform: scale(1.05);
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.study-timer-stage__clock {
+  transition: transform 0.5s ease;
+}
+
+/* ═══════════ MARQUEE ═══════════ */
+.marquee-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(2, 6, 23, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.m-track {
+  display: flex;
+  width: max-content;
+  animation: mscroll 40s linear infinite;
+}
+.m-track:hover { animation-play-state: paused; }
+
+.m-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 3rem;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.m-num {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: white;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.m-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@keyframes mscroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #a5b4fc, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

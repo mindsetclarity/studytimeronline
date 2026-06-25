@@ -52,7 +52,7 @@ export function formatHmsForced(ms: number): string {
 }
 
 /**
- * Tab title countdown — "25:00 · Tempo" while running.
+ * Tab title countdown — "25:00 · Study Timer Online" while running.
  * Restores to BRAND when stopped (caller handles restore).
  */
 export function formatTabTitle(ms: number, brand: string): string {

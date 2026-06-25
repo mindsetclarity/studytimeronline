@@ -4,7 +4,7 @@
  * quota exceeded all degrade gracefully to in-memory defaults).
  */
 
-const PREFIX = "tempo:";
+const PREFIX = "study-timer-online:";
 
 function key(name: string): string {
   return `${PREFIX}${name}`;

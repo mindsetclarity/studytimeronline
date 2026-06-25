@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Plan Today"
+  description="Choose what you need next."
+  canonicalPath="/today"
+>
+  <style>
+    .plan-dashboard {
+      padding: 4rem 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .plan-dashboard__title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-primary, #fff);
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .plan-dashboard__subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary, #aaa);
+      margin: 0 0 3rem 0;
+    }
+
+    .plan-dashboard__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .plan-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.4));
+      border: 1px solid rgba(45, 212, 191, 0.15); /* Subtle teal border */
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 140px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .plan-card:hover, .plan-card:focus-visible {
+      border-color: #2dd4bf; /* Bright teal accent */
+      background: linear-gradient(145deg, rgba(20, 30, 50, 0.8), rgba(20, 30, 50, 0.5));
+      box-shadow: 0 8px 30px rgba(45, 212, 191, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      outline: none;
+      transform: translateY(-4px);
+    }
+
+    .plan-card__title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #f8fafc; /* Crisp white */
+      margin-bottom: 8px;
+    }
+
+    .plan-card__action {
+      font-size: 0.85rem;
+      color: var(--text-secondary, #888);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .plan-dashboard {
+        padding: 2rem 1rem;
+      }
+      .plan-dashboard__grid {
+        grid-template-columns: 1fr;
+      }
+      .plan-card {
+        height: 100px;
+      }
+    }
+  </style>
+
+  <section class="plan-dashboard" aria-labelledby="plan-today-title">
+    <h1 id="plan-today-title" class="plan-dashboard__title">Plan Today</h1>
+    <p class="plan-dashboard__subtitle">Choose what you need next.</p>
+
+    <div class="plan-dashboard__grid" aria-label="Plan Today options">
+      <a class="plan-card" href="/study-planner">
+        <strong class="plan-card__title">Planner</strong>
+        <span class="plan-card__action">Edit plan</span>
+      </a>
+      <a class="plan-card" href="/study-stats">
+        <strong class="plan-card__title">Stats</strong>
+        <span class="plan-card__action">View progress</span>
+      </a>
+    </div>
+  </section>
+</Layout>

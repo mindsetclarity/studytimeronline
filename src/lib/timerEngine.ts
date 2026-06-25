@@ -1,5 +1,5 @@
 /**
- * Tempo — accurate countdown timer engine.
+ * Study Timer Online - accurate countdown timer engine.
  *
  * Anti-pattern avoided: subtracting 1s on every setInterval tick. That drifts
  * because browsers throttle background tabs to 1Hz (or worse), so a "10 min"

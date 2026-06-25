@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://tempo-timer.example',
+  site: 'https://studytimeronline.com',
   adapter: vercel(),
   integrations: [sitemap()],
   vite: {

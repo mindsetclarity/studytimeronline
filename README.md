@@ -1,46 +1,23 @@
-# Astro Starter Kit: Basics
+# Study Timer Online
+
+A static Astro and Tailwind 4 website for a premium study command center: Study Timer, Pomodoro, Exam Timer, Focus Session, Study Planner, and Study Stats.
+
+## Scripts
 
 ```sh
-npm create astro@latest -- --template basics
+npm.cmd run dev
+npm.cmd run build
+npx.cmd astro check
+node scripts/test-timer-engine.mjs
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Use `npm.cmd` and `npx.cmd` on Windows PowerShell to avoid script execution policy issues with `.ps1` shims.
 
-## 🚀 Project Structure
+## Architecture
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/lib/` contains framework-agnostic timer engines, formatting, storage, URL state, alarm, notification, and fullscreen helpers.
+- `src/components/` contains the shared Astro app shell and reusable visual sections.
+- `src/scripts/` contains small page-specific browser modules bundled by Astro.
+- `src/pages/` contains static Astro routes for study-first product pages and secondary utility pages.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The v1 direction is static-first, no-backend, global English-first, and designed around `DESIGN.md`: ink/canvas surfaces, restrained shadows, premium typography, visible controls, and accessible study workflows. The main product is no longer a generic timer collection; it is a calm study timer for focused students.

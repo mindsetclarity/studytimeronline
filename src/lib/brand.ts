@@ -1,17 +1,11 @@
-/**
- * Brand config — single source of truth for the site name.
- * Change BRAND here and it propagates everywhere.
- *
- * Current working name: "Tempo". Swap to "Cadence" or "Steady" by editing one line.
- */
-export const BRAND = "Tempo";
+/** Brand config - single source of truth for the site name and domain. */
+export const BRAND = "Study Timer Online";
 
 /** Short tagline shown under the logo / in hero. */
-export const TAGLINE = "Time, beautifully kept.";
+export const TAGLINE = "A calm study timer for focused students.";
 
 /** Default meta description (overridable per-page). */
 export const DEFAULT_DESCRIPTION =
-  "A premium online countdown timer, Pomodoro timer, exam timer, flip clock, and study timer. Focus, study, take exams, and count down to events — no sign-up, works on every device.";
+  "A calm online study timer for focused students, self-learners, exam preparation, and remote study groups. Plan a study session, focus with Pomodoro or exam mode, and review progress without sign-up.";
 
-/** Domain placeholder — update once the real domain is decided. */
-export const SITE_URL = "https://tempo-timer.example";
+export const SITE_URL = "https://studytimeronline.com";

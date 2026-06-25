@@ -1,16 +1,39 @@
 ---
-import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+import { BRAND } from "../lib/brand";
+
+const description =
+  "A calm study timer for focused students. Start a focused block, plan today's study, and keep progress local-first.";
 ---
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Tempo</title>
-	</head>
-	<body>
-		<main class="container-page py-spacing-5xl">
-			<h1 class="heading-display">Foundation ready.</h1>
-		</main>
-	</body>
-</html>
+
+<Layout title={BRAND} description={description} canonicalPath="/">
+  <section class="home-focus-hero home-focus-hero--sunset" data-home-first-impression>
+    <img
+      class="home-focus-hero__image"
+      src="/assets/phase-8/sunset-focus-hero.png"
+      alt=""
+      width="1829"
+      height="856"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      aria-hidden="true"
+    />
+    <div class="container-page home-focus-hero__grid">
+      <div class="home-focus-hero__copy">
+        <p class="eyebrow">golden-hour focus</p>
+        <h1>Study in a calmer rhythm.</h1>
+        <p>Choose one task, start a focused block, and let the noise fade out.</p>
+        <div class="home-focus-hero__actions" aria-label="Primary study actions">
+          <a class="btn-primary home-focus-hero__primary" href="/timer">Start Focus</a>
+          <a class="btn-secondary home-focus-hero__secondary" href="/today">Plan Today</a>
+        </div>
+        <ul class="home-focus-hero__proof" aria-label="Study Timer Online principles">
+          <li>No login</li>
+          <li>Private progress</li>
+          <li>Mobile ready</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>
