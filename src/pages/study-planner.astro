@@ -152,16 +152,14 @@ import Layout from "../layouts/Layout.astro";
       margin-bottom: 1rem;
     }
 
-    /* Queue Task Row */
+    /* Queue Section */
     .task-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
     .task-row {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(15, 23, 42, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.03);
       padding: 12px 14px;
       border-radius: 8px;
@@ -169,7 +167,7 @@ import Layout from "../layouts/Layout.astro";
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
     .task-row:hover {
       background: rgba(15, 23, 42, 0.5);
@@ -202,7 +200,7 @@ import Layout from "../layouts/Layout.astro";
       font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -220,7 +218,7 @@ import Layout from "../layouts/Layout.astro";
       font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
     .btn-ghost:hover {
       color: #f8fafc;
@@ -273,7 +271,7 @@ import Layout from "../layouts/Layout.astro";
       font-size: 0.8rem;
       color: #94a3b8;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
     }
     .chip-compact:hover {
       background: rgba(255, 255, 255, 0.1);
@@ -294,7 +292,7 @@ import Layout from "../layouts/Layout.astro";
       cursor: pointer;
       width: 100%;
       font-size: 0.95rem;
-      transition: all 0.2s;
+      transition: opacity 0.2s, filter 0.2s;
     }
     .btn-add:hover {
       filter: brightness(1.1);

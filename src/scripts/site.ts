@@ -66,7 +66,7 @@ function setupMobileMenu(): void {
       if (button.getAttribute("aria-expanded") === "true") return;
       menu.hidden = true;
       menu.removeAttribute("data-menu-state");
-    }, prefersReducedMotion() ? 0 : 190);
+    }, 0);
   };
 
   button.addEventListener("click", () => {
@@ -169,6 +169,6 @@ setupThemeToggle();
 setupMobileMenu();
 setupBackNavigation();
 setupPageReveal();
-setupTimerDigitMotion();
-setupPressMotion();
+// setupTimerDigitMotion(); // Disabled to eliminate continuous reflow lag
+// setupPressMotion(); // Disabled for instant tap response
 setupGamificationUI();

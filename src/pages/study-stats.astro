@@ -36,7 +36,7 @@ import Layout from "../layouts/Layout.astro";
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: all 0.2s;
+      transition: background-color 0.2s, border-color 0.2s;
     }
     .btn-outline:hover {
       background: rgba(45, 212, 191, 0.1);
@@ -55,7 +55,7 @@ import Layout from "../layouts/Layout.astro";
       border-radius: 12px;
       padding: 1.25rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.02);
-      transition: all 0.3s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -72,11 +72,13 @@ import Layout from "../layouts/Layout.astro";
       letter-spacing: 0.05em;
       display: block;
       margin-bottom: 0.5rem;
+      font-weight: 600;
     }
     .stat-card strong {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #2dd4bf; /* Important numbers in teal */
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
       display: block;
       line-height: 1.2;
     }
@@ -162,7 +164,7 @@ import Layout from "../layouts/Layout.astro";
       width: 100%;
       background: #2dd4bf;
       border-radius: 4px;
-      transition: height 0.5s ease;
+      transition: none;
     }
     .weekly-bar strong {
       font-size: 0.75rem;

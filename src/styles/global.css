@@ -260,14 +260,30 @@ html, body {
   max-width: 100vw;
 }
 
+/* Eliminate 300ms tap delay and tap highlights on all interactive elements */
+button, a, input, select, textarea, [role="button"], summary, label, .card, [data-menu-button], [data-theme-toggle] {
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (max-width: 768px) {
-  /* Reduce heavy backdrop filters to improve scroll performance on mobile */
+  /* Eliminate heavy backdrop filters and animations to ensure smooth scrolling on mobile */
+  *, *::before, *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
   .site-header,
   .mobile-menu,
   .panel,
-  .stat-card {
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+  .stat-card,
+  .card,
+  .glass-panel,
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .home-focus-hero__image {
+    animation: none !important;
   }
 }
 

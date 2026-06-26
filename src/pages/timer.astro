@@ -78,7 +78,7 @@ import Layout from "../layouts/Layout.astro";
       background: transparent;
       border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
       color: var(--text-secondary, #aaa);
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
     }
 
     .compact-btn-secondary:hover:not(:disabled) {
@@ -100,7 +100,7 @@ import Layout from "../layouts/Layout.astro";
       height: 100%;
       background: var(--gradient-primary, linear-gradient(to right, #5eead4, #2dd4bf));
       width: 0%;
-      transition: width 1s linear;
+      transition: none;
     }
 
     /* DURATION CHIPS */
@@ -123,7 +123,7 @@ import Layout from "../layouts/Layout.astro";
       border: 1px solid transparent;
       color: var(--text-secondary, #999);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
     }
 
     .compact-chip:hover:not(:disabled) {
@@ -145,19 +145,38 @@ import Layout from "../layouts/Layout.astro";
     .compact-chip-custom {
       display: flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(45, 212, 191, 0.05);
       border-radius: 8px;
-      border: 1px solid transparent;
-      padding-right: 8px;
-      transition: all 0.2s ease;
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.08);
+      padding-right: 10px;
+      transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       height: 36px;
+      cursor: pointer;
     }
-    .compact-chip-custom:focus-within {
-      border-color: rgba(45, 212, 191, 0.4);
+    .compact-chip-custom:hover:not(.is-disabled) {
       background: rgba(45, 212, 191, 0.1);
+      border-color: rgba(45, 212, 191, 0.5);
     }
-    .compact-chip-custom:focus-within label {
+    .compact-chip-custom[aria-pressed="true"]:not(.is-disabled),
+    .compact-chip-custom:focus-within:not(.is-disabled) {
+      border-color: rgba(45, 212, 191, 0.75);
+      background: rgba(45, 212, 191, 0.15);
+      box-shadow: 0 0 16px rgba(45, 212, 191, 0.22);
+    }
+    .compact-chip-custom[aria-pressed="true"]:not(.is-disabled) input,
+    .compact-chip-custom:focus-within:not(.is-disabled) input {
       color: #2dd4bf !important;
+    }
+    .compact-chip-custom[aria-pressed="true"]:not(.is-disabled) label,
+    .compact-chip-custom:focus-within:not(.is-disabled) label {
+      color: #2dd4bf !important;
+    }
+    .compact-chip-custom.is-disabled,
+    .compact-chip-custom:has(input:disabled) {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     /* Override Fullscreen Styles slightly to prevent breaking layout */
@@ -320,7 +339,8 @@ import Layout from "../layouts/Layout.astro";
           <button class="compact-chip chip" type="button" data-preset-minutes="45">45 min</button>
           <button class="compact-chip chip" type="button" data-preset-minutes="60">60 min</button>
           
-          <div class="compact-chip-custom">
+          <div class="compact-chip-custom" title="Smart / random suggestion">
+            <span aria-hidden="true" style="font-size: 0.85rem; margin-left: 10px; margin-right: 2px; user-select: none;">✨</span>
             <input 
               id="cockpit-duration" 
               name="duration-minutes" 
@@ -330,7 +350,7 @@ import Layout from "../layouts/Layout.astro";
               value="45" 
               data-duration 
               aria-label="Custom time"
-              style="background: transparent; border: none; color: var(--text-primary, #fff); width: 44px; text-align: center; height: 100%; font-size: 0.85rem; font-weight: 600; padding: 0; outline: none;"
+              style="background: transparent; border: none; color: var(--text-primary, #fff); width: 44px; text-align: center; height: 100%; font-size: 0.85rem; font-weight: 600; padding: 0; outline: none; transition: color 0.2s ease;"
             />
             <label for="cockpit-duration" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary, #999); cursor: text; margin-left: -4px; transition: color 0.2s ease;">min</label>
           </div>

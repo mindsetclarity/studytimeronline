@@ -72,7 +72,7 @@ import Layout from "../layouts/Layout.astro";
       background: transparent;
       border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
       color: var(--text-secondary, #aaa);
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
     }
 
     .compact-btn-secondary:hover:not(:disabled) {
@@ -100,7 +100,7 @@ import Layout from "../layouts/Layout.astro";
       height: 100%;
       background: var(--gradient-primary, linear-gradient(to right, #5eead4, #2dd4bf));
       width: 0%;
-      transition: width 0.25s linear;
+      transition: none;
     }
 
     .study-timer-stage[data-fullscreen="true"] {
@@ -136,21 +136,27 @@ import Layout from "../layouts/Layout.astro";
       }
     }
 
+    .pomodoro-header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .pomodoro-badge-row {
+      display: flex;
+      align-items: center;
+    }
+
     /* VOICE TOGGLE */
     .voice-toggle-wrapper {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+      position: static;
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-    
-    @media (max-width: 600px) {
-      .voice-toggle-wrapper {
-        top: 16px;
-        right: 16px;
-      }
     }
 
     .voice-label {
@@ -245,7 +251,7 @@ import Layout from "../layouts/Layout.astro";
       border: 1px solid transparent;
       color: var(--text-secondary, #999);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
     }
     
     .compact-chip:hover:not(:disabled) {
@@ -286,23 +292,25 @@ import Layout from "../layouts/Layout.astro";
       <!-- MAIN COMPACT TIMER PANEL -->
       <section class="timer-panel-compact study-timer-stage" id="study-stage" aria-labelledby="study-stage-title">
         
-        <div class="voice-toggle-wrapper">
-          <span class="voice-label" id="voice-toggle-label">Voice</span>
-          <button 
-            type="button" 
-            class="voice-switch" 
-            role="switch" 
-            aria-checked="true" 
-            aria-labelledby="voice-toggle-label"
-            id="voice-toggle"
-          >
-            <span class="voice-switch-ball"></span>
-          </button>
-        </div>
+        <div class="pomodoro-header-row">
+          <div class="pomodoro-badge-row">
+            <span id="phase-badge" style="display: none !important;" aria-hidden="true"></span>
+            <span class="timer-cockpit__state" id="cycle-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); background: rgba(45, 212, 191, 0.08); padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 600;">Cycle 1 of 4</span>
+          </div>
 
-        <div style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;">
-          <span class="timer-cockpit__state" id="phase-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #2dd4bf; border: 1px solid currentColor; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">Focus</span>
-          <span class="timer-cockpit__state" id="cycle-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary, #888); padding: 0.2rem 0;">Cycle 1 of 4</span>
+          <div class="voice-toggle-wrapper">
+            <span class="voice-label" id="voice-toggle-label">Voice</span>
+            <button 
+              type="button" 
+              class="voice-switch" 
+              role="switch" 
+              aria-checked="true" 
+              aria-labelledby="voice-toggle-label"
+              id="voice-toggle"
+            >
+              <span class="voice-switch-ball"></span>
+            </button>
+          </div>
         </div>
 
         <div class="study-timer-stage__clock" aria-live="polite" style="width: 100%;">
@@ -594,12 +602,27 @@ import Layout from "../layouts/Layout.astro";
       document.addEventListener("fullscreenchange", handleFullscreenChange);
       handleFullscreenChange();
 
+      let lastFormattedTime = "";
+      let lastProgressWidth = -1;
+      let lastTitle = "";
       engine.addEventListener("tick", (e: any) => {
         const tick = e.detail as TickDetail;
-        timerDisplay.textContent = formatHms(tick.remainingMs);
-        progressFill.style.width = `${tick.progress * 100}%`;
+        const formatted = formatHms(tick.remainingMs);
+        if (formatted !== lastFormattedTime) {
+          lastFormattedTime = formatted;
+          timerDisplay.textContent = formatted;
+        }
+        const widthRounded = Math.round(tick.progress * 1000) / 10;
+        if (widthRounded !== lastProgressWidth) {
+          lastProgressWidth = widthRounded;
+          progressFill.style.width = `${widthRounded}%`;
+        }
         if (engine.getState() === "running") {
-           document.title = formatTabTitle(tick.remainingMs, "Pomodoro");
+           const nextTitle = formatTabTitle(tick.remainingMs, "Pomodoro");
+           if (nextTitle !== lastTitle) {
+             lastTitle = nextTitle;
+             document.title = nextTitle;
+           }
         }
       });
 

@@ -144,12 +144,32 @@ function setupStudyCockpit(root: HTMLElement): void {
 
   const formatForMode = (ms: number): string => mode === "countup" || mode === "exam" ? formatHmsForced(ms) : formatHms(ms);
 
+  let lastFormattedDisplay = "";
   const setDisplay = (ms: number): void => {
-    if (display) display.textContent = formatForMode(ms);
+    const formatted = formatForMode(ms);
+    if (formatted !== lastFormattedDisplay) {
+      lastFormattedDisplay = formatted;
+      if (display) display.textContent = formatted;
+    }
   };
 
+  let lastProgressWidth = -1;
   const setProgress = (progress: number): void => {
-    if (progressFill) progressFill.style.width = `${Math.max(0, Math.min(100, progress * 100))}%`;
+    const widthRounded = Math.round(Math.max(0, Math.min(100, progress * 100)) * 10) / 10;
+    if (widthRounded !== lastProgressWidth) {
+      lastProgressWidth = widthRounded;
+      if (progressFill) progressFill.style.width = `${widthRounded}%`;
+    }
+  };
+
+  let lastTabTitle = "";
+  const updateTabTitle = (ms: number): void => {
+    if (state !== "running") return;
+    const nextTitle = formatTabTitle(ms, BRAND);
+    if (nextTitle !== lastTabTitle) {
+      lastTabTitle = nextTitle;
+      document.title = nextTitle;
+    }
   };
 
   const updateIntentionLabel = (): void => {
@@ -189,6 +209,10 @@ function setupStudyCockpit(root: HTMLElement): void {
     });
     if (durationInput) durationInput.disabled = locked || mode === "countup";
     if (intentionInput) intentionInput.disabled = locked;
+    const customChip = qs<HTMLElement>(root, ".compact-chip-custom");
+    if (customChip) {
+      customChip.classList.toggle("is-disabled", locked || mode === "countup");
+    }
   };
 
   const modeDetail = (): string => {
@@ -201,9 +225,16 @@ function setupStudyCockpit(root: HTMLElement): void {
 
   const updatePresetState = (): void => {
     const minutes = durationMinutes();
+    let anyPresetMatched = false;
     qsa<HTMLButtonElement>(root, "[data-preset-minutes]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(Number(button.dataset.presetMinutes) === minutes));
+      const isMatch = Number(button.dataset.presetMinutes) === minutes;
+      if (isMatch) anyPresetMatched = true;
+      button.setAttribute("aria-pressed", String(isMatch));
     });
+    const customChip = qs<HTMLElement>(root, ".compact-chip-custom");
+    if (customChip) {
+      customChip.setAttribute("aria-pressed", String(!anyPresetMatched));
+    }
   };
 
   const renderIdle = (): void => {
@@ -363,9 +394,18 @@ function setupStudyCockpit(root: HTMLElement): void {
     });
   });
 
+  const customChip = qs<HTMLElement>(root, ".compact-chip-custom");
+  customChip?.addEventListener("click", (e) => {
+    if (state !== "idle" || mode === "countup") return;
+    if (e.target !== durationInput) {
+      durationInput?.focus();
+      durationInput?.select();
+    }
+  });
+
   intentionInput?.addEventListener("input", updateIntentionLabel);
   intentionInput?.addEventListener("change", saveDraft);
-  notesInput?.addEventListener("input", () => write("studyCockpitDraftNotes", notesInput.value));
+  notesInput?.addEventListener("change", () => write("studyCockpitDraftNotes", notesInput.value));
   durationInput?.addEventListener("input", () => {
     if (state !== "idle") return;
     renderIdle();
@@ -454,7 +494,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     const tick = (event as CustomEvent<TickDetail>).detail;
     setDisplay(tick.remainingMs);
     setProgress(tick.progress);
-    if (state === "running") document.title = formatTabTitle(tick.remainingMs, BRAND);
+    updateTabTitle(tick.remainingMs);
 
     if (voiceEnabled && state === "running") {
       const elapsedSeconds = Math.floor((countdown.getTotalMs() - tick.remainingMs) / 1000);
@@ -491,7 +531,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     if (mode !== "countup") return;
     const elapsed = stopwatch.getElapsedMs();
     setDisplay(elapsed);
-    if (state === "running") document.title = formatTabTitle(elapsed, BRAND);
+    updateTabTitle(elapsed);
   });
 
   stopwatch.addEventListener("state", () => {
