@@ -269,6 +269,29 @@ import Layout from "../layouts/Layout.astro";
       opacity: 0.3;
       cursor: not-allowed;
     }
+    
+    .compact-chip-custom {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(45, 212, 191, 0.05);
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.08);
+      color: var(--text-primary, #fff);
+    }
+    
+    .compact-chip-custom:hover:not(:disabled) {
+      background: rgba(45, 212, 191, 0.1);
+      border-color: rgba(45, 212, 191, 0.5);
+      color: #fff;
+    }
+    
+    .compact-chip-custom[aria-pressed="true"]:not(:disabled) {
+      background: rgba(45, 212, 191, 0.15);
+      border-color: rgba(45, 212, 191, 0.75);
+      box-shadow: 0 0 16px rgba(45, 212, 191, 0.22);
+      color: #2dd4bf;
+    }
 
     @media (max-width: 600px) {
       .setting-row {
@@ -346,6 +369,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="25" aria-pressed="true">25</button>
               <button class="compact-chip chip" data-val="30">30</button>
               <button class="compact-chip chip" data-val="45">45</button>
+              <button class="compact-chip chip compact-chip-custom" data-val="28" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 28 min</button>
             </div>
           </div>
           <div class="setting-row">
@@ -354,6 +378,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="5" aria-pressed="true">5</button>
               <button class="compact-chip chip" data-val="10">10</button>
               <button class="compact-chip chip" data-val="15">15</button>
+              <button class="compact-chip chip compact-chip-custom" data-val="7" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 7 min</button>
             </div>
           </div>
           <div class="setting-row">
@@ -362,6 +387,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="15" aria-pressed="true">15</button>
               <button class="compact-chip chip" data-val="20">20</button>
               <button class="compact-chip chip" data-val="30">30</button>
+              <button class="compact-chip chip compact-chip-custom" data-val="18" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 18 min</button>
             </div>
           </div>
           <div class="setting-row">
@@ -386,7 +412,7 @@ import Layout from "../layouts/Layout.astro";
     import { toggleFullscreen, isFullscreen, exitFullscreen } from "../lib/fullscreen";
     import { BRAND } from "../lib/brand";
     import { showNotification } from "../lib/notification";
-    import { cancelSpeech, isVoiceSupported, speakTimerMessage } from "../lib/voice";
+    import { cancelSpeech, isVoiceEnabled, isVoiceSupported, setVoiceEnabled, speakTimerMessage } from "../lib/voice";
     import { read, write } from "../lib/storage";
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -407,7 +433,7 @@ import Layout from "../layouts/Layout.astro";
       const studyStage = document.getElementById("study-stage")!;
 
       const voiceToggle = document.getElementById("voice-toggle") as HTMLButtonElement;
-      let voiceEnabled = read<boolean>("studyCockpitVoice", true);
+      let voiceEnabled = isVoiceEnabled();
       const spokenEvents = new Set<string>();
 
       if (voiceToggle && !isVoiceSupported()) {
@@ -416,9 +442,8 @@ import Layout from "../layouts/Layout.astro";
         voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
         voiceToggle.addEventListener("click", () => {
           voiceEnabled = !voiceEnabled;
-          write("studyCockpitVoice", voiceEnabled);
+          setVoiceEnabled(voiceEnabled);
           voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
-          if (!voiceEnabled) cancelSpeech();
         });
       }
 
@@ -522,6 +547,39 @@ import Layout from "../layouts/Layout.astro";
         });
       }
 
+      function getRandomSafeVal(min: number, max: number, exclude: number[]): number {
+        let val = min;
+        let attempts = 0;
+        do {
+          val = Math.floor(Math.random() * (max - min + 1)) + min;
+          attempts++;
+        } while (exclude.includes(val) && attempts < 50);
+        return val;
+      }
+
+      const randomConfigs: Record<string, { min: number; max: number; presets: number[] }> = {
+        focus: { min: 20, max: 60, presets: [15, 25, 30, 45] },
+        shortBreak: { min: 3, max: 15, presets: [5, 10, 15] },
+        longBreak: { min: 10, max: 30, presets: [15, 20, 30] }
+      };
+
+      Object.keys(randomConfigs).forEach(setting => {
+        const row = document.querySelector(`[data-setting="${setting}"]`);
+        const customBtn = row?.querySelector(".compact-chip-custom") as HTMLElement | null;
+        if (!customBtn) return;
+
+        const currentVal = (config as any)[setting];
+        const { min, max, presets } = randomConfigs[setting];
+
+        let valToUse = currentVal;
+        if (presets.includes(currentVal)) {
+          valToUse = getRandomSafeVal(min, max, presets);
+        }
+
+        customBtn.dataset.val = valToUse.toString();
+        customBtn.innerHTML = `<span aria-hidden="true" style="user-select: none;">✨</span> ${valToUse} min`;
+      });
+
       // Settings binding
       ["focus", "shortBreak", "longBreak", "longBreakEvery"].forEach(setting => {
         const row = document.querySelector(`[data-setting="${setting}"]`);
@@ -529,12 +587,22 @@ import Layout from "../layouts/Layout.astro";
         
         // update initial aria-pressed based on config
         row.querySelectorAll(".compact-chip").forEach(btn => {
-          const val = parseInt((btn as HTMLElement).dataset.val || "0", 10);
-          btn.setAttribute("aria-pressed", (val === (config as any)[setting]).toString());
+          const initialVal = parseInt((btn as HTMLElement).dataset.val || "0", 10);
+          btn.setAttribute("aria-pressed", (initialVal === (config as any)[setting]).toString());
           
           btn.addEventListener("click", () => {
             if (engine.getState() !== "idle") return; // blocked if not idle
             
+            const wasPressed = btn.getAttribute("aria-pressed") === "true";
+            let val = parseInt((btn as HTMLElement).dataset.val || "0", 10);
+
+            if (btn.classList.contains("compact-chip-custom") && wasPressed && randomConfigs[setting]) {
+              const { min, max, presets } = randomConfigs[setting];
+              val = getRandomSafeVal(min, max, [...presets, val]);
+              (btn as HTMLElement).dataset.val = val.toString();
+              btn.innerHTML = `<span aria-hidden="true" style="user-select: none;">✨</span> ${val} min`;
+            }
+
             row.querySelectorAll(".compact-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
             btn.setAttribute("aria-pressed", "true");
             (config as any)[setting] = val;
@@ -638,13 +706,11 @@ import Layout from "../layouts/Layout.astro";
           resumeBtn.style.display = "none";
           if (phase === "focus") {
             detailText.textContent = "Focusing...";
-            if (voiceEnabled) {
-              const currentSession = completedFocusSessions + 1;
-              const key = `focus-start-${currentSession}`;
-              if (!spokenEvents.has(key)) {
-                speakTimerMessage(`Session ${currentSession} started.`);
-                spokenEvents.add(key);
-              }
+            const currentSession = completedFocusSessions + 1;
+            const key = `pomodoro-session-${currentSession}-started`;
+            if (!spokenEvents.has(key)) {
+              spokenEvents.add(key);
+              speakTimerMessage(`Session ${currentSession} started.`);
             }
           } else {
             detailText.textContent = "On Break";
@@ -661,19 +727,29 @@ import Layout from "../layouts/Layout.astro";
       engine.addEventListener("finish", () => {
         alarm.play();
         
-        if (voiceEnabled) {
-          if (phase === "focus") {
-            const currentSession = completedFocusSessions + 1;
-            speakTimerMessage(`${getOrdinal(currentSession)} session completed.`);
-
-            // In our infinite repeating model, longBreakEvery acts as the end of a cycle.
+        if (phase === "focus") {
+          const currentSession = completedFocusSessions + 1;
+          const compKey = `pomodoro-session-${currentSession}-completed`;
+          if (!spokenEvents.has(compKey)) {
+            spokenEvents.add(compKey);
             if (currentSession === config.longBreakEvery) {
-              speakTimerMessage("You successfully completed all the sessions.");
+              spokenEvents.add("pomodoro-all-completed");
+              speakTimerMessage(`${getOrdinal(currentSession)} session completed. You successfully completed all the sessions.`);
             } else {
-              speakTimerMessage(`${config.shortBreak} minutes break started.`);
+              spokenEvents.add(`pomodoro-session-${currentSession}-break-started`);
+              speakTimerMessage(`${getOrdinal(currentSession)} session completed. ${config.shortBreak} minutes break started.`);
             }
-          } else {
-            speakTimerMessage("Break ended.");
+          }
+        } else {
+          const breakEndKey = `pomodoro-break-ended-${completedFocusSessions}`;
+          if (!spokenEvents.has(breakEndKey)) {
+            spokenEvents.add(breakEndKey);
+            const nextSession = phase === "longBreak" ? 1 : completedFocusSessions + 1;
+            if (phase === "longBreak") {
+              spokenEvents.clear();
+            }
+            spokenEvents.add(`pomodoro-session-${nextSession}-started`);
+            speakTimerMessage(`Break ended. Session ${nextSession} started.`);
           }
         }
 

@@ -8,7 +8,7 @@ import { read, studyDurationMin, studyTask, write } from "../lib/storage";
 import { recordCompletedStudySession } from "../lib/sessions";
 import { CountdownEngine, StopwatchEngine, type StateDetail, type TickDetail } from "../lib/timerEngine";
 import { addXP } from "../lib/gamification";
-import { cancelSpeech, isVoiceSupported, speakTimerMessage } from "../lib/voice";
+import { cancelSpeech, isVoiceEnabled, isVoiceSupported, setVoiceEnabled, speakTimerMessage } from "../lib/voice";
 
 type StudyMode = "countup" | "countdown" | "pomodoro" | "exam";
 type CockpitState = "idle" | "running" | "paused" | "finished";
@@ -100,8 +100,9 @@ function setupStudyCockpit(root: HTMLElement): void {
   const stage = qs<HTMLElement>(root, "[data-study-stage]");
 
   const voiceToggle = qs<HTMLButtonElement>(root, "[data-voice-toggle]");
-  let voiceEnabled = read<boolean>("studyCockpitVoice", true);
+  let voiceEnabled = isVoiceEnabled();
   const spokenCheckpoints = new Set<number>();
+  const spokenEvents = new Set<string>();
 
   if (voiceToggle && !isVoiceSupported()) {
     voiceToggle.hidden = true;
@@ -109,9 +110,8 @@ function setupStudyCockpit(root: HTMLElement): void {
     voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
     voiceToggle.addEventListener("click", () => {
       voiceEnabled = !voiceEnabled;
-      write("studyCockpitVoice", voiceEnabled);
+      setVoiceEnabled(voiceEnabled);
       voiceToggle.setAttribute("aria-checked", String(voiceEnabled));
-      if (!voiceEnabled) cancelSpeech();
     });
   }
 
@@ -352,7 +352,10 @@ function setupStudyCockpit(root: HTMLElement): void {
     setState("finished");
     document.title = originalTitle;
     if (automatic) {
-      if (voiceEnabled && mode !== "countup") speakTimerMessage("Time over.");
+      if (mode !== "countup" && !spokenEvents.has("timer-complete")) {
+        spokenEvents.add("timer-complete");
+        speakTimerMessage("Time over.");
+      }
       alarm.play();
       showNotification(`${BRAND} session complete`, `${intention() || "Study session"} is complete.`);
     }
@@ -363,6 +366,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     completing = true;
     cancelSpeech();
     spokenCheckpoints.clear();
+    spokenEvents.clear();
     countdown.clear();
     stopwatch.reset();
     completing = false;
@@ -430,7 +434,11 @@ function setupStudyCockpit(root: HTMLElement): void {
       stopwatch.start();
     } else {
       spokenCheckpoints.clear();
-      if (voiceEnabled) speakTimerMessage("Timer started.");
+      spokenEvents.clear();
+      if (!spokenEvents.has("timer-started")) {
+        spokenEvents.add("timer-started");
+        speakTimerMessage("Timer started.");
+      }
       countdown.start(durationMinutes() * 60 * 1000);
     }
   });
@@ -496,17 +504,17 @@ function setupStudyCockpit(root: HTMLElement): void {
     setProgress(tick.progress);
     updateTabTitle(tick.remainingMs);
 
-    if (voiceEnabled && state === "running") {
+    if (state === "running") {
       const elapsedSeconds = Math.floor((countdown.getTotalMs() - tick.remainingMs) / 1000);
       const elapsedMinutes = Math.floor(elapsedSeconds / 60);
 
       if (elapsedMinutes > 0 && elapsedMinutes % 15 === 0) {
         if (!spokenCheckpoints.has(elapsedMinutes)) {
+          spokenCheckpoints.add(elapsedMinutes);
           const remainingMinutes = Math.ceil(tick.remainingMs / 60000);
           if (remainingMinutes > 0) {
             speakTimerMessage(`${remainingMinutes} minutes left.`);
           }
-          spokenCheckpoints.add(elapsedMinutes);
         }
       }
     }
