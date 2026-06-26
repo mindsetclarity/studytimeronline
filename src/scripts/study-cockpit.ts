@@ -352,9 +352,9 @@ function setupStudyCockpit(root: HTMLElement): void {
     setState("finished");
     document.title = originalTitle;
     if (automatic) {
-      if (mode !== "countup" && !spokenEvents.has("timer-complete")) {
-        spokenEvents.add("timer-complete");
-        speakTimerMessage("Time over.");
+      if (mode !== "countup" && !spokenEvents.has("timer-complete-motivation")) {
+        spokenEvents.add("timer-complete-motivation");
+        speakTimerMessage("Time over. Well done, you did it.");
       }
       alarm.play();
       showNotification(`${BRAND} session complete`, `${intention() || "Study session"} is complete.`);
@@ -435,9 +435,9 @@ function setupStudyCockpit(root: HTMLElement): void {
     } else {
       spokenCheckpoints.clear();
       spokenEvents.clear();
-      if (!spokenEvents.has("timer-started")) {
-        spokenEvents.add("timer-started");
-        speakTimerMessage("Timer started.");
+      if (!spokenEvents.has("timer-start-motivation")) {
+        spokenEvents.add("timer-start-motivation");
+        speakTimerMessage("Timer started. Stay focused. Lock in.");
       }
       countdown.start(durationMinutes() * 60 * 1000);
     }
@@ -505,6 +505,16 @@ function setupStudyCockpit(root: HTMLElement): void {
     updateTabTitle(tick.remainingMs);
 
     if (state === "running") {
+      const remainingSeconds = Math.round(tick.remainingMs / 1000);
+      const totalSeconds = Math.round(countdown.getTotalMs() / 1000);
+
+      if (totalSeconds > 900 && remainingSeconds <= 900 && remainingSeconds > 0) {
+        if (!spokenEvents.has("timer-15-min-remaining-motivation")) {
+          spokenEvents.add("timer-15-min-remaining-motivation");
+          speakTimerMessage("15 minutes left. Be disciplined. Stay hard.");
+        }
+      }
+
       const elapsedSeconds = Math.floor((countdown.getTotalMs() - tick.remainingMs) / 1000);
       const elapsedMinutes = Math.floor(elapsedSeconds / 60);
 
@@ -512,7 +522,7 @@ function setupStudyCockpit(root: HTMLElement): void {
         if (!spokenCheckpoints.has(elapsedMinutes)) {
           spokenCheckpoints.add(elapsedMinutes);
           const remainingMinutes = Math.ceil(tick.remainingMs / 60000);
-          if (remainingMinutes > 0) {
+          if (remainingMinutes > 0 && remainingMinutes !== 15) {
             speakTimerMessage(`${remainingMinutes} minutes left.`);
           }
         }

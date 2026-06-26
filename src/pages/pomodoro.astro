@@ -453,6 +453,16 @@ import Layout from "../layouts/Layout.astro";
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
       }
 
+      function getSessionStartMessage(n: number): string {
+        switch (n) {
+          case 1: return "Session 1 started. Lock in and stay focused.";
+          case 2: return "Session 2 started. Stay disciplined.";
+          case 3: return "Session 3 started. Keep pushing.";
+          case 4: return "Session 4 started. Finish strong.";
+          default: return `Session ${n} started. Stay focused and keep going.`;
+        }
+      }
+
       type Phase = "focus" | "shortBreak" | "longBreak";
       let phase: Phase = "focus";
       let completedFocusSessions = 0;
@@ -707,10 +717,10 @@ import Layout from "../layouts/Layout.astro";
           if (phase === "focus") {
             detailText.textContent = "Focusing...";
             const currentSession = completedFocusSessions + 1;
-            const key = `pomodoro-session-${currentSession}-started`;
+            const key = `pomodoro-session-${currentSession}-start-motivation`;
             if (!spokenEvents.has(key)) {
               spokenEvents.add(key);
-              speakTimerMessage(`Session ${currentSession} started.`);
+              speakTimerMessage(getSessionStartMessage(currentSession));
             }
           } else {
             detailText.textContent = "On Break";
@@ -729,27 +739,27 @@ import Layout from "../layouts/Layout.astro";
         
         if (phase === "focus") {
           const currentSession = completedFocusSessions + 1;
-          const compKey = `pomodoro-session-${currentSession}-completed`;
+          const compKey = `pomodoro-session-${currentSession}-complete-motivation`;
           if (!spokenEvents.has(compKey)) {
             spokenEvents.add(compKey);
             if (currentSession === config.longBreakEvery) {
-              spokenEvents.add("pomodoro-all-completed");
-              speakTimerMessage(`${getOrdinal(currentSession)} session completed. You successfully completed all the sessions.`);
+              spokenEvents.add("pomodoro-all-sessions-complete-motivation");
+              speakTimerMessage(`${getOrdinal(currentSession)} session completed. You successfully completed all the sessions. Well done, you did it.`);
             } else {
-              spokenEvents.add(`pomodoro-session-${currentSession}-break-started`);
-              speakTimerMessage(`${getOrdinal(currentSession)} session completed. ${config.shortBreak} minutes break started.`);
+              spokenEvents.add(`pomodoro-session-${currentSession}-break-start-motivation`);
+              speakTimerMessage(`${getOrdinal(currentSession)} session completed. Good work. ${config.shortBreak} minutes break started. Recover, then come back stronger.`);
             }
           }
         } else {
-          const breakEndKey = `pomodoro-break-ended-${completedFocusSessions}`;
+          const breakEndKey = `pomodoro-break-ended-${completedFocusSessions}-motivation`;
           if (!spokenEvents.has(breakEndKey)) {
             spokenEvents.add(breakEndKey);
             const nextSession = phase === "longBreak" ? 1 : completedFocusSessions + 1;
             if (phase === "longBreak") {
               spokenEvents.clear();
             }
-            spokenEvents.add(`pomodoro-session-${nextSession}-started`);
-            speakTimerMessage(`Break ended. Session ${nextSession} started.`);
+            spokenEvents.add(`pomodoro-session-${nextSession}-start-motivation`);
+            speakTimerMessage(`Break ended. ${getSessionStartMessage(nextSession)}`);
           }
         }
 
