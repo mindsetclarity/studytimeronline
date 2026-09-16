@@ -1,0 +1,256 @@
+/**
+ * Design tokens — the single source of truth for colour, shadow and gradient.
+ *
+ * This file replaces eight competing :root / [data-theme="dark"] blocks that
+ * had accumulated in global.css, one per "phase" of the redesign. They all had
+ * equal specificity, so whichever happened to be last in the file won, and a
+ * token like --surface-page was declared seven times. The values below are the
+ * ones that were winning, so rendering is unchanged.
+ *
+ * :root is the light theme. It is not reachable yet — Layout.astro pins
+ * data-theme="dark" — but it is now coherent, so wiring up a toggle is a
+ * matter of removing that attribute rather than untangling the cascade.
+ *
+ * Add a token in ONE place: here. Component rules consume var(--name).
+ */
+
+:root {
+  --surface-page: #f5efe7;
+  --surface-card: rgba(255, 252, 246, 0.92);
+  --surface-inset: #eee4d6;
+  --text-primary: #16120d;
+  --text-secondary: #5d554b;
+  --text-tertiary: #8d8375;
+  --border-hairline: rgba(34, 25, 15, 0.11);
+  --border-hairline-strong: rgba(34, 25, 15, 0.22);
+  --cta-bg: var(--lux-ink-900);
+  --cta-fg: var(--lux-warm-50);
+  --selection-bg: rgba(45, 212, 191, 0.35);
+  --selection-fg: #F8FAFC;
+  --accent: #2DD4BF;
+  --surface-raised: rgba(255, 252, 246, 0.94);
+  --surface-quiet: #efe6d8;
+  --surface-ink: var(--lux-ink-900);
+  --surface-ink-soft: var(--lux-ink-850);
+  --text-on-ink: #fffaf1;
+  --text-on-ink-muted: #bfc7d4;
+  --focus-ring: color-mix(in srgb, var(--lux-cyan-focus) 72%, #ffffff);
+  --shadow-product: 0 1px 1px rgba(47, 34, 18, 0.05), 0 10px 30px -24px rgba(47, 34, 18, 0.34), inset 0 0 0 1px rgba(47, 34, 18, 0.11);
+  --shadow-product-raised: 0 1px 1px rgba(47, 34, 18, 0.06), 0 18px 52px -36px rgba(47, 34, 18, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.72), inset 0 0 0 1px rgba(47, 34, 18, 0.12);
+  --lux-ink-950: #070a10;
+  --lux-ink-900: #0b0f17;
+  --lux-ink-850: #111722;
+  --lux-graphite-800: #1a2230;
+  --lux-graphite-700: #273142;
+  --lux-warm-50: #fffaf1;
+  --lux-warm-100: #f7efe4;
+  --lux-warm-200: #eadfce;
+  --lux-cyan-focus: #50e3c2;
+  --lux-cyan-focus-deep: #20b89a;
+  --lux-violet-delight: #9b7cff;
+  --lux-violet-soft: #d8ccff;
+  --lux-amber-urgency: #f5a623;
+  --lux-amber-soft: #fff0c8;
+  --lux-green-calm: #55c98b;
+  --color-accent: var(--lux-cyan-focus);
+  --color-accent-deep: var(--lux-cyan-focus-deep);
+  --color-warning: var(--lux-amber-urgency);
+  --color-warning-soft: var(--lux-amber-soft);
+  --surface-glass: rgba(255, 252, 246, 0.72);
+  --surface-glass-strong: rgba(255, 252, 246, 0.88);
+  --surface-highlight: rgba(155, 124, 255, 0.11);
+  --shadow-luxury-glow: 0 0 0 1px rgba(255, 255, 255, 0.28) inset, 0 22px 70px -52px rgba(155, 124, 255, 0.48), 0 16px 48px -42px rgba(80, 227, 194, 0.32);
+  --motion-fast: 160ms;
+  --motion-medium: 260ms;
+  --motion-slow: 520ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0.72, 0.22, 1);
+  --motion-ease-press: cubic-bezier(0.18, 0.84, 0.26, 1);
+  --sunset-ink: #f5efe7;
+  --sunset-graphite: #fffcf6;
+  --sunset-cream: #16120d;
+  --sunset-muted: #5d554b;
+  --sunset-orange: #c2410c;
+  --sunset-ember: #b45309;
+  --sunset-rose: #0f766e;
+  --sunset-teal: #0f766e;
+  --sunset-aqua: #0d9488;
+  /* --- content & brand: values the pages used to hardcode ---------------- */
+  --content-heading: #16120d; /* headings on page surfaces */
+  --content-body: #5d554b; /* body copy */
+  --content-muted: #8d8375; /* captions, metadata */
+  --content-strong: #241c12; /* emphasised UI text */
+  --brand: #0f766e; /* primary teal */
+  --brand-bright: #0d9488; /* teal highlight */
+  --brand-amber: #b45309; /* eyebrow / warning accent */
+  --brand-a04: rgba(15, 118, 110, 0.05);
+  --brand-a05: rgba(15, 118, 110, 0.06);
+  --brand-a08: rgba(15, 118, 110, 0.09);
+  --brand-a10: rgba(15, 118, 110, 0.11);
+  --brand-a12: rgba(15, 118, 110, 0.14);
+  --brand-a15: rgba(15, 118, 110, 0.17);
+  --brand-a20: rgba(15, 118, 110, 0.22);
+  --brand-a25: rgba(15, 118, 110, 0.27);
+  --brand-a30: rgba(15, 118, 110, 0.32);
+  --brand-a35: rgba(15, 118, 110, 0.37);
+  --brand-a40: rgba(15, 118, 110, 0.42);
+  --brand-a50: rgba(15, 118, 110, 0.52);
+  --brand-a75: rgba(15, 118, 110, 0.75);
+  --overlay-02: rgba(24, 18, 10, 0.03);
+  --overlay-03: rgba(24, 18, 10, 0.04);
+  --overlay-04: rgba(24, 18, 10, 0.05);
+  --overlay-05: rgba(24, 18, 10, 0.06);
+  --overlay-06: rgba(24, 18, 10, 0.07);
+  --overlay-08: rgba(24, 18, 10, 0.09);
+  --overlay-10: rgba(24, 18, 10, 0.12);
+  --overlay-15: rgba(24, 18, 10, 0.17);
+  --overlay-20: rgba(24, 18, 10, 0.22);
+  --panel-slate-30: rgba(255, 252, 246, 0.55);
+  --panel-slate-40: rgba(255, 252, 246, 0.62);
+  --panel-slate-50: rgba(255, 252, 246, 0.7);
+  --panel-slate-70: rgba(255, 252, 246, 0.85);
+  --panel-ink-80: rgba(255, 252, 246, 0.9);
+  --status-danger: #dc2626; /* error text */
+  --status-danger-deep: #b91c1c; /* error emphasis */
+  /* --- app chrome: was hardcoded in theme.css via Tailwind classes -------- */
+  --app-bg: #f5efe7;
+  --app-fg: #16120d;
+  --app-heading: #0f0c08;
+  --focus-bg: #ebe3d6;          /* focus mode dims the paper, not to black */
+  --bg-vignette: rgba(255, 252, 246, 0.5);
+  --marquee-bg: rgba(255, 252, 246, 0.95);
+  --flip-card-face: #efe7db;
+  --flip-card-face-top: #f6f0e6;
+  /* --- page backdrop: was a !important block pinning the dark palette ----- */
+  --page-backdrop: #f5efe7;
+  --page-backdrop-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(15, 118, 110, 0.07), transparent),
+    radial-gradient(ellipse 60% 50% at 85% 90%, rgba(234, 223, 206, 0.8), transparent),
+    linear-gradient(180deg, #f7f2ea 0%, #f3ece2 50%, #efe6d8 100%);
+  /* --- surfaces & shadows lifted out of global.css ---------------------- */
+  --panel-card: #fffcf6;
+  --panel-card-deep: #f7f1e8;
+  --panel-card-alt: #f4ede3;
+  --header-bg: rgba(255, 252, 246, 0.88);
+  --brand-pale: #0f766e;
+  --brand-bright-a70: rgba(13, 148, 136, 0.7);
+  --brand-a18: rgba(15, 118, 110, 0.2);
+  --brand-a22: rgba(15, 118, 110, 0.24);
+  --brand-a28: rgba(15, 118, 110, 0.3);
+  --brand-a38: rgba(15, 118, 110, 0.4);
+  --brand-a45: rgba(15, 118, 110, 0.47);
+  --brand-a55: rgba(15, 118, 110, 0.57);
+  --brand-a60: rgba(15, 118, 110, 0.62);
+  --shade-a50: rgba(47, 34, 18, 0.16);
+  --shade-a70: rgba(47, 34, 18, 0.22);
+  --shade-a80: rgba(47, 34, 18, 0.26);
+  --shade-a90: rgba(47, 34, 18, 0.3);
+  --muted-a25: rgba(141, 131, 117, 0.3);
+  --amber-a35: rgba(180, 83, 9, 0.35);
+}
+
+/* Higher specificity than :root, so dark no longer depends on source order. */
+:root[data-theme="dark"] {
+  --sunset-ink: #05080F;
+  --sunset-graphite: #0B1220;
+  --sunset-cream: #F8FAFC;
+  --sunset-muted: #94A3B8;
+  --sunset-orange: #FB923C;
+  --sunset-ember: #F59E0B;
+  --sunset-rose: #0D9488;
+  --sunset-teal: #2DD4BF;
+  --sunset-aqua: #5EEAD4;
+  --panel-card: #0B1220;
+  --panel-card-deep: #07111A;
+  --panel-card-alt: #08121C;
+  --header-bg: rgba(5, 8, 15, 0.85);
+  --brand-pale: #99F6E4;
+  --brand-bright-a70: rgba(94, 234, 212, 0.7);
+  --brand-a18: rgba(45, 212, 191, 0.18);
+  --brand-a22: rgba(45, 212, 191, 0.22);
+  --brand-a28: rgba(45, 212, 191, 0.28);
+  --brand-a38: rgba(45, 212, 191, 0.38);
+  --brand-a45: rgba(45, 212, 191, 0.45);
+  --brand-a55: rgba(45, 212, 191, 0.55);
+  --brand-a60: rgba(45, 212, 191, 0.6);
+  --shade-a50: rgba(0, 0, 0, 0.5);
+  --shade-a70: rgba(0, 0, 0, 0.7);
+  --shade-a80: rgba(0, 0, 0, 0.8);
+  --shade-a90: rgba(0, 0, 0, 0.9);
+  --muted-a25: rgba(148, 163, 184, 0.25);
+  --amber-a35: rgba(245, 158, 11, 0.35);
+  --page-backdrop: #05080F;
+  --page-backdrop-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45, 212, 191, 0.08), transparent),
+    radial-gradient(ellipse 60% 50% at 85% 90%, rgba(11, 22, 32, 0.8), transparent),
+    linear-gradient(180deg, #05080F 0%, #07111A 50%, #0B1620 100%);
+  --app-bg: #0f172a;
+  --app-fg: #f1f5f9;
+  --app-heading: #ffffff;
+  --focus-bg: #000000;
+  --bg-vignette: rgba(15, 23, 42, 0.4);
+  --marquee-bg: rgba(2, 6, 23, 0.95);
+  --flip-card-face: #16181d;
+  --flip-card-face-top: #1e2128;
+  --content-heading: #F8FAFC;
+  --content-body: #94A3B8;
+  --content-muted: #64748B;
+  --content-strong: #E2E8F0;
+  --brand: #2DD4BF;
+  --brand-bright: #5EEAD4;
+  --brand-amber: #F59E0B;
+  --brand-a04: rgba(45, 212, 191, 0.04);
+  --brand-a05: rgba(45, 212, 191, 0.05);
+  --brand-a08: rgba(45, 212, 191, 0.08);
+  --brand-a10: rgba(45, 212, 191, 0.1);
+  --brand-a12: rgba(45, 212, 191, 0.12);
+  --brand-a15: rgba(45, 212, 191, 0.15);
+  --brand-a20: rgba(45, 212, 191, 0.2);
+  --brand-a25: rgba(45, 212, 191, 0.25);
+  --brand-a30: rgba(45, 212, 191, 0.3);
+  --brand-a35: rgba(45, 212, 191, 0.35);
+  --brand-a40: rgba(45, 212, 191, 0.4);
+  --brand-a50: rgba(45, 212, 191, 0.5);
+  --brand-a75: rgba(45, 212, 191, 0.75);
+  --overlay-02: rgba(255, 255, 255, 0.02);
+  --overlay-03: rgba(255, 255, 255, 0.03);
+  --overlay-04: rgba(255, 255, 255, 0.04);
+  --overlay-05: rgba(255, 255, 255, 0.05);
+  --overlay-06: rgba(255, 255, 255, 0.06);
+  --overlay-08: rgba(255, 255, 255, 0.08);
+  --overlay-10: rgba(255, 255, 255, 0.1);
+  --overlay-15: rgba(255, 255, 255, 0.15);
+  --overlay-20: rgba(255, 255, 255, 0.2);
+  --panel-slate-30: rgba(15, 23, 42, 0.3);
+  --panel-slate-40: rgba(15, 23, 42, 0.4);
+  --panel-slate-50: rgba(15, 23, 42, 0.5);
+  --panel-slate-70: rgba(15, 23, 42, 0.7);
+  --panel-ink-80: rgba(9, 14, 23, 0.8);
+  --status-danger: #F87171;
+  --status-danger-deep: #EF4444;
+  --surface-page: var(--lux-ink-950);
+  --surface-card: rgba(17, 23, 34, 0.78);
+  --surface-inset: rgba(29, 38, 53, 0.86);
+  --text-primary: #fff7ea;
+  --text-secondary: #c9c2b8;
+  --text-tertiary: #8d8790;
+  --border-hairline: rgba(255, 255, 255, 0.105);
+  --border-hairline-strong: rgba(255, 255, 255, 0.22);
+  --cta-bg: var(--lux-warm-50);
+  --cta-fg: var(--lux-ink-950);
+  --selection-bg: var(--lux-cyan-focus);
+  --selection-fg: var(--lux-ink-950);
+  --surface-raised: rgba(18, 24, 36, 0.84);
+  --surface-quiet: rgba(25, 33, 47, 0.82);
+  --surface-ink: #05070b;
+  --surface-ink-soft: #111827;
+  --text-on-ink-muted: #aab4c6;
+  --focus-ring: var(--lux-cyan-focus);
+  --shadow-product: 0 1px 1px rgba(0, 0, 0, 0.35), 0 14px 34px -26px rgba(0, 0, 0, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.055), inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  --shadow-product-raised: 0 1px 1px rgba(0, 0, 0, 0.42), 0 24px 80px -48px rgba(0, 0, 0, 0.98), inset 0 1px 0 rgba(255, 255, 255, 0.075), inset 0 0 0 1px rgba(255, 255, 255, 0.115);
+  --color-link: #fafafa;
+  --color-link-deep: #ffffff;
+  --surface-glass: rgba(18, 24, 36, 0.66);
+  --surface-glass-strong: rgba(22, 29, 42, 0.88);
+  --surface-highlight: rgba(155, 124, 255, 0.12);
+  --shadow-luxury-glow: 0 0 0 1px rgba(255, 255, 255, 0.09) inset, 0 22px 90px -58px rgba(155, 124, 255, 0.58), 0 18px 64px -50px rgba(80, 227, 194, 0.4);
+}

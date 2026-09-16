@@ -30,7 +30,7 @@ interface Props {
       max-width: 620px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 var(--overlay-08);
       backdrop-filter: blur(20px);
       position: relative;
       z-index: 10;
@@ -65,14 +65,14 @@ interface Props {
     .error-title {
       font-size: clamp(1.5rem, 4vw, 2.25rem);
       font-weight: 700;
-      color: #f8fafc;
+      color: var(--content-heading);
       margin: 0 0 1rem 0;
       letter-spacing: -0.02em;
     }
 
     .error-description {
       font-size: clamp(1rem, 2vw, 1.125rem);
-      color: #94a3b8;
+      color: var(--content-body);
       line-height: 1.7;
       margin: 0 0 2.5rem 0;
       max-width: 480px;

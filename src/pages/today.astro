@@ -42,20 +42,20 @@ import Layout from "../layouts/Layout.astro";
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.4));
-      border: 1px solid rgba(45, 212, 191, 0.15); /* Subtle teal border */
+      background: linear-gradient(145deg, var(--panel-slate-70), var(--panel-slate-40));
+      border: 1px solid var(--brand-a15); /* Subtle teal border */
       border-radius: 16px;
       padding: 24px 16px;
       text-decoration: none;
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
       height: 140px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 var(--overlay-05);
     }
 
     .plan-card:hover, .plan-card:focus-visible {
-      border-color: #2dd4bf; /* Bright teal accent */
+      border-color: var(--brand); /* Bright teal accent */
       background: linear-gradient(145deg, rgba(20, 30, 50, 0.8), rgba(20, 30, 50, 0.5));
-      box-shadow: 0 8px 30px rgba(45, 212, 191, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 30px var(--brand-a15), inset 0 1px 0 var(--overlay-10);
       outline: none;
       transform: translateY(-4px);
     }
@@ -63,7 +63,7 @@ import Layout from "../layouts/Layout.astro";
     .plan-card__title {
       font-size: 1.15rem;
       font-weight: 600;
-      color: #f8fafc; /* Crisp white */
+      color: var(--content-heading); /* Crisp white */
       margin-bottom: 8px;
     }
 

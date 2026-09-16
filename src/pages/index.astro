@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import StudyTimerPanel from "../components/StudyTimerPanel.astro";
 import { BRAND } from "../lib/brand";
 
 const description =
@@ -67,66 +68,58 @@ const faqSchema = {
 ---
 
 <Layout title={BRAND} description={description} canonicalPath="/">
-  <section class="home-focus-hero home-focus-hero--sunset" data-home-first-impression>
-    <img
-      class="home-focus-hero__image"
-      src="/assets/phase-8/sunset-focus-hero.png"
-      alt="Study Timer Online - Aesthetic Study Timer Dashboard"
-      width="1829"
-      height="856"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      aria-hidden="true"
-    />
-    <div class="container-page home-focus-hero__grid">
-      <div class="home-focus-hero__copy">
-        <p class="eyebrow">golden-hour focus</p>
-        <h1>Study in a calmer rhythm.</h1>
-        <p>Choose one task, start a focused block, and let the noise fade out.</p>
-        <div class="home-focus-hero__actions" aria-label="Primary study actions">
-          <a class="btn-primary home-focus-hero__primary" href="/timer">Start Focus</a>
-          <a class="btn-secondary home-focus-hero__secondary" href="/today">Plan Today</a>
-        </div>
-        <ul class="home-focus-hero__proof" aria-label="Study Timer Online principles">
-          <li>No login</li>
-          <li>Private progress</li>
-          <li>Mobile ready</li>
-        </ul>
-      </div>
+  <section class="home-hero" data-home-first-impression>
+    <div class="container-page home-hero__copy">
+      <h1>Study in a calmer rhythm.</h1>
+      <p class="home-hero__lede">Pick a length and start. No login, no install, no ads.</p>
     </div>
+  </section>
+
+  <!-- The timer is the product, so it is the hero — not a click away. -->
+  <StudyTimerPanel />
+
+  <section class="container-page home-hero__proof-band">
+    <ul class="home-hero__proof" aria-label="Study Timer Online principles">
+      <li>No login</li>
+      <li>Private progress</li>
+      <li>Mobile ready</li>
+    </ul>
+    <p class="home-hero__links">
+      Prefer the classic 25/5 rhythm? <a href="/pomodoro">Open the Pomodoro timer</a> ·
+      <a href="/study-planner">Plan today</a> · <a href="/study-stats">See your stats</a>
+    </p>
   </section>
 
   <section class="container-page seo-about-band" aria-labelledby="seo-main-heading" style="padding-block: 4rem 6rem; max-width: 880px; margin: 0 auto;">
     <article class="card" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
-      <header style="margin-bottom: 2.25rem; border-bottom: 1px solid rgba(45, 212, 191, 0.15); padding-bottom: 1.75rem;">
-        <h2 id="seo-main-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: #F8FAFC; line-height: 1.25; margin-bottom: 0.75rem;">Study Timer Online: The Premier Aesthetic Study Timer</h2>
-        <p style="color: #2DD4BF; font-weight: 600; font-size: 1.05rem; margin: 0;">Designed for Deep Focus, Pomodoro Sprints, and Academic Flow</p>
+      <header style="margin-bottom: 2.25rem; border-bottom: 1px solid var(--brand-a15); padding-bottom: 1.75rem;">
+        <h2 id="seo-main-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: var(--content-heading); line-height: 1.25; margin-bottom: 0.75rem;">Study Timer Online: The Premier Aesthetic Study Timer</h2>
+        <p style="color: var(--brand); font-weight: 600; font-size: 1.05rem; margin: 0;">Designed for Deep Focus, Pomodoro Sprints, and Academic Flow</p>
       </header>
 
-      <div class="seo-article-body" style="display: flex; flex-direction: column; gap: 2rem; color: #94A3B8; font-size: 1.025rem;">
+      <div class="seo-article-body" style="display: flex; flex-direction: column; gap: 2rem; color: var(--content-body); font-size: 1.025rem;">
         <section>
-          <h3 style="color: #F8FAFC; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Enter Your Deepest Flow State</h3>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Enter Your Deepest Flow State</h3>
           <p style="margin: 0;">Finding the right <strong>study timer</strong> can fundamentally elevate your academic workflow and daily productivity. In an increasingly noisy digital ecosystem overflowing with disruptive push notifications, intrusive advertisements, and complex interfaces, students and dedicated self-learners desperately require an <strong>aesthetic study timer</strong> that cultivates a serene, distraction-free digital sanctuary. <strong>Study Timer Online</strong> was meticulously engineered from the ground up to solve this exact modern challenge. Combining minimalist architecture with a polished <strong>study timer online aesthetic</strong> visual language, our focus tool guides your mind into a sustained state of deep concentration. Whether you are revising for rigorous university exams, completing daily coursework assignments, or conducting intense research sprints, having a streamlined focus cockpit eliminates mental friction and keeps you aligned with your highest priorities.</p>
         </section>
 
         <section>
-          <h3 style="color: #F8FAFC; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">The Power of the Pomodoro Study Timer Method</h3>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">The Power of the Pomodoro Study Timer Method</h3>
           <p style="margin: 0;">One of the most scientifically proven frameworks for overcoming academic procrastination is the <strong>study timer pomodoro</strong> technique. The Pomodoro rhythm strategically partitions your workload into highly focused cognitive intervals—typically 25 to 50 minutes of uninterrupted concentration followed immediately by a restorative 5 to 10-minute mental reset. Our responsive, built-in <strong>pomodoro study timer</strong> automates this entire psychological cycle seamlessly. By oscillating between high-intensity intellectual output and structured relaxation periods, your neurological pathways consolidate complex information significantly faster while actively preventing cognitive exhaustion. Unlike bulky desktop software that demands tedious account registrations, intrusive background permissions, or mandatory cloud syncing, our dedicated <strong>study timer pomodoro</strong> engine executes instantaneously directly within your web browser. You retain absolute control to tailor focus sprint durations, short break refreshment windows, and extended long break recovery intervals to harmonize perfectly with your personal cognitive stamina.</p>
         </section>
 
         <section>
-          <h3 style="color: #F8FAFC; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Why Cultivate an Aesthetic Study Timer Online Environment?</h3>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Why Cultivate an Aesthetic Study Timer Online Environment?</h3>
           <p style="margin: 0;">Cognitive science confirms that your visual environment directly influences your psychological mood. Cluttered, harsh digital layouts subconsciously trigger cortisol release and low-grade anxiety, whereas a refined <strong>study timer aesthetic</strong> interface induces immediate tranquility and laser focus. We designed <strong>Study Timer Online</strong> with curated golden-hour sunset palettes, deep midnight ocean gradients, and vibrant mint-teal UI highlights. This intentional <strong>aesthetic study timer</strong> design philosophy transforms your screen into a sophisticated productivity haven rather than an overwhelming corporate spreadsheet. Furthermore, our holistic <strong>study timer online aesthetic</strong> approach encompasses audio engagement—providing optional calming voice cues and soothing ambient soundscapes that gently mask disruptive environmental noise. Every visual component, from the fluid motion of the progress trackers to the crisp readability of the tabular digits, is optimized to anchor your attention exactly where it belongs.</p>
         </section>
 
         <section>
-          <h3 style="color: #F8FAFC; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Local-First Privacy & Universal Browser Accessibility</h3>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Local-First Privacy & Universal Browser Accessibility</h3>
           <p style="margin: 0;">Contemporary productivity web apps routinely compromise personal privacy by forcing mandatory user profiles and aggressively tracking study behaviors. Our reliable <strong>study timer</strong> operates on an uncompromising local-first technical foundation. All your task checklists, completed session histories, and daily focus streaks are stored securely within your own device browser's local storage. You can launch <strong>Study Timer Online</strong> across any smartphone, tablet, or laptop and instantly resume your focused momentum without ever sacrificing personal data security. Experience the ultimate intersection of radical simplicity, rock-solid privacy, and state-of-the-art visual design today. Initiate your first focus block and discover why thousands of ambitious students trust our <strong>pomodoro study timer</strong> to accomplish their most demanding academic goals.</p>
         </section>
 
         <section>
-          <h3 style="color: #F8FAFC; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Pacing Your Exam Simulations with Fixed Countdown Modes</h3>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Pacing Your Exam Simulations with Fixed Countdown Modes</h3>
           <p style="margin: 0;">Beyond standard Pomodoro cycles, our versatile <strong>study timer</strong> equips you with specialized fixed countdown engines tailored specifically for standardized test preparation and timed mock exams. When practicing under simulated exam pressure, internal pacing is the ultimate differentiator between success and frustration. Utilizing our clean <strong>study timer online aesthetic</strong> countdown cockpit enables you to build psychological endurance under authentic testing constraints. By monitoring the smooth, calming progression of the muted tracker ring, you naturally calibrate your internal pacing rhythm, preventing panic-induced rushing or catastrophic procrastination during high-stakes assessments. Integrating intuitive task management with a breathtaking <strong>aesthetic study timer</strong> interface, <strong>Study Timer Online</strong> stands as your indispensable daily productivity ally.</p>
         </section>
       </div>
@@ -135,24 +128,76 @@ const faqSchema = {
 
   <section class="container-page seo-faq-band" aria-labelledby="seo-faq-heading" style="padding-block: 2rem 8rem; max-width: 880px; margin: 0 auto;">
     <header style="text-align: center; margin-bottom: 3.5rem;">
-      <p class="eyebrow" style="color: #F59E0B; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem;">frequently asked questions</p>
-      <h2 id="seo-faq-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: #F8FAFC; margin: 0;">Study Timer & Pomodoro FAQ</h2>
+      <p class="eyebrow" style="color: var(--brand-amber); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem;">frequently asked questions</p>
+      <h2 id="seo-faq-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: var(--content-heading); margin: 0;">Study Timer & Pomodoro FAQ</h2>
     </header>
 
     <div class="faq-accordion-list" style="display: flex; flex-direction: column; gap: 1rem;">
       {faqList.map((item) => (
         <details class="card faq-item" style="padding: 1.5rem 1.75rem; border-radius: 20px; cursor: pointer; transition: border-color 0.2s ease;">
-          <summary style="font-size: 1.125rem; font-weight: 700; color: #F8FAFC; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+          <summary style="font-size: 1.125rem; font-weight: 700; color: var(--content-heading); outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
             <span>{item.q}</span>
-            <span class="faq-toggle-icon" aria-hidden="true" style="color: #2DD4BF; font-size: 1.5rem; font-weight: 400; line-height: 1;">+</span>
+            <span class="faq-toggle-icon" aria-hidden="true" style="color: var(--brand); font-size: 1.5rem; font-weight: 400; line-height: 1;">+</span>
           </summary>
-          <div style="margin-top: 1.25rem; color: #94A3B8; font-size: 1.025rem; line-height: 1.75; border-top: 1px solid rgba(45, 212, 191, 0.12); padding-top: 1.25rem;" set:html={item.a} />
+          <div style="margin-top: 1.25rem; color: var(--content-body); font-size: 1.025rem; line-height: 1.75; border-top: 1px solid var(--brand-a12); padding-top: 1.25rem;" set:html={item.a} />
         </details>
       ))}
     </div>
   </section>
 
   <style>
+    .home-hero {
+      padding: 1rem 0 0.75rem;
+      text-align: center;
+    }
+
+    .home-hero h1 {
+      font-size: clamp(1.75rem, 4.5vw, 2.4rem);
+      line-height: 1.1;
+      margin: 0.5rem 0 0;
+    }
+
+    .home-hero__lede {
+      color: var(--content-body);
+      font-size: 1.05rem;
+      margin: 0.6rem auto 0;
+      max-width: 52ch;
+    }
+
+    .home-hero__proof-band {
+      padding-bottom: 1rem;
+      text-align: center;
+    }
+
+    .home-hero__proof {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .home-hero__proof li {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--content-body);
+      background: var(--overlay-04);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+    }
+
+    .home-hero__links {
+      color: var(--content-body);
+      font-size: 0.9rem;
+      margin: 1.25rem 0 0;
+    }
+
+    .home-hero__links a {
+      color: var(--brand);
+    }
+
     details > summary::-webkit-details-marker {
       display: none;
     }

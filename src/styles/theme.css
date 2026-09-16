@@ -20,11 +20,16 @@
 
 @layer base {
   body.modern-theme {
-    @apply bg-slate-900 text-slate-100 font-sans antialiased selection:bg-neon-purple selection:text-white transition-colors duration-300;
+    @apply font-sans antialiased selection:bg-neon-purple selection:text-white transition-colors duration-300;
+    /* Was bg-slate-900 / text-slate-100 — the dark values below are those
+       exact colours, so only the light theme is new. */
+    background-color: var(--app-bg);
+    color: var(--app-fg);
   }
   
   .modern-theme h1, .modern-theme h2, .modern-theme h3, .modern-theme h4, .modern-theme h5, .modern-theme h6 {
-    @apply tracking-tight font-semibold text-white;
+    @apply tracking-tight font-semibold;
+    color: var(--app-heading);
   }
 }
 
@@ -100,14 +105,14 @@
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4) 0%, transparent 100%);
+  background: radial-gradient(circle at 50% 50%, var(--bg-vignette) 0%, transparent 100%);
 }
 
 .svg-bg-layer::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-image: linear-gradient(var(--overlay-02) 1px, transparent 1px), linear-gradient(90deg, var(--overlay-02) 1px, transparent 1px);
   background-size: 50px 50px;
   background-position: center center;
   mask-image: radial-gradient(circle at 50% 50%, black 10%, transparent 80%);
@@ -139,7 +144,7 @@ body {
 }
 
 body.is-focusing {
-  @apply bg-black;
+  background-color: var(--focus-bg);
 }
 
 body.is-focusing .site-header,
@@ -174,7 +179,7 @@ body.is-focusing .study-timer-stage__clock {
   z-index: 10;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(2, 6, 23, 0.95);
+  background: var(--marquee-bg);
   backdrop-filter: none;
 }
 
@@ -197,14 +202,14 @@ body.is-focusing .study-timer-stage__clock {
 .m-num {
   font-size: 1.3rem;
   font-weight: 800;
-  color: white;
+  color: var(--app-heading);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
 .m-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--content-body);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -224,4 +229,149 @@ body.is-focusing .study-timer-stage__clock {
 @media (max-width: 768px) {
   .float-icon { display: none !important; }
   .m-track { animation: none !important; }
+}
+
+/* ═══════════ FLIP CLOCK (split-flap timer display) ═══════════ */
+/* Cell geometry is driven by --flip-size so one clamp() resizes the whole
+   clock; JS in src/lib/flipClock.ts only toggles .is-flipping. */
+.flip-clock {
+  /* Total track width in --flip-size units; JS rewrites it per build so an
+     HH:MM:SS clock shrinks to fit the same card an MM:SS clock fills. */
+  --flip-units: 3.5;
+  --flip-size: min(clamp(40px, 17vw, 108px), calc(100cqw / var(--flip-units)));
+  --flip-gap: calc(var(--flip-size) * 0.07);
+  --flip-radius: calc(var(--flip-size) * 0.1);
+  --flip-card: var(--flip-card-face);
+  --flip-card-top: var(--flip-card-face-top);
+  --flip-digit: var(--content-heading);
+  display: block;
+  text-shadow: none;
+}
+
+.flip-clock__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--flip-gap);
+  perspective: calc(var(--flip-size) * 4);
+}
+
+.flip-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--flip-size) * 0.26);
+  height: var(--flip-size);
+  font-size: calc(var(--flip-size) * 0.5);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--flip-digit);
+  opacity: 0.4;
+  /* A colon's dots sit near the baseline, not the em centre — nudge them onto
+     the card seam. */
+  transform: translateY(calc(var(--flip-size) * -0.06));
+  user-select: none;
+}
+
+.flip-cell {
+  position: relative;
+  width: calc(var(--flip-size) * 0.72);
+  height: var(--flip-size);
+  border-radius: var(--flip-radius);
+  background: var(--flip-card);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  user-select: none;
+}
+
+/* Hairline where the two halves meet — the split in "split-flap". */
+.flip-cell::after {
+  content: "";
+  position: absolute;
+  inset: calc(50% - 1px) 0 auto 0;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.flip-cell__face,
+.flip-cell__flap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  font-size: calc(var(--flip-size) * 0.66);
+  font-weight: 700;
+  line-height: var(--flip-size);
+  color: var(--flip-digit);
+  backface-visibility: hidden;
+}
+
+/* Each half clips the same full-height glyph so the two halves line up. */
+.flip-cell__face--top,
+.flip-cell__flap--top {
+  top: 0;
+  align-items: flex-start;
+  border-radius: var(--flip-radius) var(--flip-radius) 0 0;
+  background: var(--flip-card-top);
+}
+
+/* flex-end pushes the full-height line box up so the half that survives the
+   overflow clip is the bottom of the glyph. */
+.flip-cell__face--bottom,
+.flip-cell__flap--bottom {
+  bottom: 0;
+  align-items: flex-end;
+  border-radius: 0 0 var(--flip-radius) var(--flip-radius);
+  background: var(--flip-card);
+}
+
+.flip-cell__flap {
+  z-index: 4;
+  transform-style: preserve-3d;
+  visibility: hidden;
+}
+
+.flip-cell__flap--top { transform-origin: bottom center; }
+.flip-cell__flap--bottom { transform-origin: top center; }
+
+.flip-cell.is-flipping .flip-cell__flap {
+  visibility: visible;
+}
+
+.flip-cell.is-flipping .flip-cell__flap--top {
+  animation: flip-fall 0.31s cubic-bezier(0.36, 0, 0.66, -0.2) forwards;
+}
+
+.flip-cell.is-flipping .flip-cell__flap--bottom {
+  animation: flip-land 0.31s cubic-bezier(0.34, 1.2, 0.64, 1) 0.31s forwards;
+}
+
+@keyframes flip-fall {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(-90deg); }
+}
+
+@keyframes flip-land {
+  from { transform: rotateX(90deg); }
+  to { transform: rotateX(0deg); }
+}
+
+/* Before its delayed animation starts the bottom flap must stay folded up,
+   otherwise it flashes the new digit for one frame. */
+.flip-cell.is-flipping .flip-cell__flap--bottom {
+  transform: rotateX(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-cell.is-flipping .flip-cell__flap--top,
+  .flip-cell.is-flipping .flip-cell__flap--bottom {
+    animation-duration: 0.01ms;
+    animation-delay: 0ms;
+  }
 }

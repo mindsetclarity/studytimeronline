@@ -59,7 +59,19 @@ const socialImage = new URL("/assets/phase-8/cinematic-study-hero.jpg", SITE_URL
     <meta name="theme-color" content="#05080f" />
     <title>{pageTitle}</title>
     <script is:inline>
-      document.documentElement.setAttribute("data-theme", "dark");
+      // Runs before first paint so the theme never flashes. Dark stays the
+      // default for anyone who has not chosen — this site has always been dark,
+      // and following prefers-color-scheme would silently flip existing users.
+      (function () {
+        var theme = "dark";
+        try {
+          var stored = localStorage.getItem("study-timer-online:theme");
+          if (stored) theme = JSON.parse(stored);
+        } catch (e) {
+          /* private mode / storage disabled — keep the default */
+        }
+        document.documentElement.setAttribute("data-theme", theme === "light" ? "light" : "dark");
+      })();
     </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FS8W1GYY8Y"></script>

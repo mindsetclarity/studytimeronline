@@ -17,7 +17,7 @@ function setTheme(next: "light" | "dark"): void {
   document.documentElement.setAttribute("data-theme", next);
   themeStorage.set(next);
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if (meta) meta.content = next === "dark" ? "#0a0a0a" : "#fafafa";
+  if (meta) meta.content = next === "dark" ? "#0f172a" : "#f5efe7";
 }
 
 function currentTheme(): "light" | "dark" {
@@ -94,15 +94,13 @@ function setupBackNavigation(): void {
 
 function setupPageReveal(): void {
   if (prefersReducedMotion()) return;
-  const targets = Array.from(document.querySelectorAll<HTMLElement>("main > section"));
-  targets.forEach((target, index) => {
-    target.dataset.motionReveal = "pending";
+  // The pageReveal keyframes already fade in from opacity 0 with `both` fill,
+  // so mark sections visible in this same task. The old version parked them at
+  // opacity 0 and waited for a rAF to release them — if that frame never came
+  // (backgrounded tab, restore from bfcache) the whole page stayed blank.
+  document.querySelectorAll<HTMLElement>("main > section").forEach((target, index) => {
     target.style.setProperty("--motion-order", String(Math.min(index, 4)));
-  });
-  requestAnimationFrame(() => {
-    targets.forEach((target) => {
-      target.dataset.motionReveal = "visible";
-    });
+    target.dataset.motionReveal = "visible";
   });
 }
 
