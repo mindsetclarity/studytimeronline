@@ -245,7 +245,7 @@ import Layout from "../layouts/Layout.astro";
       letter-spacing: 0.05em;
     }
     .input-compact {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--input-bg);
       border: 1px solid var(--overlay-10);
       border-radius: 8px;
       padding: 10px 14px;
@@ -283,8 +283,8 @@ import Layout from "../layouts/Layout.astro";
     }
     
     .btn-add {
-      background: linear-gradient(135deg, var(--brand), #14b8a6);
-      color: #020617;
+      background: linear-gradient(135deg, var(--brand), var(--brand-end));
+      color: var(--on-brand);
       font-weight: 600;
       padding: 10px 16px;
       border-radius: 8px;

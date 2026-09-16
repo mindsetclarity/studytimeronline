@@ -20,7 +20,7 @@
   --surface-inset: #eee4d6;
   --text-primary: #16120d;
   --text-secondary: #5d554b;
-  --text-tertiary: #8d8375;
+  --text-tertiary: #6b6257;
   --border-hairline: rgba(34, 25, 15, 0.11);
   --border-hairline-strong: rgba(34, 25, 15, 0.22);
   --cta-bg: var(--lux-ink-900);
@@ -71,16 +71,16 @@
   --sunset-muted: #5d554b;
   --sunset-orange: #c2410c;
   --sunset-ember: #b45309;
-  --sunset-rose: #0f766e;
-  --sunset-teal: #0f766e;
-  --sunset-aqua: #0d9488;
+  --sunset-rose: #0b635d;
+  --sunset-teal: #0b635d;
+  --sunset-aqua: #0b635d;
   /* --- content & brand: values the pages used to hardcode ---------------- */
   --content-heading: #16120d; /* headings on page surfaces */
   --content-body: #5d554b; /* body copy */
-  --content-muted: #8d8375; /* captions, metadata */
+  --content-muted: #6b6257; /* captions, metadata */
   --content-strong: #241c12; /* emphasised UI text */
-  --brand: #0f766e; /* primary teal */
-  --brand-bright: #0d9488; /* teal highlight */
+  --brand: #0b635d; /* primary teal */
+  --brand-bright: #0b635d; /* teal highlight */
   --brand-amber: #b45309; /* eyebrow / warning accent */
   --brand-a04: rgba(15, 118, 110, 0.05);
   --brand-a05: rgba(15, 118, 110, 0.06);
@@ -146,10 +146,23 @@
   --shade-a90: rgba(47, 34, 18, 0.3);
   --muted-a25: rgba(141, 131, 117, 0.3);
   --amber-a35: rgba(180, 83, 9, 0.35);
+  /* --- form fields & callouts that were painted translucent-black -------- */
+  --input-bg: rgba(255, 252, 246, 0.95);
+  --callout-bg: rgba(15, 118, 110, 0.06);
+  --error-card-from: rgba(255, 252, 246, 0.95);
+  --error-card-to: rgba(247, 241, 232, 0.95);
+  --brand-end: #0f766e;
+  --on-brand: #fffaf1;          /* text on a teal fill */
 }
 
 /* Higher specificity than :root, so dark no longer depends on source order. */
 :root[data-theme="dark"] {
+  --brand-end: #14b8a6;
+  --on-brand: #020617;
+  --error-card-from: rgba(11, 18, 32, 0.8);
+  --error-card-to: rgba(7, 17, 26, 0.9);
+  --input-bg: rgba(0, 0, 0, 0.3);
+  --callout-bg: rgba(5, 8, 15, 0.6);
   --sunset-ink: #05080F;
   --sunset-graphite: #0B1220;
   --sunset-cream: #F8FAFC;
