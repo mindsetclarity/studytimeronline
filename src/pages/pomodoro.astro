@@ -454,6 +454,7 @@ import Layout from "../layouts/Layout.astro";
     import { Alarm } from "../lib/alarm";
     import { mountFlipClock } from "../lib/flipClock";
     import { bindShortcuts } from "../lib/shortcuts";
+    import { recordCompletedStudySession } from "../lib/sessions";
     import { toggleFullscreen, isFullscreen, exitFullscreen } from "../lib/fullscreen";
     import { BRAND } from "../lib/brand";
     import { showNotification } from "../lib/notification";
@@ -793,8 +794,19 @@ import Layout from "../layouts/Layout.astro";
 
       engine.addEventListener("finish", () => {
         alarm.play();
-        
+
         if (phase === "focus") {
+          // Focus blocks count toward Stats; breaks do not.
+          const focusMs = engine.getTotalMs();
+          recordCompletedStudySession({
+            task: "Pomodoro focus",
+            minutes: Math.max(1, Math.round(focusMs / 60000)),
+            durationMs: focusMs,
+            mode: "pomodoro",
+            source: "pomodoro",
+            status: "completed",
+          });
+
           const currentSession = completedFocusSessions + 1;
           const compKey = `pomodoro-session-${currentSession}-complete-motivation`;
           if (!spokenEvents.has(compKey)) {

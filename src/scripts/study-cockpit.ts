@@ -319,21 +319,25 @@ function setupStudyCockpit(root: HTMLElement): void {
   };
 
   const recordSession = (elapsedMs: number): void => {
-    if (source === "planner" && plannerTaskId) {
-      const subject = plannerSubject();
-      recordCompletedStudySession({
-        task: intention() || "Study Session",
-        minutes: Math.max(1, Math.round(elapsedMs / 60000)),
-        durationMs: Math.max(0, Math.round(elapsedMs)),
-        mode,
-        subject: subject || undefined,
-        plannerTaskId: plannerTaskId || undefined,
-        notes: notes(),
-        finishedAt: new Date().toISOString(),
-        source: "timer",
-        status: "completed"
-      });
-      
+    // Every finished session counts toward Stats. This used to happen only for
+    // timers launched from the Planner, so anyone starting a timer directly
+    // (most visitors) saw Stats stuck at zero. Under a minute is noise.
+    if (elapsedMs < 60_000) return;
+    const fromPlanner = source === "planner" && Boolean(plannerTaskId);
+    recordCompletedStudySession({
+      task: intention() || "Study Session",
+      minutes: Math.max(1, Math.round(elapsedMs / 60000)),
+      durationMs: Math.max(0, Math.round(elapsedMs)),
+      mode,
+      subject: fromPlanner ? plannerSubject() || undefined : undefined,
+      plannerTaskId: fromPlanner ? plannerTaskId : undefined,
+      notes: notes(),
+      finishedAt: new Date().toISOString(),
+      source: "timer",
+      status: "completed"
+    });
+
+    if (fromPlanner) {
       const tasks = readPlannerTasks();
       const updated = tasks.map(t => t.id === plannerTaskId ? { ...t, status: "done" as const } : t);
       writePlannerTasks(updated);
