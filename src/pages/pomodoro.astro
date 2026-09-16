@@ -31,15 +31,53 @@ import Layout from "../layouts/Layout.astro";
       }
     }
 
-    .timer-text-responsive {
-      font-size: clamp(56px, 14vw, 110px);
-      font-weight: 700;
-      line-height: 1;
-      margin: 8px 0;
-      font-variant-numeric: tabular-nums;
-      text-shadow: 0 4px 32px rgba(0,0,0,0.3);
-      color: var(--text-primary, #fff);
-      transition: font-size 0.2s ease-out;
+    /* Keep the whole timer above the fold — see the same block in timer.astro. */
+    .study-cockpit-page {
+      padding-block: 0;
+      min-height: 0;
+    }
+
+    .timer-panel-compact.study-timer-stage {
+      min-height: 0;
+      display: flex;
+      gap: 0;
+    }
+
+    .timer-panel-compact .study-timer-stage__clock {
+      min-height: 0;
+      padding: 8px 0 0;
+      border: none;
+      background: none;
+      box-shadow: none;
+      overflow: visible; /* the flip cards rotate out of the box */
+    }
+
+    .study-timer-stage[data-fullscreen="true"] .flip-clock {
+      --flip-size: clamp(90px, 20vh, 200px);
+    }
+
+    /* A shortcut nobody knows about is not a feature. Hidden on touch layouts. */
+    .shortcut-hint {
+      display: none;
+      margin: 16px 0 0;
+      font-size: 0.75rem;
+      color: var(--text-secondary, #94a3b8);
+    }
+
+    .shortcut-hint kbd {
+      font: inherit;
+      font-weight: 600;
+      color: var(--text-primary, #e2e8f0);
+      background: var(--overlay-06);
+      border: 1px solid var(--overlay-10);
+      border-radius: 5px;
+      padding: 1px 6px;
+    }
+
+    @media (min-width: 601px) and (pointer: fine) {
+      .shortcut-hint {
+        display: block;
+      }
     }
 
     .compact-controls-wrapper {
@@ -78,7 +116,7 @@ import Layout from "../layouts/Layout.astro";
     .compact-btn-secondary:hover:not(:disabled) {
       border-color: var(--text-primary, #fff);
       color: var(--text-primary, #fff);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--overlay-05);
     }
 
     .compact-btn-secondary:disabled {
@@ -90,7 +128,7 @@ import Layout from "../layouts/Layout.astro";
     .compact-progress-track {
       width: 100%;
       height: 4px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--overlay-08);
       border-radius: 2px;
       margin: 12px 0 0 0;
       overflow: hidden;
@@ -98,7 +136,7 @@ import Layout from "../layouts/Layout.astro";
 
     .compact-progress-fill {
       height: 100%;
-      background: var(--gradient-primary, linear-gradient(to right, #5eead4, #2dd4bf));
+      background: var(--gradient-primary, linear-gradient(to right, var(--brand-bright), var(--brand)));
       width: 0%;
       transition: none;
     }
@@ -120,9 +158,8 @@ import Layout from "../layouts/Layout.astro";
 
     /* FULLSCREEN MOBILE LANDSCAPE */
     @media (orientation: landscape) {
-      .study-timer-stage[data-fullscreen="true"] .timer-text-responsive {
-        font-size: clamp(7rem, 18vw, 18rem) !important;
-        margin: 4px 0 !important;
+      .study-timer-stage[data-fullscreen="true"] .flip-clock {
+        --flip-size: clamp(90px, 26vh, 240px);
       }
       .study-timer-stage[data-fullscreen="true"] .compact-controls-wrapper {
         margin-top: 12px !important;
@@ -171,9 +208,9 @@ import Layout from "../layouts/Layout.astro";
       position: relative;
       width: 40px;
       height: 22px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--overlay-08);
       border-radius: 11px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--overlay-05);
       cursor: pointer;
       transition: background 0.3s ease;
       outline: none;
@@ -181,12 +218,12 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .voice-switch:focus-visible {
-      box-shadow: 0 0 0 2px #2dd4bf;
+      box-shadow: 0 0 0 2px var(--brand);
     }
 
     .voice-switch[aria-checked="true"] {
-      background: rgba(45, 212, 191, 0.15);
-      border-color: rgba(45, 212, 191, 0.3);
+      background: var(--brand-a15);
+      border-color: var(--brand-a30);
     }
 
     .voice-switch-ball {
@@ -202,7 +239,7 @@ import Layout from "../layouts/Layout.astro";
 
     .voice-switch[aria-checked="true"] .voice-switch-ball {
       transform: translateX(18px);
-      background: #2dd4bf;
+      background: var(--brand);
     }
 
     /* COMPACT SETTINGS */
@@ -210,8 +247,8 @@ import Layout from "../layouts/Layout.astro";
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: var(--overlay-02);
+      border: 1px solid var(--overlay-05);
       border-radius: 16px;
       padding: 16px;
       text-align: left;
@@ -247,7 +284,7 @@ import Layout from "../layouts/Layout.astro";
       font-size: 0.85rem;
       font-weight: 600;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--overlay-04);
       border: 1px solid transparent;
       color: var(--text-secondary, #999);
       cursor: pointer;
@@ -255,14 +292,14 @@ import Layout from "../layouts/Layout.astro";
     }
     
     .compact-chip:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--overlay-08);
       color: var(--text-primary, #ddd);
     }
     
     .compact-chip[aria-pressed="true"]:not(:disabled) {
-      background: rgba(45, 212, 191, 0.1);
-      border-color: rgba(45, 212, 191, 0.4);
-      color: #2dd4bf;
+      background: var(--brand-a10);
+      border-color: var(--brand-a40);
+      color: var(--brand);
     }
     
     .compact-chip:disabled {
@@ -274,23 +311,23 @@ import Layout from "../layouts/Layout.astro";
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      background: rgba(45, 212, 191, 0.05);
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      box-shadow: 0 0 10px rgba(45, 212, 191, 0.08);
+      background: var(--brand-a05);
+      border: 1px solid var(--brand-a35);
+      box-shadow: 0 0 10px var(--brand-a08);
       color: var(--text-primary, #fff);
     }
     
     .compact-chip-custom:hover:not(:disabled) {
-      background: rgba(45, 212, 191, 0.1);
-      border-color: rgba(45, 212, 191, 0.5);
+      background: var(--brand-a10);
+      border-color: var(--brand-a50);
       color: #fff;
     }
     
     .compact-chip-custom[aria-pressed="true"]:not(:disabled) {
-      background: rgba(45, 212, 191, 0.15);
-      border-color: rgba(45, 212, 191, 0.75);
+      background: var(--brand-a15);
+      border-color: var(--brand-a75);
       box-shadow: 0 0 16px rgba(45, 212, 191, 0.22);
-      color: #2dd4bf;
+      color: var(--brand);
     }
 
     @media (max-width: 600px) {
@@ -318,7 +355,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="pomodoro-header-row">
           <div class="pomodoro-badge-row">
             <span id="phase-badge" style="display: none !important;" aria-hidden="true"></span>
-            <span class="timer-cockpit__state" id="cycle-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); background: rgba(45, 212, 191, 0.08); padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 600;">Cycle 1 of 4</span>
+            <span class="timer-cockpit__state" id="cycle-badge" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand); border: 1px solid var(--brand-a30); background: var(--brand-a08); padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 600;">Cycle 1 of 4</span>
           </div>
 
           <div class="voice-toggle-wrapper">
@@ -339,7 +376,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="study-timer-stage__clock" aria-live="polite" style="width: 100%;">
           <div class="study-timer-stage__aura" aria-hidden="true"></div>
           
-          <div class="timer-text-responsive timer-display timer-digits timer-digits-modern" id="timer-display">25:00</div>
+          <div class="timer-display" id="timer-display" data-flip-clock>25:00</div>
           
           <p class="study-timer-stage__detail" id="detail-text" style="color: var(--text-secondary, #888); font-size: 0.9rem; margin: 0;">25 min focus · 5 min break</p>
           
@@ -357,6 +394,12 @@ import Layout from "../layouts/Layout.astro";
           <button class="compact-btn-secondary" type="button" id="reset-btn" disabled>Reset</button>
           <button class="compact-btn-secondary" type="button" id="fullscreen-btn" aria-label="Enter fullscreen">Fullscreen</button>
         </div>
+
+        <p class="shortcut-hint">
+          <kbd>Space</kbd> start / pause <span aria-hidden="true">·</span>
+          <kbd>R</kbd> reset <span aria-hidden="true">·</span>
+          <kbd>F</kbd> fullscreen
+        </p>
       </section>
 
       <!-- POMODORO SETTINGS -->
@@ -409,6 +452,8 @@ import Layout from "../layouts/Layout.astro";
     import { CountdownEngine, type TickDetail, type StateDetail } from "../lib/timerEngine";
     import { formatHms, formatTabTitle } from "../lib/formatTime";
     import { Alarm } from "../lib/alarm";
+    import { mountFlipClock } from "../lib/flipClock";
+    import { bindShortcuts } from "../lib/shortcuts";
     import { toggleFullscreen, isFullscreen, exitFullscreen } from "../lib/fullscreen";
     import { BRAND } from "../lib/brand";
     import { showNotification } from "../lib/notification";
@@ -422,6 +467,11 @@ import Layout from "../layouts/Layout.astro";
       const phaseBadge = document.getElementById("phase-badge")!;
       const cycleBadge = document.getElementById("cycle-badge")!;
       const timerDisplay = document.getElementById("timer-display")!;
+      const flipClock = mountFlipClock(timerDisplay);
+      const setDisplay = (text: string): void => {
+        if (flipClock) flipClock.render(text);
+        else timerDisplay.textContent = text;
+      };
       const detailText = document.getElementById("detail-text")!;
       const progressFill = document.getElementById("progress-fill")!;
       
@@ -492,12 +542,12 @@ import Layout from "../layouts/Layout.astro";
         if (phase === "shortBreak") currentDuration = config.shortBreak;
         if (phase === "longBreak") currentDuration = config.longBreak;
 
-        timerDisplay.textContent = formatHms(currentDuration * 60 * 1000);
+        setDisplay(formatHms(currentDuration * 60 * 1000));
         progressFill.style.width = "0%";
 
         if (phase === "focus") {
           phaseBadge.textContent = "Focus";
-          phaseBadge.style.color = "#2dd4bf";
+          phaseBadge.style.color = "var(--brand)";
           detailText.textContent = `${config.focus} min focus · ${config.shortBreak} min break`;
           startBtn.textContent = "Start Focus";
         } else if (phase === "shortBreak") {
@@ -680,6 +730,13 @@ import Layout from "../layouts/Layout.astro";
       document.addEventListener("fullscreenchange", handleFullscreenChange);
       handleFullscreenChange();
 
+      bindShortcuts({
+        // Start / Pause / Resume share one slot; only one is ever displayed.
+        space: () => [startBtn, pauseBtn, resumeBtn].find((b) => b.offsetParent !== null) ?? null,
+        r: () => resetBtn,
+        f: () => fullscreenBtn,
+      });
+
       let lastFormattedTime = "";
       let lastProgressWidth = -1;
       let lastTitle = "";
@@ -688,7 +745,7 @@ import Layout from "../layouts/Layout.astro";
         const formatted = formatHms(tick.remainingMs);
         if (formatted !== lastFormattedTime) {
           lastFormattedTime = formatted;
-          timerDisplay.textContent = formatted;
+          setDisplay(formatted);
         }
         const widthRounded = Math.round(tick.progress * 1000) / 10;
         if (widthRounded !== lastProgressWidth) {

@@ -1,10 +1,12 @@
 import { Alarm } from "../lib/alarm";
 import { BRAND } from "../lib/brand";
 import { formatHms, formatHmsForced, formatTabTitle } from "../lib/formatTime";
+import { mountFlipClock } from "../lib/flipClock";
 import { exitFullscreen, isFullscreen, toggleFullscreen } from "../lib/fullscreen";
 import { showNotification } from "../lib/notification";
 import { readPlannerTasks, writePlannerTasks } from "../lib/planner";
-import { read, studyDurationMin, studyTask, write } from "../lib/storage";
+import { bindShortcuts } from "../lib/shortcuts";
+import { read, remove, studyDurationMin, studyTask, write } from "../lib/storage";
 import { recordCompletedStudySession } from "../lib/sessions";
 import { CountdownEngine, StopwatchEngine, type StateDetail, type TickDetail } from "../lib/timerEngine";
 import { addXP } from "../lib/gamification";
@@ -70,6 +72,18 @@ function isStudyMode(value: string | null | undefined): value is StudyMode {
   return value === "countup" || value === "countdown" || value === "pomodoro" || value === "exam";
 }
 
+/**
+ * A countdown in progress, saved so an accidental reload does not throw away
+ * forty minutes of a session. The engine already works off an absolute
+ * deadline, so the two numbers below are the whole state.
+ */
+interface RunningSession {
+  endTimestamp: number;
+  totalMs: number;
+}
+
+const RUNNING_KEY = "studyRunningSession";
+
 function setupStudyCockpit(root: HTMLElement): void {
   const countdown = new CountdownEngine();
   const stopwatch = new StopwatchEngine();
@@ -80,6 +94,7 @@ function setupStudyCockpit(root: HTMLElement): void {
   const source = params.get("source") || "";
 
   const display = qs<HTMLElement>(root, "[data-timer-display]");
+  const flipClock = mountFlipClock(display);
   const detail = qs<HTMLElement>(root, "[data-session-detail]");
   const progressWrap = qs<HTMLElement>(root, "[data-progress-wrap]");
   const progressFill = qs<HTMLElement>(root, "[data-progress-fill]");
@@ -95,7 +110,8 @@ function setupStudyCockpit(root: HTMLElement): void {
   const startButton = qs<HTMLButtonElement>(root, "[data-start]");
   const pauseButton = qs<HTMLButtonElement>(root, "[data-pause]");
   const finishButton = qs<HTMLButtonElement>(root, "[data-finish]");
-  const resetButton = qs<HTMLButtonElement>(root, "[data-reset]");
+  // The completion summary carries its own Reset, so bind every one of them.
+  const resetButtons = qsa<HTMLButtonElement>(root, "[data-reset]");
   const summary = qs<HTMLElement>(root, "[data-session-summary]");
   const stage = qs<HTMLElement>(root, "[data-study-stage]");
 
@@ -149,7 +165,8 @@ function setupStudyCockpit(root: HTMLElement): void {
     const formatted = formatForMode(ms);
     if (formatted !== lastFormattedDisplay) {
       lastFormattedDisplay = formatted;
-      if (display) display.textContent = formatted;
+      if (flipClock) flipClock.render(formatted);
+      else if (display) display.textContent = formatted;
     }
   };
 
@@ -198,7 +215,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     }
     if (pauseButton) pauseButton.disabled = next !== "running";
     if (finishButton) finishButton.disabled = next === "idle" || next === "finished";
-    if (resetButton) resetButton.disabled = next === "idle";
+    resetButtons.forEach((button) => { button.disabled = next === "idle"; });
 
     const locked = next === "running" || next === "paused" || next === "finished";
     qsa<HTMLButtonElement>(root, "[data-study-mode]").forEach((button) => {
@@ -364,6 +381,10 @@ function setupStudyCockpit(root: HTMLElement): void {
 
   const resetSession = (clearNotes = false): void => {
     completing = true;
+    // Clear here rather than relying on the "state" listener — it bails while
+    // `completing` is set, and a surviving record would restore a countdown the
+    // user just reset.
+    remove(RUNNING_KEY);
     cancelSpeech();
     spokenCheckpoints.clear();
     spokenEvents.clear();
@@ -459,7 +480,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     completeSession(elapsed, false);
   });
 
-  resetButton?.addEventListener("click", () => resetSession(false));
+  resetButtons.forEach((button) => button.addEventListener("click", () => resetSession(false)));
 
   const fullscreenBtn = qs<HTMLButtonElement>(root, "[data-fullscreen]");
   const stageEl = qs<HTMLElement>(root, "[data-study-stage]") ?? root;
@@ -534,8 +555,19 @@ function setupStudyCockpit(root: HTMLElement): void {
     if (mode === "countup" || completing) return;
     const next = (event as CustomEvent<StateDetail>).detail.state;
     setState(next);
-    if (next === "running" && detail) detail.textContent = runningDetail();
-    if (next === "paused" && detail) detail.textContent = "Paused. Continue when you are ready.";
+    if (next === "running") {
+      write<RunningSession>(RUNNING_KEY, {
+        endTimestamp: Date.now() + countdown.getRemainingMs(),
+        totalMs: countdown.getTotalMs(),
+      });
+      if (detail) detail.textContent = runningDetail();
+    } else {
+      // Pausing drops the record too: a deliberate pause is a smaller thing to
+      // lose than a reload mid-session, and restoring a pause as "running"
+      // would be worse than not restoring it.
+      remove(RUNNING_KEY);
+      if (next === "paused" && detail) detail.textContent = "Paused. Continue when you are ready.";
+    }
   });
 
   countdown.addEventListener("finish", () => {
@@ -566,6 +598,29 @@ function setupStudyCockpit(root: HTMLElement): void {
   updateIntentionLabel();
   applyMode(mode, false);
   setState("idle");
+
+  bindShortcuts({
+    // Whichever of Start / Pause is currently on screen.
+    space: () => (startButton && !startButton.disabled ? startButton : pauseButton),
+    r: () => resetButtons[0],
+    f: () => fullscreenBtn,
+  });
+
+  // Survive a reload: pick a countdown back up if it was still running when the
+  // page went away. A deadline that already passed is dropped rather than
+  // logged — recording a session the user may not have sat through is worse
+  // than losing it.
+  // ponytail: restores countdowns only; the pomodoro page keeps its own
+  // phase/cycle state and would need that persisted too.
+  if (mode !== "countup") {
+    const saved = read<RunningSession | null>(RUNNING_KEY, null);
+    if (saved && countdown.restore(saved.endTimestamp, saved.totalMs)) {
+      if (durationInput) durationInput.value = String(Math.round(saved.totalMs / 60000));
+      updatePresetState();
+    } else if (saved) {
+      remove(RUNNING_KEY);
+    }
+  }
 
   window.addEventListener("pagehide", () => {
     countdown.destroy();

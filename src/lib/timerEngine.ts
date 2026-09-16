@@ -62,6 +62,29 @@ export class CountdownEngine extends EventTarget {
     this.emitTick();
   }
 
+  /**
+   * Re-enter a countdown that outlived the page (reload, crash, tab restore).
+   * Unlike start(), the original `totalMs` is kept so progress stays truthful.
+   * No-op if the deadline has already passed — the caller decides what a
+   * session finished while away should mean.
+   */
+  restore(endTimestamp: number, totalMs: number): boolean {
+    const total = this.clampDuration(totalMs);
+    // Finite check first: a corrupted deadline gives NaN, and `NaN <= 0` is
+    // false, so a bare comparison would start a timer that never ends.
+    if (!Number.isFinite(endTimestamp)) return false;
+    const remaining = endTimestamp - Date.now();
+    if (total <= 0 || remaining <= 0) return false;
+    this.totalMs = total;
+    this.remainingMs = remaining;
+    this.endTimestamp = endTimestamp;
+    this.setState("running");
+    this.requestWakeLock();
+    this.startTicking();
+    this.emitTick();
+    return true;
+  }
+
   /** Pause a running timer; preserves remaining time exactly. */
   pause(): void {
     if (this.state !== "running") return;
