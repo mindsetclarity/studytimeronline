@@ -16,6 +16,15 @@ const PAGE_LABELS: Record<string, string> = {
   "/contact": "Contact Us",
 };
 const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Study";
+
+// The product's four tools, always one click away on wide screens. The Menu
+// button still carries the full list (Home, Plan Today) for everyone.
+const TOOL_TABS = [
+  { label: "Timer", href: "/timer" },
+  { label: "Pomodoro", href: "/pomodoro" },
+  { label: "Planner", href: "/study-planner" },
+  { label: "Stats", href: "/study-stats" },
+];
 ---
 
 <header class="site-header" data-site-header>
@@ -36,6 +45,14 @@ const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Stu
       </a>
     </div>
 
+
+    <nav class="header-tabs" aria-label="Study tools">
+      {TOOL_TABS.map((tab) => (
+        <a class="header-tabs__link" href={tab.href} aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}>
+          {tab.label}
+        </a>
+      ))}
+    </nav>
 
     <div class="site-header__actions">
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark theme">
@@ -68,6 +85,49 @@ const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Stu
   </nav>
 </header>
 <style>
+  /* Hidden on narrow screens, where the Menu button already covers navigation. */
+  .header-tabs {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .header-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      margin-inline: auto;
+      border-radius: 999px;
+      border: 1px solid var(--overlay-08);
+      background: var(--overlay-03);
+    }
+  }
+
+  .header-tabs__link {
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--content-body);
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .header-tabs__link:hover {
+    color: var(--content-heading);
+    background: var(--overlay-06);
+  }
+
+  .header-tabs__link[aria-current="page"] {
+    color: var(--brand);
+    background: var(--brand-a12);
+  }
+
+  .header-tabs__link:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
   /* Only the icon for the theme you would switch TO is shown. */
   .theme-toggle {
     display: inline-flex;
