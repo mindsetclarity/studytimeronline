@@ -108,6 +108,23 @@ const PRESETS = [15, 25, 30, 45, 60];
       <p class="timer-shell__eyebrow">Timer complete</p>
       <h2 id="study-summary-title" class="timer-shell__summary-title">Good work. Take a short break.</h2>
 
+      <!-- Filled in by study-cockpit.ts once the session is saved. -->
+      <div class="session-progress" data-summary-progress hidden>
+        <div class="session-progress__stat">
+          <strong data-progress-today>0 min</strong>
+          <span>today</span>
+        </div>
+        <div class="session-progress__stat">
+          <strong data-progress-sessions>0</strong>
+          <span data-progress-sessions-label>sessions</span>
+        </div>
+        <div class="session-progress__stat">
+          <strong data-progress-streak>0</strong>
+          <span data-progress-streak-label>day streak</span>
+        </div>
+      </div>
+      <a class="session-progress__link" href="/study-stats" data-summary-stats-link hidden>See your stats →</a>
+
       <div class="compact-controls-wrapper">
         <button class="btn-primary compact-btn-primary" type="button" data-start-another>Start Again</button>
         <button class="compact-btn-secondary" type="button" data-reset>Reset</button>
@@ -205,6 +222,54 @@ const PRESETS = [15, 25, 30, 45, 60];
 
   .study-session-summary {
     margin-top: 2rem;
+  }
+
+  .session-progress {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin: 0 0 12px;
+  }
+
+  .session-progress[hidden],
+  .session-progress__link[hidden] {
+    display: none;
+  }
+
+  .session-progress__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 8px;
+    border-radius: 14px;
+    background: var(--overlay-04);
+    border: 1px solid var(--overlay-08);
+  }
+
+  .session-progress__stat strong {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--content-heading);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .session-progress__stat span {
+    font-size: 0.75rem;
+    color: var(--content-body);
+  }
+
+  .session-progress__link {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .session-progress__link:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: 600px) {
