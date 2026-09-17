@@ -28,19 +28,19 @@ import Layout from "../layouts/Layout.astro";
             <form id="support-draft-form" style="display: none; flex-direction: column; gap: 1.25rem; margin-top: 0.5rem;" novalidate>
               <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                 <label for="contact-email" style="color: var(--content-heading); font-weight: 600; font-size: 0.95rem;">Your Email <span style="color: var(--brand);">*</span></label>
-                <input id="contact-email" name="email" type="email" required placeholder="you@example.com" style="background: #05080F; border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
+                <input id="contact-email" name="email" type="email" required placeholder="you@example.com" style="background: var(--field-bg); border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
                 <span id="error-email" style="color: var(--status-danger); font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter a valid email address.</span>
               </div>
 
               <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                 <label for="contact-country" style="color: var(--content-heading); font-weight: 600; font-size: 0.95rem;">Your Country <span style="color: var(--brand);">*</span></label>
-                <input id="contact-country" name="country" type="text" required placeholder="India" style="background: #05080F; border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
+                <input id="contact-country" name="country" type="text" required placeholder="India" style="background: var(--field-bg); border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;" />
                 <span id="error-country" style="color: var(--status-danger); font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter your country.</span>
               </div>
 
               <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                 <label for="contact-feedback" style="color: var(--content-heading); font-weight: 600; font-size: 0.95rem;">Your Feedback <span style="color: var(--brand);">*</span></label>
-                <textarea id="contact-feedback" name="feedback" required rows="4" placeholder="Tell us what you need help with…" style="background: #05080F; border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; resize: vertical; transition: border-color 0.2s;"></textarea>
+                <textarea id="contact-feedback" name="feedback" required rows="4" placeholder="Tell us what you need help with…" style="background: var(--field-bg); border: 1px solid var(--brand-a30); border-radius: 12px; padding: 0.75rem 1rem; color: var(--content-heading); font-family: inherit; font-size: 1rem; outline: none; resize: vertical; transition: border-color 0.2s;"></textarea>
                 <span id="error-feedback" style="color: var(--status-danger); font-size: 0.85rem; display: none; margin-top: 0.2rem;">Please enter your feedback message.</span>
               </div>
 

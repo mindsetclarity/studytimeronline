@@ -71,6 +71,10 @@ const socialImage = new URL("/assets/phase-8/cinematic-study-hero.jpg", SITE_URL
           /* private mode / storage disabled — keep the default */
         }
         document.documentElement.setAttribute("data-theme", theme === "light" ? "light" : "dark");
+        if (theme === "light") {
+          var meta = document.querySelector("meta[name=theme-color]");
+          if (meta) meta.setAttribute("content", "#f5efe7");
+        }
       })();
     </script>
     <!-- Google tag (gtag.js) -->

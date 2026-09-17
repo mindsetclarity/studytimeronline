@@ -153,10 +153,12 @@
   --error-card-to: rgba(247, 241, 232, 0.95);
   --brand-end: #0f766e;
   --on-brand: #fffaf1;          /* text on a teal fill */
+  --field-bg: #fffcf6;          /* contact form inputs */
 }
 
 /* Higher specificity than :root, so dark no longer depends on source order. */
 :root[data-theme="dark"] {
+  --field-bg: #05080F;
   --brand-end: #14b8a6;
   --on-brand: #020617;
   --error-card-from: rgba(11, 18, 32, 0.8);
