@@ -1,5 +1,6 @@
 import { readPlannerTasks } from "../lib/planner";
 import { readSessions, type StudySessionRecord } from "../lib/sessions";
+import { streakDays } from "../lib/streak";
 
 interface NormalizedSession {
   task: string;
@@ -109,13 +110,9 @@ function buildDaySummaries(sessions: NormalizedSession[], todayStart: number, co
   });
 }
 
+// Shared with the timer completion panel so both always report the same streak.
 function steadyDays(sessions: NormalizedSession[], todayStart: number): number {
-  let count = 0;
-  for (let day = todayStart; day >= todayStart - 90 * DAY_MS; day -= DAY_MS) {
-    if (sessionsForDay(sessions, day).length === 0) break;
-    count += 1;
-  }
-  return count;
+  return streakDays(sessions.map((session) => session.finishedAt), new Date(todayStart));
 }
 
 function steadyDaysLabel(days: number): string {

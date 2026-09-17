@@ -7,7 +7,8 @@ import { showNotification } from "../lib/notification";
 import { readPlannerTasks, writePlannerTasks } from "../lib/planner";
 import { bindShortcuts } from "../lib/shortcuts";
 import { read, remove, studyDurationMin, studyTask, write } from "../lib/storage";
-import { recordCompletedStudySession } from "../lib/sessions";
+import { readSessions, recordCompletedStudySession } from "../lib/sessions";
+import { dayProgress } from "../lib/streak";
 import { CountdownEngine, StopwatchEngine, type StateDetail, type TickDetail } from "../lib/timerEngine";
 import { addXP } from "../lib/gamification";
 import { cancelSpeech, isVoiceEnabled, isVoiceSupported, setVoiceEnabled, speakTimerMessage } from "../lib/voice";
@@ -344,6 +345,23 @@ function setupStudyCockpit(root: HTMLElement): void {
     }
   };
 
+  // The payoff after a session: what today and the streak look like now.
+  const showDayProgress = (recorded: boolean): void => {
+    const panel = qs<HTMLElement>(root, "[data-summary-progress]");
+    const link = qs<HTMLElement>(root, "[data-summary-stats-link]");
+    if (!panel) return;
+    if (!recorded) { panel.hidden = true; if (link) link.hidden = true; return; }
+    const { todayMinutes, todaySessions, streak } = dayProgress(readSessions());
+    const setText = (sel: string, text: string) => { const el = qs<HTMLElement>(root, sel); if (el) el.textContent = text; };
+    setText("[data-progress-today]", formatSummaryDuration(todayMinutes * 60000));
+    setText("[data-progress-sessions]", String(todaySessions));
+    setText("[data-progress-sessions-label]", todaySessions === 1 ? "session" : "sessions");
+    setText("[data-progress-streak]", String(streak));
+    setText("[data-progress-streak-label]", "day streak");
+    panel.hidden = false;
+    if (link) link.hidden = false;
+  };
+
   const completeSession = (elapsedMs: number, automatic: boolean): void => {
     if (completing || elapsedMs <= 0) return;
     completing = true;
@@ -351,6 +369,7 @@ function setupStudyCockpit(root: HTMLElement): void {
     setProgress(1);
     if (detail) detail.textContent = "Session complete.";
     recordSession(elapsedMs);
+    showDayProgress(elapsedMs >= 60_000);
     addXP(elapsedMs / 60000);
     write("studyCockpitDraftNotes", "");
 
