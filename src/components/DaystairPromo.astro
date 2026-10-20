@@ -1,0 +1,163 @@
+---
+// Our planner app. Styled with the site's own tokens so it reads as part of the site, not an ad.
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.daystair.app";
+---
+
+<section class="container-page daystair" aria-labelledby="daystair-heading">
+  <div class="card daystair__card">
+    <video
+      class="daystair__video"
+      src="/assets/daystair-promo.mp4"
+      poster="/assets/daystair-promo-poster.jpg"
+      width="1280"
+      height="720"
+      muted
+      loop
+      playsinline
+      controls
+      preload="none"
+      aria-label="Daystair app tour"
+      data-daystair-video
+    ></video>
+
+    <div class="daystair__body">
+      <div>
+        <p class="daystair__eyebrow">From the makers of Study Timer Online</p>
+        <h2 id="daystair-heading">Know why today's session matters.</h2>
+        <p class="daystair__lede">
+          Daystair links every study session to a bigger goal. Set the exam for the year, break it into
+          weeks, and each day shows the tasks that move it forward.
+        </p>
+      </div>
+
+      <div class="daystair__aside">
+        <ul class="daystair__points">
+          <li>Subjects, exams and mock tests</li>
+          <li>Built-in focus timer</li>
+          <li>Works offline, no ads</li>
+        </ul>
+        <a class="daystair__cta" href={PLAY_URL} target="_blank" rel="noopener">
+          <img src="/assets/daystair-icon.png" alt="" width="28" height="28" />
+          Get Daystair on Google Play
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Load and play only once the card is on screen, so the homepage stays light.
+  const video = document.querySelector<HTMLVideoElement>("[data-daystair-video]");
+  if (video && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.4 }).observe(video);
+  }
+</script>
+
+<style>
+  .daystair {
+    padding-block: 2rem 1rem;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .daystair__card {
+    padding: clamp(12px, 2vw, 16px);
+    border-radius: 28px;
+  }
+
+  .daystair__video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 18px;
+    background: var(--overlay-04);
+  }
+
+  .daystair__body {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    align-items: end;
+    gap: 1.5rem 2rem;
+    padding: clamp(16px, 4vw, 32px);
+  }
+
+  .daystair__eyebrow {
+    color: var(--brand-amber);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+  }
+
+  .daystair h2 {
+    color: var(--content-heading);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .daystair__lede {
+    color: var(--content-body);
+    line-height: 1.7;
+    margin: 0.75rem 0 0;
+  }
+
+  .daystair__points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .daystair__points li {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--content-body);
+    background: var(--overlay-04);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+  }
+
+  .daystair__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    margin-top: 1rem;
+    padding: 0.45rem 1.1rem 0.45rem 0.5rem;
+    border-radius: 999px;
+    background: var(--brand);
+    color: var(--surface-page);
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform var(--motion-fast) var(--motion-ease-press);
+  }
+
+  .daystair__cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .daystair__cta img {
+    border-radius: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .daystair__body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .daystair__cta {
+      transition: none;
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import StudyTimerPanel from "../components/StudyTimerPanel.astro";
+import DaystairPromo from "../components/DaystairPromo.astro";
 import { BRAND } from "../lib/brand";
 
 const description =
@@ -89,6 +90,8 @@ const faqSchema = {
       <a href="/study-planner">Plan today</a> · <a href="/study-stats">See your stats</a>
     </p>
   </section>
+
+  <DaystairPromo />
 
   <section class="container-page seo-about-band" aria-labelledby="seo-main-heading" style="padding-block: 4rem 6rem; max-width: 880px; margin: 0 auto;">
     <article class="card" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
