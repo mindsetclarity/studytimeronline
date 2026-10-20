@@ -19,7 +19,8 @@ const {
 } = Astro.props;
 
 const pageTitle = title === BRAND ? title : `${title} | ${BRAND}`;
-const canonical = new URL(canonicalPath, SITE_URL).toString();
+// Pages are served with a trailing slash (/timer -> /timer/), so the canonical must match.
+const canonical = new URL(canonicalPath.endsWith("/") ? canonicalPath : `${canonicalPath}/`, SITE_URL).toString();
 const socialImage = new URL("/assets/phase-8/cinematic-study-hero.jpg", SITE_URL).toString();
 ---
 
