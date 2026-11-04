@@ -1,0 +1,122 @@
+---
+/**
+ * Wraps every Markdown guide in src/pages/guides/. Astro passes the
+ * Markdown frontmatter in as `frontmatter`.
+ */
+import Layout from "./Layout.astro";
+import { BRAND, SITE_URL } from "../lib/brand";
+
+const { frontmatter } = Astro.props;
+const { title, description, published, updated } = frontmatter;
+const path = Astro.url.pathname;
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: published,
+  dateModified: updated ?? published,
+  author: { "@type": "Organization", name: BRAND, url: SITE_URL },
+  publisher: { "@type": "Organization", name: BRAND, url: SITE_URL },
+  mainEntityOfPage: new URL(path, SITE_URL).toString(),
+};
+---
+
+<Layout title={title} description={description} canonicalPath={path}>
+  <section class="page-band" style="padding-block: 3rem 6rem;">
+    <div class="container-page" style="max-width: 820px; margin: 0 auto;">
+      <nav class="guide-crumbs" aria-label="Breadcrumb">
+        <a href="/guides">Study guides</a>
+      </nav>
+      <article class="card legal-copy guide-prose">
+        <header class="guide-prose__head">
+          <h1>{title}</h1>
+          <p class="guide-prose__meta">
+            Published <time datetime={published}>{formatDate(published)}</time>
+            {updated && updated !== published && (
+              <> · Updated <time datetime={updated}>{formatDate(updated)}</time></>
+            )}
+          </p>
+        </header>
+        <slot />
+        <aside class="guide-prose__cta">
+          <p>Ready to try it? <a href="/timer">Start a study timer</a> or <a href="/pomodoro">run a Pomodoro cycle</a>.</p>
+        </aside>
+      </article>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</Layout>
+
+<style>
+  .guide-crumbs {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  .guide-crumbs a {
+    color: var(--brand);
+  }
+  .guide-prose {
+    padding: clamp(28px, 6vw, 56px);
+    border-radius: 28px;
+    line-height: 1.8;
+  }
+  .guide-prose__head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--brand-a15);
+  }
+  .guide-prose__head h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.2;
+    color: var(--content-heading);
+  }
+  .guide-prose__meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+  }
+  .guide-prose :global(h2) {
+    color: var(--content-heading);
+  }
+  .guide-prose :global(h3) {
+    color: var(--content-heading);
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .guide-prose :global(p),
+  .guide-prose :global(li) {
+    color: var(--content-body);
+  }
+  .guide-prose :global(ul),
+  .guide-prose :global(ol) {
+    padding-left: 1.4rem;
+  }
+  .guide-prose :global(strong) {
+    color: var(--content-heading);
+  }
+  .guide-prose :global(a) {
+    color: var(--brand);
+  }
+  .guide-prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  .guide-prose :global(th),
+  .guide-prose :global(td) {
+    border: 1px solid var(--brand-a15);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    color: var(--content-body);
+  }
+  .guide-prose__cta {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--brand-a15);
+  }
+</style>

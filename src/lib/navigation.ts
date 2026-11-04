@@ -22,17 +22,28 @@ export const PRIMARY_NAV: NavLink[] = [
     description: "Run a calm Pomodoro interval.",
   },
   {
-    label: "Plan Today",
-    href: "/today",
-    description: "Open today's planning hub.",
+    label: "Planner",
+    href: "/study-planner",
+    description: "Plan today's study tasks.",
+  },
+  {
+    label: "Stats",
+    href: "/study-stats",
+    description: "See your study minutes and streak.",
+  },
+  {
+    label: "Guides",
+    href: "/guides",
+    description: "Practical guides to studying with a timer.",
   },
 ];
 
-export const STUDY_TOOLS: NavLink[] = PRIMARY_NAV.filter((link) => !["/", "/today"].includes(link.href));
+export const STUDY_TOOLS: NavLink[] = PRIMARY_NAV.filter((link) => ["/timer", "/pomodoro"].includes(link.href));
 export const TOOLS: NavLink[] = STUDY_TOOLS;
 export const NAV_LINKS: NavLink[] = PRIMARY_NAV;
 
 export const TRUST_LINKS: NavLink[] = [
+  { label: "Study Guides", href: "/guides", description: "Practical guides to studying with a timer." },
   { label: "About Us", href: "/about", description: "The mission and story behind Study Timer Online." },
   { label: "Privacy Policy", href: "/privacy", description: "How this no-account timer site treats data." },
   { label: "Terms & Conditions", href: "/terms", description: "Simple terms for using Study Timer Online." },

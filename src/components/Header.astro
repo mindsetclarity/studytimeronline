@@ -14,6 +14,7 @@ const PAGE_LABELS: Record<string, string> = {
   "/privacy": "Privacy Policy",
   "/terms": "Terms & Conditions",
   "/contact": "Contact Us",
+  "/guides": "Guides",
 };
 const activeLabel = activeLink?.label ?? PAGE_LABELS[normalizedPathname] ?? "Study";
 
@@ -24,6 +25,7 @@ const TOOL_TABS = [
   { label: "Pomodoro", href: "/pomodoro" },
   { label: "Planner", href: "/study-planner" },
   { label: "Stats", href: "/study-stats" },
+  { label: "Guides", href: "/guides" },
 ];
 ---
 

@@ -5,11 +5,36 @@ import StudyTimerPanel from "../components/StudyTimerPanel.astro";
 
 <Layout
   title="Timer"
-  description="A clean countdown timer for focused study."
+  description="A free countdown timer for study sessions and timed practice exams, with preset and custom lengths, full-screen mode and session tracking."
   canonicalPath="/timer"
 >
   <StudyTimerPanel
     title="Study Timer"
     subtitle="Pick a length, hit start, and let the rest fade out."
   />
+
+  <section class="container-page" style="padding-block: 3rem 6rem; max-width: 820px; margin: 0 auto;">
+    <article class="card legal-copy" style="padding: clamp(28px, 6vw, 48px); border-radius: 28px; line-height: 1.8;">
+      <h2 style="margin-top: 0;">Using the study timer</h2>
+      <p>Choose a preset (15, 25, 30, 45 or 60 minutes) or type your own length, then press start. The timer keeps accurate time even if you switch tabs, and plays an alarm when it finishes. Every completed session is added to your <a href="/study-stats">stats</a>, so you can see your daily minutes and streak build up.</p>
+
+      <h2>Which length should I pick?</h2>
+      <ul>
+        <li><strong>15 minutes:</strong> for a task you've been avoiding. Getting started is the whole goal.</li>
+        <li><strong>25–30 minutes:</strong> flashcards, vocabulary, quick review.</li>
+        <li><strong>45–60 minutes:</strong> reading with notes, problem sets, essay drafting.</li>
+        <li><strong>Custom:</strong> match the exact length of a practice exam.</li>
+      </ul>
+      <p>Not sure? Start with 25 minutes and adjust. Our guide on <a href="/guides/how-long-to-study">how long a study session should be</a> explains how to find your own length.</p>
+
+      <h2>Tips for a better session</h2>
+      <ul>
+        <li>Write down one specific goal before you press start.</li>
+        <li>Put your phone in another room, not just face-down.</li>
+        <li>If a distracting thought comes up, note it on paper and get back to work.</li>
+        <li>When the alarm rings, take a real break: stand up and rest your eyes.</li>
+      </ul>
+      <p>Want breaks scheduled for you? Use the <a href="/pomodoro">Pomodoro timer</a>. Preparing for an exam? See <a href="/guides/timed-practice-exams">how to run a timed practice exam at home</a>.</p>
+    </article>
+  </section>
 </Layout>
