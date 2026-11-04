@@ -5,7 +5,7 @@ import DaystairPromo from "../components/DaystairPromo.astro";
 import { BRAND } from "../lib/brand";
 
 const description =
-  "Study Timer Online is the ultimate aesthetic study timer and pomodoro study timer. Boost your focus with our calm study timer online aesthetic experience.";
+  "A free online study timer and Pomodoro timer with a planner, session stats and practical study guides. No sign-up; your progress stays in your browser.";
 
 const faqList = [
   {
@@ -22,7 +22,7 @@ const faqList = [
   },
   {
     q: "What is a Pomodoro timer?",
-    a: "<p>A Pomodoro timer is a specialized productivity timer that automates the scientifically proven Pomodoro Technique. It alternates between focused work sprints (traditionally 25 minutes) and short mental recovery breaks (5 minutes), helping your brain sustain high cognitive stamina over extended study sessions.</p>"
+    a: "<p>A Pomodoro timer is a timer built around the Pomodoro Technique. It alternates focused work blocks (traditionally 25 minutes) with short breaks (5 minutes), which makes long study sessions easier to start and sustain.</p>"
   },
   {
     q: "How does a Pomodoro timer work?",
@@ -46,11 +46,11 @@ const faqList = [
   },
   {
     q: "How does Study Timer Online work?",
-    a: "<p>Study Timer Online operates directly within your web browser using modern local-first web technology. When you start a timer, plan a study queue, or log completed focus blocks, all data is saved securely in your browser's local storage. This ensures lightning-fast performance, zero latency, and absolute personal privacy without requiring logins.</p>"
+    a: "<p>Study Timer Online operates directly within your web browser using modern local-first web technology. When you start a timer, plan a study queue, or log completed focus blocks, all data is saved securely in your browser's local storage. That keeps it fast and means you never need to log in. Clearing your browser data removes it.</p>"
   },
   {
     q: "How does Study Timer Online compare with other Pomodoro timers?",
-    a: "<p>Unlike traditional desktop Pomodoro apps or commercial websites that force account sign-ups, display intrusive video advertisements, or charge subscription fees, Study Timer Online is completely free, minimalist, and distraction-free. Designed with soothing dark aesthetics and golden-hour palettes, it prioritizes visual calm and absolute data privacy.</p>"
+    a: "<p>Study Timer Online is free and needs no account or download. It focuses on a few things done well: a countdown timer, a Pomodoro timer, a simple daily planner and local session stats, plus <a href='/guides'>practical guides</a> on how to study with them.</p>"
   }
 ];
 
@@ -72,7 +72,7 @@ const faqSchema = {
   <section class="home-hero" data-home-first-impression>
     <div class="container-page home-hero__copy">
       <h1>Study in a calmer rhythm.</h1>
-      <p class="home-hero__lede">Pick a length and start. No login, no install, no ads.</p>
+      <p class="home-hero__lede">Pick a length and start. No login, no install.</p>
     </div>
   </section>
 
@@ -86,7 +86,7 @@ const faqSchema = {
       <li>Mobile ready</li>
     </ul>
     <p class="home-hero__links">
-      Prefer the classic 25/5 rhythm? <a href="/pomodoro">Open the Pomodoro timer</a> ·
+      Prefer the classic 25/5 rhythm? <a href="/pomodoro">Open the Pomodoro timer</a> · <a href="/guides">Read the study guides</a> ·
       <a href="/study-planner">Plan today</a> · <a href="/study-stats">See your stats</a>
     </p>
   </section>
@@ -96,34 +96,39 @@ const faqSchema = {
   <section class="container-page seo-about-band" aria-labelledby="seo-main-heading" style="padding-block: 4rem 6rem; max-width: 880px; margin: 0 auto;">
     <article class="card" style="padding: clamp(28px, 6vw, 56px); border-radius: 28px; line-height: 1.8;">
       <header style="margin-bottom: 2.25rem; border-bottom: 1px solid var(--brand-a15); padding-bottom: 1.75rem;">
-        <h2 id="seo-main-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: var(--content-heading); line-height: 1.25; margin-bottom: 0.75rem;">Study Timer Online: The Premier Aesthetic Study Timer</h2>
-        <p style="color: var(--brand); font-weight: 600; font-size: 1.05rem; margin: 0;">Designed for Deep Focus, Pomodoro Sprints, and Academic Flow</p>
+        <h2 id="seo-main-heading" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: var(--content-heading); line-height: 1.25; margin-bottom: 0.75rem;">How to get the most out of a study timer</h2>
+        <p style="color: var(--brand); font-weight: 600; font-size: 1.05rem; margin: 0;">A timer won't study for you, but it does make starting and staying on track much easier.</p>
       </header>
 
       <div class="seo-article-body" style="display: flex; flex-direction: column; gap: 2rem; color: var(--content-body); font-size: 1.025rem;">
         <section>
-          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Enter Your Deepest Flow State</h3>
-          <p style="margin: 0;">Finding the right <strong>study timer</strong> can fundamentally elevate your academic workflow and daily productivity. In an increasingly noisy digital ecosystem overflowing with disruptive push notifications, intrusive advertisements, and complex interfaces, students and dedicated self-learners desperately require an <strong>aesthetic study timer</strong> that cultivates a serene, distraction-free digital sanctuary. <strong>Study Timer Online</strong> was meticulously engineered from the ground up to solve this exact modern challenge. Combining minimalist architecture with a polished <strong>study timer online aesthetic</strong> visual language, our focus tool guides your mind into a sustained state of deep concentration. Whether you are revising for rigorous university exams, completing daily coursework assignments, or conducting intense research sprints, having a streamlined focus cockpit eliminates mental friction and keeps you aligned with your highest priorities.</p>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Give every session one job</h3>
+          <p style="margin: 0;">Before you press start, decide what the session is for, and make it specific. "Revise chemistry" is too vague to begin. "Redo the eight equilibrium questions I got wrong" tells you exactly what to do first and when you're finished. The timer then answers the other question that breaks concentration: "should I stop yet?" Not until it rings.</p>
         </section>
 
         <section>
-          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">The Power of the Pomodoro Study Timer Method</h3>
-          <p style="margin: 0;">One of the most scientifically proven frameworks for overcoming academic procrastination is the <strong>study timer pomodoro</strong> technique. The Pomodoro rhythm strategically partitions your workload into highly focused cognitive intervals—typically 25 to 50 minutes of uninterrupted concentration followed immediately by a restorative 5 to 10-minute mental reset. Our responsive, built-in <strong>pomodoro study timer</strong> automates this entire psychological cycle seamlessly. By oscillating between high-intensity intellectual output and structured relaxation periods, your neurological pathways consolidate complex information significantly faster while actively preventing cognitive exhaustion. Unlike bulky desktop software that demands tedious account registrations, intrusive background permissions, or mandatory cloud syncing, our dedicated <strong>study timer pomodoro</strong> engine executes instantaneously directly within your web browser. You retain absolute control to tailor focus sprint durations, short break refreshment windows, and extended long break recovery intervals to harmonize perfectly with your personal cognitive stamina.</p>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Pick a length you can actually finish</h3>
+          <p style="margin: 0;">Short blocks of 15–25 minutes suit flashcards and tasks you've been avoiding. Reading and most problem sets suit 30–50 minutes. Essays, coding and mock exams can run 60–90. If the timer keeps ringing in the middle of a thought, go longer. If you're checking the clock with ten minutes left, go shorter. Our guide on <a href="/guides/how-long-to-study" style="color: var(--brand);">how long a study session should be</a> covers this in more detail.</p>
         </section>
 
         <section>
-          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Why Cultivate an Aesthetic Study Timer Online Environment?</h3>
-          <p style="margin: 0;">Cognitive science confirms that your visual environment directly influences your psychological mood. Cluttered, harsh digital layouts subconsciously trigger cortisol release and low-grade anxiety, whereas a refined <strong>study timer aesthetic</strong> interface induces immediate tranquility and laser focus. We designed <strong>Study Timer Online</strong> with curated golden-hour sunset palettes, deep midnight ocean gradients, and vibrant mint-teal UI highlights. This intentional <strong>aesthetic study timer</strong> design philosophy transforms your screen into a sophisticated productivity haven rather than an overwhelming corporate spreadsheet. Furthermore, our holistic <strong>study timer online aesthetic</strong> approach encompasses audio engagement—providing optional calming voice cues and soothing ambient soundscapes that gently mask disruptive environmental noise. Every visual component, from the fluid motion of the progress trackers to the crisp readability of the tabular digits, is optimized to anchor your attention exactly where it belongs.</p>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Use the Pomodoro rhythm when starting is the hard part</h3>
+          <p style="margin: 0;">The <a href="/pomodoro" style="color: var(--brand);">Pomodoro timer</a> alternates 25 minutes of focus with 5-minute breaks, and gives you a longer break after four rounds. It works because 25 minutes is short enough to start even when you don't feel like it, and the breaks are planned in advance, so you don't need to feel exhausted to earn them. Both lengths are adjustable. Read <a href="/guides/pomodoro-technique" style="color: var(--brand);">the Pomodoro Technique guide</a> for how to adapt it to different kinds of work.</p>
         </section>
 
         <section>
-          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Local-First Privacy & Universal Browser Accessibility</h3>
-          <p style="margin: 0;">Contemporary productivity web apps routinely compromise personal privacy by forcing mandatory user profiles and aggressively tracking study behaviors. Our reliable <strong>study timer</strong> operates on an uncompromising local-first technical foundation. All your task checklists, completed session histories, and daily focus streaks are stored securely within your own device browser's local storage. You can launch <strong>Study Timer Online</strong> across any smartphone, tablet, or laptop and instantly resume your focused momentum without ever sacrificing personal data security. Experience the ultimate intersection of radical simplicity, rock-solid privacy, and state-of-the-art visual design today. Initiate your first focus block and discover why thousands of ambitious students trust our <strong>pomodoro study timer</strong> to accomplish their most demanding academic goals.</p>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Test yourself, don't just reread</h3>
+          <p style="margin: 0;">How you use a block matters more than its length. Writing out what you remember from memory, then checking it, beats rereading your notes, even though rereading feels easier. Spreading reviews of the same topic across several days beats one long session the night before. See <a href="/guides/active-recall-and-spaced-repetition" style="color: var(--brand);">active recall and spaced repetition</a> for a simple schedule.</p>
         </section>
 
         <section>
-          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Pacing Your Exam Simulations with Fixed Countdown Modes</h3>
-          <p style="margin: 0;">Beyond standard Pomodoro cycles, our versatile <strong>study timer</strong> equips you with specialized fixed countdown engines tailored specifically for standardized test preparation and timed mock exams. When practicing under simulated exam pressure, internal pacing is the ultimate differentiator between success and frustration. Utilizing our clean <strong>study timer online aesthetic</strong> countdown cockpit enables you to build psychological endurance under authentic testing constraints. By monitoring the smooth, calming progression of the muted tracker ring, you naturally calibrate your internal pacing rhythm, preventing panic-induced rushing or catastrophic procrastination during high-stakes assessments. Integrating intuitive task management with a breathtaking <strong>aesthetic study timer</strong> interface, <strong>Study Timer Online</strong> stands as your indispensable daily productivity ally.</p>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Practise under exam conditions</h3>
+          <p style="margin: 0;">Set the <a href="/timer" style="color: var(--brand);">timer</a> to the exact length of your exam, work out how many minutes each mark is worth, and sit a past paper without pausing. The review afterwards is where the value is: sort lost marks into "didn't know it", "misread", "ran out of time" and "careless". <a href="/guides/timed-practice-exams" style="color: var(--brand);">How to run a timed practice exam</a> walks through the whole process.</p>
+        </section>
+
+        <section>
+          <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Your progress stays on your device</h3>
+          <p style="margin: 0;">There's no account to create. Your timer settings, <a href="/study-planner" style="color: var(--brand);">planner</a> tasks and session history are saved in your browser's local storage, and the <a href="/study-stats" style="color: var(--brand);">stats page</a> reads them back to show your daily minutes and streak. Clearing your browser data removes them. See the <a href="/privacy" style="color: var(--brand);">privacy policy</a> for what third-party services the site uses.</p>
         </section>
       </div>
     </article>
