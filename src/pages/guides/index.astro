@@ -13,7 +13,7 @@ const guides = (Object.values(import.meta.glob("./*.md", { eager: true })) as Gu
 
 <Layout
   title="Study Guides"
-  description="Practical, research-based guides on the Pomodoro Technique, session length, timed practice exams, active recall and planning a study day."
+  description="Practical study guides: the Pomodoro Technique, session length, study breaks, revision timetables, procrastination, phone distraction, active recall and timed practice exams."
   canonicalPath="/guides"
 >
   <section class="page-band" style="padding-block: 3rem 6rem;">
@@ -28,7 +28,7 @@ const guides = (Object.values(import.meta.glob("./*.md", { eager: true })) as Gu
       <ul class="guides-list">
         {guides.map((g) => (
           <li class="card guides-list__item">
-            <h2><a href={g.url}>{g.frontmatter.title}</a></h2>
+            <h2><a href={`${g.url}/`}>{g.frontmatter.title}</a></h2>
             <p>{g.frontmatter.summary}</p>
           </li>
         ))}

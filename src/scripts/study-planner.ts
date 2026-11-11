@@ -59,7 +59,7 @@ function createStartLink(task: PlannerTask, isUpNext: boolean): HTMLAnchorElemen
   });
   const link = document.createElement("a");
   link.className = "btn-start";
-  link.href = `/timer?${params.toString()}`;
+  link.href = `/timer/?${params.toString()}`;
   link.textContent = isUpNext ? "Start Timer" : "Start";
   return link;
 }

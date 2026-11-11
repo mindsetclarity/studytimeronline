@@ -88,4 +88,4 @@ At the end of each day, write down how many blocks you finished and rate the qua
 
 ## Using the timer here
 
-The [study timer](/timer) has preset lengths of 15, 25, 30, 45 and 60 minutes, plus a custom option. The [stats page](/study-stats) tracks your total minutes per day, so you can see whether longer sessions actually add up to more study time across the week.
+The [study timer](/timer/) has preset lengths of 15, 25, 30, 45 and 60 minutes, plus a custom option. The [stats page](/study-stats/) tracks your total minutes per day, so you can see whether longer sessions actually add up to more study time across the week.

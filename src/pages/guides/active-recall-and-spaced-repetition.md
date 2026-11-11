@@ -71,4 +71,4 @@ Run one or two of these blocks per subject per day and your reviews stay spaced 
 
 ## Where to go next
 
-If you're new to timed study blocks, start with our [Pomodoro Technique guide](/guides/pomodoro-technique). To plan a whole day around reviews and new material, see [how to plan a study day](/guides/plan-a-study-day). The [planner](/study-planner) can hold each day's due topics as tasks.
+If you're new to timed study blocks, start with our [Pomodoro Technique guide](/guides/pomodoro-technique/). To plan a whole day around reviews and new material, see [how to plan a study day](/guides/plan-a-study-day/). The [planner](/study-planner/) can hold each day's due topics as tasks.

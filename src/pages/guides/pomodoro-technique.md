@@ -47,7 +47,7 @@ Twenty-five minutes is a starting point, not a rule. Different work suits differ
 | Flashcards, vocabulary, formula drills | 25 / 5 | Repetitive work gets dull quickly, so short blocks keep it fresh. |
 | Reading and note-taking | 30–40 / 5–8 | You need time to build up context on a chapter. |
 | Long problem sets, essays, coding | 45–50 / 10 | Breaking off mid-problem costs a lot, so longer blocks pay off. |
-| Mock exams | Match the real exam | Practise the conditions you'll face (see our [timed practice exam guide](/guides/timed-practice-exams)). |
+| Mock exams | Match the real exam | Practise the conditions you'll face (see our [timed practice exam guide](/guides/timed-practice-exams/)). |
 
 If you regularly hit the end of a block in the middle of a thought, your blocks are probably too short for that kind of work. If you're checking the clock with 10 minutes still to go, they're too long.
 
@@ -71,8 +71,8 @@ Here's what a realistic evening of revision for a chemistry test might look like
 7. **Pomodoro 4 (25 min):** Mark your answers, then write a one-paragraph summary of what you still find confusing.
 8. **Long break (20 min)**
 
-Notice that almost every block asks you to *produce* something: an answer, a list, a summary. Rereading is the least effective way to use a Pomodoro. Our guide to [active recall and spaced repetition](/guides/active-recall-and-spaced-repetition) explains why.
+Notice that almost every block asks you to *produce* something: an answer, a list, a summary. Rereading is the least effective way to use a Pomodoro. Our guide to [active recall and spaced repetition](/guides/active-recall-and-spaced-repetition/) explains why.
 
 ## Running it on Study Timer Online
 
-The [Pomodoro timer](/pomodoro) starts at 25 minutes of focus and 5 minutes of break by default, and you can change both before you begin. It counts completed sessions for you, and the [stats page](/study-stats) shows your daily minutes and streak. Everything is stored in your own browser, so you don't need an account.
+The [Pomodoro timer](/pomodoro/) starts at 25 minutes of focus and 5 minutes of break by default, and you can change both before you begin. It counts completed sessions for you, and the [stats page](/study-stats/) shows your daily minutes and streak. Everything is stored in your own browser, so you don't need an account.

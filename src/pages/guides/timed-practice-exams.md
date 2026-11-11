@@ -74,4 +74,4 @@ Timed practice also gets you used to the feeling of time pressure, which makes e
 
 ## Running a mock exam here
 
-The [study timer](/timer) takes custom lengths, so you can match the exact duration of your paper and keep it full-screen on a second device or on the corner of your desk. When it finishes, the session is logged on your [stats page](/study-stats), so you can see how many full papers you've sat each week.
+The [study timer](/timer/) takes custom lengths, so you can match the exact duration of your paper and keep it full-screen on a second device or on the corner of your desk. When it finishes, the session is logged on your [stats page](/study-stats/), so you can see how many full papers you've sat each week.

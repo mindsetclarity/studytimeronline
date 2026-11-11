@@ -13,27 +13,27 @@ export const PRIMARY_NAV: NavLink[] = [
   },
   {
     label: "Timer",
-    href: "/timer",
+    href: "/timer/",
     description: "Start a focused countdown timer.",
   },
   {
     label: "Pomodoro",
-    href: "/pomodoro",
+    href: "/pomodoro/",
     description: "Run a calm Pomodoro interval.",
   },
   {
     label: "Planner",
-    href: "/study-planner",
+    href: "/study-planner/",
     description: "Plan today's study tasks.",
   },
   {
     label: "Stats",
-    href: "/study-stats",
+    href: "/study-stats/",
     description: "See your study minutes and streak.",
   },
   {
     label: "Guides",
-    href: "/guides",
+    href: "/guides/",
     description: "Practical guides to studying with a timer.",
   },
 ];
@@ -43,11 +43,11 @@ export const TOOLS: NavLink[] = STUDY_TOOLS;
 export const NAV_LINKS: NavLink[] = PRIMARY_NAV;
 
 export const TRUST_LINKS: NavLink[] = [
-  { label: "Study Guides", href: "/guides", description: "Practical guides to studying with a timer." },
-  { label: "About Us", href: "/about", description: "The mission and story behind Study Timer Online." },
-  { label: "Privacy Policy", href: "/privacy", description: "How this no-account timer site treats data." },
-  { label: "Terms & Conditions", href: "/terms", description: "Simple terms for using Study Timer Online." },
-  { label: "Contact Us", href: "/contact", description: "Send feedback or request a study feature." },
+  { label: "Study Guides", href: "/guides/", description: "Practical guides to studying with a timer." },
+  { label: "About Us", href: "/about/", description: "The mission and story behind Study Timer Online." },
+  { label: "Privacy Policy", href: "/privacy/", description: "How this no-account timer site treats data." },
+  { label: "Terms & Conditions", href: "/terms/", description: "Simple terms for using Study Timer Online." },
+  { label: "Contact Us", href: "/contact/", description: "Send feedback or request a study feature." },
 ];
 
 /** Match a pathname against a link, handling trailing slashes. */
