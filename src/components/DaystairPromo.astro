@@ -7,8 +7,8 @@ const PLAY_URL = "https://play.google.com/store/apps/details?id=com.daystair.app
   <div class="card daystair__card">
     <video
       class="daystair__video"
-      src="/media/daystair-promo.mp4"
-      poster="/assets/daystair-promo-poster.jpg"
+      src="/media/daystair-tour.mp4"
+      poster="/assets/daystair-tour-poster.jpg"
       width="1280"
       height="720"
       muted
@@ -23,23 +23,59 @@ const PLAY_URL = "https://play.google.com/store/apps/details?id=com.daystair.app
     <div class="daystair__body">
       <div>
         <p class="daystair__eyebrow">From the makers of Study Timer Online</p>
-        <h2 id="daystair-heading">Know why today's session matters.</h2>
+        <h2 id="daystair-heading">Plan big. Do today. Scroll less.</h2>
         <p class="daystair__lede">
-          Daystair links every study session to a bigger goal. Set the exam for the year, break it into
-          weeks, and each day shows the tasks that move it forward.
+          Daystair is a goal planner, day planner, habit tracker and focus timer in one Android app, with a
+          friendly panda that counts your reels. Set a big goal, break it into small steps, and each day shows
+          the tasks that move you forward.
         </p>
       </div>
 
       <div class="daystair__aside">
         <ul class="daystair__points">
-          <li>Subjects, exams and mock tests</li>
-          <li>Built-in focus timer</li>
-          <li>Works offline, no ads</li>
+          <li>Free, no ads</li>
+          <li>Works offline</li>
+          <li>Home screen widgets</li>
         </ul>
         <a class="daystair__cta" href={PLAY_URL} target="_blank" rel="noopener">
-          <img src="/assets/daystair-icon.png" alt="" width="28" height="28" />
+          <img src="/assets/daystair-panda.png" alt="" width="32" height="32" />
           Get Daystair on Google Play
         </a>
+      </div>
+    </div>
+
+    <div class="daystair__features">
+      <div>
+        <h3>🐼 Count reels, scroll less</h3>
+        <p>
+          One reel turns into fifty before you notice. Reel Panda floats on your screen and counts every
+          Instagram Reel and YouTube Short as you watch. Set your own daily limit, and when you pass it the
+          panda reminds you what you planned instead. Optional, and off until you turn it on.
+        </p>
+      </div>
+      <div>
+        <h3>🪜 Big goals, small steps</h3>
+        <p>
+          The Goal Ladder runs Year → Quarter → Month → Week → Day. Link any task to a bigger goal and watch
+          the progress climb. Your Top 3, timetable and to-do list sit together on one screen, and yesterday's
+          unfinished tasks wait for you to keep, move or skip.
+        </p>
+      </div>
+      <div>
+        <h3>🎧 Deep focus, zero noise</h3>
+        <p>
+          A Pomodoro timer with your own focus and break lengths, calm wallpapers and a live countdown in your
+          notifications. Keep an optional floating timer bar over other apps, block the apps you choose while
+          you focus, and see focus time by category.
+        </p>
+      </div>
+      <div>
+        <h3>🌱 Habits that actually stick</h3>
+        <p>
+          Daily ticks, streaks and a monthly score, plus a mood log and planned-vs-done stats. Write by hand on
+          50+ real planner pages with stickers, and turn on packs for studies (subjects, exams, mock tests),
+          content or business.
+        </p>
       </div>
     </div>
   </div>
@@ -149,8 +185,36 @@ const PLAY_URL = "https://play.google.com/store/apps/details?id=com.daystair.app
     border-radius: 8px;
   }
 
+  .daystair__features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 clamp(16px, 4vw, 32px) clamp(16px, 4vw, 32px);
+  }
+
+  .daystair__features > div {
+    background: var(--overlay-04);
+    border-radius: 18px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .daystair h3 {
+    color: var(--content-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  .daystair__features p {
+    color: var(--content-body);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
   @media (max-width: 640px) {
-    .daystair__body {
+    .daystair__body,
+    .daystair__features {
       grid-template-columns: 1fr;
     }
   }
