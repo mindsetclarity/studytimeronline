@@ -8,7 +8,8 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://studytimeronline.com',
   adapter: cloudflare(),
-  integrations: [sitemap()],
+  // /study-stats only shows this device's data, so it's noindex and left out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/study-stats') })],
   vite: {
     plugins: [tailwindcss()],
   },

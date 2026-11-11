@@ -2,57 +2,57 @@
 import Layout from "../layouts/Layout.astro";
 import StudyTimerPanel from "../components/StudyTimerPanel.astro";
 import DaystairPromo from "../components/DaystairPromo.astro";
-import { BRAND } from "../lib/brand";
+import { BRAND, SITE_URL } from "../lib/brand";
 
 const description =
   "A free online study timer and Pomodoro timer with a planner, session stats and practical study guides. No sign-up; your progress stays in your browser.";
 
 const faqList = [
   {
-    q: "What is a study timer?",
-    a: "<p>A study timer is a dedicated digital countdown or stopwatch tool designed to help students, self-learners, and professionals track their focus sessions. By partitioning study time into structured intervals, a study timer eliminates distractions, prevents cognitive fatigue, and builds consistent academic discipline.</p>"
+    q: "Should I use the study timer or the Pomodoro timer?",
+    a: "<p>Use the <a href='/timer/'>study timer</a> when you know how long a task should take, or when you're practising for an exam with a fixed length. Use the <a href='/pomodoro/'>Pomodoro timer</a> when starting is the hard part: it runs 25-minute blocks with 5-minute breaks and a longer break after four rounds, so you never have to decide when to stop.</p>"
   },
   {
-    q: "How to use a study timer?",
-    a: "<p>To use a study timer effectively, choose a single academic task or coursework assignment. Open Study Timer Online, select your preferred countdown duration (such as 25, 45, or 50 minutes), and click Start Focus. Put away distracting mobile devices and concentrate entirely on the task until the alarm chimes.</p>"
+    q: "Why is it called Pomodoro?",
+    a: "<p><em>Pomodoro</em> is Italian for tomato. Francesco Cirillo came up with the method as a university student in the late 1980s and timed his study blocks with a tomato-shaped kitchen timer. Our <a href='/guides/pomodoro-technique/'>Pomodoro guide</a> covers how to adapt it to different kinds of work.</p>"
   },
   {
-    q: "How to set a timer for study?",
-    a: "<p>Setting a timer for study is instant with Study Timer Online. Simply navigate to our main Timer or Pomodoro page, use the compact duration chips or custom minute input box to select your desired timeframe, and click the start button. No account creation or app download is required.</p>"
+    q: "Does the timer keep running if I switch tabs or lock my phone?",
+    a: "<p>It keeps time from the moment you pressed start, so switching tabs doesn't make it drift. Some phones pause web pages in the background to save battery, though, so for a long session keep the tab open and the screen on, or use full-screen mode.</p>"
   },
   {
-    q: "What is a Pomodoro timer?",
-    a: "<p>A Pomodoro timer is a timer built around the Pomodoro Technique. It alternates focused work blocks (traditionally 25 minutes) with short breaks (5 minutes), which makes long study sessions easier to start and sustain.</p>"
+    q: "Do I need an account? Where is my data saved?",
+    a: "<p>No account is needed. Your timer settings, planner tasks and session history are saved in your browser's local storage on this device and aren't uploaded anywhere. That also means they don't sync between devices, and clearing your browser data removes them. The <a href='/privacy/'>privacy policy</a> lists the third-party services the site does use, such as analytics and ads.</p>"
   },
   {
-    q: "How does a Pomodoro timer work?",
-    a: "<p>A Pomodoro timer works by breaking complex coursework into manageable cognitive cycles. During the focus sprint, your brain concentrates deeply on problem-solving. When the timer chimes, you enter a short break to rest your neural pathways. After completing four consecutive focus sprints, the timer initiates an extended long break (15 to 30 minutes) for complete mental restoration.</p>"
+    q: "How long should a study session be?",
+    a: "<p>There's no single right length. 15 to 25 minutes suits flashcards or a task you've been avoiding, 30 to 50 minutes suits reading and problem sets, and essays or mock exams can run 60 to 90. If the alarm keeps cutting you off mid-thought, go longer; if you're watching the clock, go shorter. See <a href='/guides/how-long-to-study/'>how long to study in one session</a>.</p>"
   },
   {
-    q: "How to use a Pomodoro timer?",
-    a: "<p>Using a Pomodoro timer involves four simple steps: select one specific study assignment, start a 25-minute focus countdown, work without interruption until the alarm rings, and take a 5-minute restorative break. Repeat this cycle to build academic momentum and overcome procrastination.</p>"
+    q: "How are my study minutes and streak counted?",
+    a: "<p>Each timer or Pomodoro session you finish is logged with its length and subject. The <a href='/study-stats/'>stats page</a> adds them up into daily minutes, time per subject and a streak of consecutive days with at least one finished session.</p>"
   },
   {
-    q: "How to set a Pomodoro timer?",
-    a: "<p>To set a Pomodoro timer on our platform, click on the Pomodoro tab in the navigation menu. Our engine automatically loads standard 25-minute focus and 5-minute break intervals. You can adjust these timings instantly in the compact settings panel to match your personal focus capacity before pressing start.</p>"
-  },
-  {
-    q: "Why is it called a Pomodoro timer?",
-    a: "<p>The Pomodoro timer is named after the Italian word for tomato (pomodoro). The technique was invented in the late 1980s by university student Francesco Cirillo, who utilized a kitchen timer shaped like a tomato to time his personal study intervals.</p>"
-  },
-  {
-    q: "How to use Pomodoro timer apps effectively?",
-    a: "<p>To use Pomodoro timer apps effectively, eliminate multitasking by committing to one task per sprint, respect the break alarms by stepping away from your desk, and choose browser-based local tools like Study Timer Online that do not bombard your screen with distracting pop-ups or social feeds.</p>"
-  },
-  {
-    q: "How does Study Timer Online work?",
-    a: "<p>Study Timer Online operates directly within your web browser using modern local-first web technology. When you start a timer, plan a study queue, or log completed focus blocks, all data is saved securely in your browser's local storage. That keeps it fast and means you never need to log in. Clearing your browser data removes it.</p>"
-  },
-  {
-    q: "How does Study Timer Online compare with other Pomodoro timers?",
-    a: "<p>Study Timer Online is free and needs no account or download. It focuses on a few things done well: a countdown timer, a Pomodoro timer, a simple daily planner and local session stats, plus <a href='/guides'>practical guides</a> on how to study with them.</p>"
+    q: "Is Study Timer Online free?",
+    a: "<p>Yes. Every tool on the site is free, with no sign-up or download. The site is supported by ads. It's made by a small independent team; you can read more <a href='/about/'>about us</a> or <a href='/contact/'>send feedback</a>.</p>"
   }
 ];
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: BRAND, url: `${SITE_URL}/`, publisher: { "@id": `${SITE_URL}/#org` } },
+    { "@type": "Organization", "@id": `${SITE_URL}/#org`, name: BRAND, url: `${SITE_URL}/`, logo: `${SITE_URL}/web-app-manifest-512x512.png` },
+    {
+      "@type": "WebApplication",
+      name: BRAND,
+      url: `${SITE_URL}/`,
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "Any (web browser)",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    },
+  ],
+};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -86,8 +86,8 @@ const faqSchema = {
       <li>Mobile ready</li>
     </ul>
     <p class="home-hero__links">
-      Prefer the classic 25/5 rhythm? <a href="/pomodoro">Open the Pomodoro timer</a> · <a href="/guides">Read the study guides</a> ·
-      <a href="/study-planner">Plan today</a> · <a href="/study-stats">See your stats</a>
+      Prefer the classic 25/5 rhythm? <a href="/pomodoro/">Open the Pomodoro timer</a> · <a href="/guides/">Read the study guides</a> ·
+      <a href="/study-planner/">Plan today</a> · <a href="/study-stats/">See your stats</a>
     </p>
   </section>
 
@@ -108,27 +108,27 @@ const faqSchema = {
 
         <section>
           <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Pick a length you can actually finish</h3>
-          <p style="margin: 0;">Short blocks of 15–25 minutes suit flashcards and tasks you've been avoiding. Reading and most problem sets suit 30–50 minutes. Essays, coding and mock exams can run 60–90. If the timer keeps ringing in the middle of a thought, go longer. If you're checking the clock with ten minutes left, go shorter. Our guide on <a href="/guides/how-long-to-study" style="color: var(--brand);">how long a study session should be</a> covers this in more detail.</p>
+          <p style="margin: 0;">Short blocks of 15–25 minutes suit flashcards and tasks you've been avoiding. Reading and most problem sets suit 30–50 minutes. Essays, coding and mock exams can run 60–90. If the timer keeps ringing in the middle of a thought, go longer. If you're checking the clock with ten minutes left, go shorter. Our guide on <a href="/guides/how-long-to-study/" style="color: var(--brand);">how long a study session should be</a> covers this in more detail.</p>
         </section>
 
         <section>
           <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Use the Pomodoro rhythm when starting is the hard part</h3>
-          <p style="margin: 0;">The <a href="/pomodoro" style="color: var(--brand);">Pomodoro timer</a> alternates 25 minutes of focus with 5-minute breaks, and gives you a longer break after four rounds. It works because 25 minutes is short enough to start even when you don't feel like it, and the breaks are planned in advance, so you don't need to feel exhausted to earn them. Both lengths are adjustable. Read <a href="/guides/pomodoro-technique" style="color: var(--brand);">the Pomodoro Technique guide</a> for how to adapt it to different kinds of work.</p>
+          <p style="margin: 0;">The <a href="/pomodoro/" style="color: var(--brand);">Pomodoro timer</a> alternates 25 minutes of focus with 5-minute breaks, and gives you a longer break after four rounds. It works because 25 minutes is short enough to start even when you don't feel like it, and the breaks are planned in advance, so you don't need to feel exhausted to earn them. Both lengths are adjustable. Read <a href="/guides/pomodoro-technique/" style="color: var(--brand);">the Pomodoro Technique guide</a> for how to adapt it to different kinds of work.</p>
         </section>
 
         <section>
           <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Test yourself, don't just reread</h3>
-          <p style="margin: 0;">How you use a block matters more than its length. Writing out what you remember from memory, then checking it, beats rereading your notes, even though rereading feels easier. Spreading reviews of the same topic across several days beats one long session the night before. See <a href="/guides/active-recall-and-spaced-repetition" style="color: var(--brand);">active recall and spaced repetition</a> for a simple schedule.</p>
+          <p style="margin: 0;">How you use a block matters more than its length. Writing out what you remember from memory, then checking it, beats rereading your notes, even though rereading feels easier. Spreading reviews of the same topic across several days beats one long session the night before. See <a href="/guides/active-recall-and-spaced-repetition/" style="color: var(--brand);">active recall and spaced repetition</a> for a simple schedule.</p>
         </section>
 
         <section>
           <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Practise under exam conditions</h3>
-          <p style="margin: 0;">Set the <a href="/timer" style="color: var(--brand);">timer</a> to the exact length of your exam, work out how many minutes each mark is worth, and sit a past paper without pausing. The review afterwards is where the value is: sort lost marks into "didn't know it", "misread", "ran out of time" and "careless". <a href="/guides/timed-practice-exams" style="color: var(--brand);">How to run a timed practice exam</a> walks through the whole process.</p>
+          <p style="margin: 0;">Set the <a href="/timer/" style="color: var(--brand);">timer</a> to the exact length of your exam, work out how many minutes each mark is worth, and sit a past paper without pausing. The review afterwards is where the value is: sort lost marks into "didn't know it", "misread", "ran out of time" and "careless". <a href="/guides/timed-practice-exams/" style="color: var(--brand);">How to run a timed practice exam</a> walks through the whole process.</p>
         </section>
 
         <section>
           <h3 style="color: var(--content-heading); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">Your progress stays on your device</h3>
-          <p style="margin: 0;">There's no account to create. Your timer settings, <a href="/study-planner" style="color: var(--brand);">planner</a> tasks and session history are saved in your browser's local storage, and the <a href="/study-stats" style="color: var(--brand);">stats page</a> reads them back to show your daily minutes and streak. Clearing your browser data removes them. See the <a href="/privacy" style="color: var(--brand);">privacy policy</a> for what third-party services the site uses.</p>
+          <p style="margin: 0;">There's no account to create. Your timer settings, <a href="/study-planner/" style="color: var(--brand);">planner</a> tasks and session history are saved in your browser's local storage, and the <a href="/study-stats/" style="color: var(--brand);">stats page</a> reads them back to show your daily minutes and streak. Clearing your browser data removes them. See the <a href="/privacy/" style="color: var(--brand);">privacy policy</a> for what third-party services the site uses.</p>
         </section>
       </div>
     </article>
@@ -219,4 +219,5 @@ const faqSchema = {
   </style>
 
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
 </Layout>

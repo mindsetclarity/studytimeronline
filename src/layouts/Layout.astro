@@ -9,6 +9,8 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   hideChrome?: boolean;
+  /** For pages with nothing for a search engine to read (e.g. the stats page only shows this device's data). */
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +18,7 @@ const {
   description = DEFAULT_DESCRIPTION,
   canonicalPath = Astro.url.pathname,
   hideChrome = false,
+  noindex = false,
 } = Astro.props;
 
 const pageTitle = title === BRAND ? title : `${title} | ${BRAND}`;
@@ -33,13 +36,17 @@ const socialImage = new URL("/assets/phase-8/cinematic-study-hero.jpg", SITE_URL
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Study Timer" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="author" content="Study Timer Online" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta name="google-adsense-account" content="ca-pub-1283630303131950" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1283630303131950" crossorigin="anonymous"></script>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />

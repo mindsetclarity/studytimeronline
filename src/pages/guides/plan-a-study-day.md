@@ -10,7 +10,7 @@ Most study plans fail by lunchtime. It's rarely laziness. The plan was written f
 
 ## Plan in blocks, not hours
 
-"Study chemistry 9–12" doesn't tell you what to do at 9:01. Instead, break the day into **focus blocks**: fixed periods of single-task work, usually 25–50 minutes, each followed by a short break. (If you're unsure how long yours should be, see [how long a study session should be](/guides/how-long-to-study).)
+"Study chemistry 9–12" doesn't tell you what to do at 9:01. Instead, break the day into **focus blocks**: fixed periods of single-task work, usually 25–50 minutes, each followed by a short break. (If you're unsure how long yours should be, see [how long a study session should be](/guides/how-long-to-study/).)
 
 Then give each block **one specific output**:
 
@@ -30,7 +30,7 @@ Plan for **about 80% of your capacity**. The rest is buffer for things that take
 Most people have a period of the day when focus comes easily, often mid-morning, though everyone differs. Track a few days and you'll find yours.
 
 - **Peak energy:** the hardest task of the day. New material, difficult problems, essay drafting.
-- **Medium energy:** practice questions on familiar topics, reviewing for [active recall](/guides/active-recall-and-spaced-repetition).
+- **Medium energy:** practice questions on familiar topics, reviewing for [active recall](/guides/active-recall-and-spaced-repetition/).
 - **Low energy:** admin. Organising notes, making flashcards, planning tomorrow.
 
 The classic mistake is spending your best hours on easy tasks "to warm up" and leaving the hard work for the evening, when you're tired.
@@ -75,4 +75,4 @@ Some days will fall apart: you get ill, there's a family emergency, or you just 
 
 ## Tools for this
 
-The [planner](/study-planner) holds a queue of today's tasks and shows what's up next. Each task pairs with a [Pomodoro](/pomodoro) or [timer](/timer) block, and the [stats page](/study-stats) shows how many minutes you actually studied, so your capacity estimate is based on real data rather than guesses.
+The [planner](/study-planner/) holds a queue of today's tasks and shows what's up next. Each task pairs with a [Pomodoro](/pomodoro/) or [timer](/timer/) block, and the [stats page](/study-stats/) shows how many minutes you actually studied, so your capacity estimate is based on real data rather than guesses.

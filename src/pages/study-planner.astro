@@ -2,7 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Today's Plan" description="Plan your study queue and start the next task." canonicalPath="/study-planner">
+<Layout
+  title="Daily Study Planner"
+  description="A free daily study planner: list today's tasks by subject with a time estimate, then start each one straight into a focus timer. No sign-up; saved in your browser."
+  canonicalPath="/study-planner"
+>
   <style is:global>
     .planner-dashboard {
       max-width: 1080px;
@@ -347,7 +351,7 @@ import Layout from "../layouts/Layout.astro";
       </div>
       <div class="planner-header__actions">
         <button class="btn-add-top" id="toggle-add-task">+ Add Task</button>
-        <a class="btn-outline" href="/study-stats">Open Stats</a>
+        <a class="btn-outline" href="/study-stats/">Open Stats</a>
       </div>
     </header>
 
@@ -422,6 +426,28 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div>
     <p class="sr-only" aria-live="polite" data-planner-live></p>
+  </section>
+
+  <section class="container-page" style="padding-block: 1rem 6rem; max-width: 820px; margin: 0 auto;">
+    <article class="card legal-copy" style="padding: clamp(28px, 6vw, 48px); border-radius: 28px; line-height: 1.8;">
+      <h2 style="margin-top: 0;">How to use the study planner</h2>
+      <p>Add each thing you want to get done today as its own task: pick a subject, describe the task, and give it a time estimate. The task at the top of your queue shows under <strong>Up Next</strong>. Press start and it opens in the <a href="/timer/">study timer</a> with that length already set, so you go from plan to work in one click. Finished tasks move to <strong>Finished Today</strong>, and the minutes count towards your <a href="/study-stats/">study stats</a>.</p>
+
+      <h2>Write tasks you can start, not topics</h2>
+      <p>"Biology" is a topic. "Make flashcards for the 12 terms in section 3.2" is a task. A good task tells you what to do first and how you'll know it's finished. If you can't picture the first five minutes, split it into smaller tasks.</p>
+
+      <h2>Plan less than you think you can do</h2>
+      <ul>
+        <li><strong>Estimate in focus minutes, not clock hours.</strong> Three hours at a desk is usually about two hours of real work once breaks and setup are counted.</li>
+        <li><strong>Put the hardest task first,</strong> while your attention is fresh, and save review or tidying up for the end of the day.</li>
+        <li><strong>Leave a buffer.</strong> If your queue adds up to more than about four hours of focus, move something to tomorrow now rather than feeling behind all evening.</li>
+        <li><strong>Check the gap.</strong> At the end of the day, compare planned minutes with done minutes. A steady gap means your estimates need adjusting, not that you failed.</li>
+      </ul>
+      <p>For a full walkthrough, read <a href="/guides/plan-a-study-day/">how to plan a study day</a>.</p>
+
+      <h2>Where your plan is saved</h2>
+      <p>Tasks are stored in your browser's local storage on this device. There's no account and nothing is uploaded, so your plan won't appear on another phone or computer, and clearing your browser data removes it.</p>
+    </article>
   </section>
 
   <script>

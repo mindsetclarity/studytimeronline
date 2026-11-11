@@ -1120,6 +1120,15 @@ button {
   line-height: var(--text-body-md--line-height);
 }
 
+.legal-copy a {
+  color: var(--brand);
+}
+
+.legal-copy ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+}
+
 @media (min-width: 600px) {
   .form-grid--three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
