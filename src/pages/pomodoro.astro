@@ -330,6 +330,12 @@ import Layout from "../layouts/Layout.astro";
       color: var(--brand);
     }
 
+    .compact-chip-custom.is-locked {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     .compact-chip-custom:focus-within {
       border-color: var(--brand-a75);
     }
@@ -681,7 +687,6 @@ import Layout from "../layouts/Layout.astro";
         if (!row) return;
         
         const apply = (btn: Element, val: number) => {
-            // Re-selecting the active value is a no-op, so it never restarts a running phase.
             if (btn.getAttribute("aria-pressed") === "true" && val === (config as any)[setting]) return;
 
             row.querySelectorAll(".compact-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
@@ -694,16 +699,8 @@ import Layout from "../layouts/Layout.astro";
             else url.searchParams.set(setting, val.toString());
             window.history.replaceState(null, "", url.toString());
 
-            // Changing the current phase's length restarts that phase at the new length;
-            // other settings apply from the next phase without interrupting the countdown.
-            if (setting === phase || engine.getState() === "idle") {
-              if (transitionTimeout) clearTimeout(transitionTimeout);
-              engine.clear();
-              document.title = originalTitle;
-              updateUIForIdle();
-            } else {
-              cycleBadge.textContent = `Cycle ${completedFocusSessions + 1} of ${config.longBreakEvery}`;
-            }
+            // Chips are only usable before Start or after Reset, so the timer is idle here.
+            updateUIForIdle();
         };
 
         // update initial aria-pressed based on config
@@ -733,7 +730,16 @@ import Layout from "../layouts/Layout.astro";
         }
       });
 
+      // Duration chips stay locked from the moment Start is pressed until Reset,
+      // including across the automatic focus/break transitions.
+      function setChipsLocked(locked: boolean) {
+        document.querySelectorAll<HTMLButtonElement | HTMLInputElement>("#pomodoro-settings button, #pomodoro-settings input")
+          .forEach(el => { el.disabled = locked; });
+        document.querySelectorAll(".compact-chip-custom").forEach(el => el.classList.toggle("is-locked", locked));
+      }
+
       startBtn.addEventListener("click", () => {
+        setChipsLocked(true);
         alarm.unlock();
         if (transitionTimeout) clearTimeout(transitionTimeout);
         let duration = phase === "focus" ? config.focus : (phase === "shortBreak" ? config.shortBreak : config.longBreak);
@@ -754,6 +760,7 @@ import Layout from "../layouts/Layout.astro";
         cancelSpeech();
         spokenEvents.clear();
 
+        setChipsLocked(false);
         updateUIForIdle();
       });
 
