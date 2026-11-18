@@ -584,9 +584,6 @@ import Layout from "../layouts/Layout.astro";
         startBtn.style.display = "block";
         pauseBtn.style.display = "none";
         resumeBtn.style.display = "none";
-        
-        // Disable duration changes only if running/paused
-        updateSettingsDisabledState(false);
       }
 
       function applyPhaseTransition() {
@@ -616,12 +613,6 @@ import Layout from "../layouts/Layout.astro";
           let duration = phase === "focus" ? config.focus : (phase === "shortBreak" ? config.shortBreak : config.longBreak);
           engine.start(duration * 60 * 1000);
         }, 2000);
-      }
-
-      function updateSettingsDisabledState(disabled: boolean) {
-        document.querySelectorAll(".compact-chip").forEach(btn => {
-          (btn as HTMLButtonElement).disabled = disabled;
-        });
       }
 
       function getRandomSafeVal(min: number, max: number, exclude: number[]): number {
@@ -668,8 +659,6 @@ import Layout from "../layouts/Layout.astro";
           btn.setAttribute("aria-pressed", (initialVal === (config as any)[setting]).toString());
           
           btn.addEventListener("click", () => {
-            if (engine.getState() !== "idle") return; // blocked if not idle
-            
             const wasPressed = btn.getAttribute("aria-pressed") === "true";
             let val = parseInt((btn as HTMLElement).dataset.val || "0", 10);
 
@@ -690,9 +679,15 @@ import Layout from "../layouts/Layout.astro";
             else url.searchParams.set(setting, val.toString());
             window.history.replaceState(null, "", url.toString());
 
-            // instantly reflect in UI if idle
-            if (engine.getState() === "idle") {
-               updateUIForIdle();
+            // Changing the current phase's length restarts that phase at the new length;
+            // other settings apply from the next phase without interrupting the countdown.
+            if (setting === phase || engine.getState() === "idle") {
+              if (transitionTimeout) clearTimeout(transitionTimeout);
+              engine.clear();
+              document.title = originalTitle;
+              updateUIForIdle();
+            } else {
+              cycleBadge.textContent = `Cycle ${completedFocusSessions + 1} of ${config.longBreakEvery}`;
             }
           });
         });
@@ -782,7 +777,6 @@ import Layout from "../layouts/Layout.astro";
         const state = (e.detail as StateDetail).state;
         
         resetBtn.disabled = (state === "idle");
-        updateSettingsDisabledState(state !== "idle");
 
         if (state === "running") {
           startBtn.style.display = "none";
