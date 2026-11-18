@@ -330,6 +330,33 @@ import Layout from "../layouts/Layout.astro";
       color: var(--brand);
     }
 
+    .compact-chip-custom:focus-within {
+      border-color: var(--brand-a75);
+    }
+
+    .custom-min-input {
+      width: 3.2ch;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: center;
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    .custom-min-input:focus {
+      outline: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .custom-min-input::-webkit-inner-spin-button,
+    .custom-min-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     @media (max-width: 600px) {
       .setting-row {
         flex-direction: column;
@@ -412,7 +439,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="25" aria-pressed="true">25</button>
               <button class="compact-chip chip" data-val="30">30</button>
               <button class="compact-chip chip" data-val="45">45</button>
-              <button class="compact-chip chip compact-chip-custom" data-val="28" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 28 min</button>
+              <label class="compact-chip chip compact-chip-custom" data-val="28"><span aria-hidden="true" style="user-select: none;">✨</span><input class="custom-min-input" type="number" inputmode="numeric" min="1" max="180" step="1" value="28" aria-label="Custom focus minutes"> min</label>
             </div>
           </div>
           <div class="setting-row">
@@ -421,7 +448,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="5" aria-pressed="true">5</button>
               <button class="compact-chip chip" data-val="10">10</button>
               <button class="compact-chip chip" data-val="15">15</button>
-              <button class="compact-chip chip compact-chip-custom" data-val="7" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 7 min</button>
+              <label class="compact-chip chip compact-chip-custom" data-val="7"><span aria-hidden="true" style="user-select: none;">✨</span><input class="custom-min-input" type="number" inputmode="numeric" min="1" max="180" step="1" value="7" aria-label="Custom short break minutes"> min</label>
             </div>
           </div>
           <div class="setting-row">
@@ -430,7 +457,7 @@ import Layout from "../layouts/Layout.astro";
               <button class="compact-chip chip" data-val="15" aria-pressed="true">15</button>
               <button class="compact-chip chip" data-val="20">20</button>
               <button class="compact-chip chip" data-val="30">30</button>
-              <button class="compact-chip chip compact-chip-custom" data-val="18" type="button"><span aria-hidden="true" style="user-select: none;">✨</span> 18 min</button>
+              <label class="compact-chip chip compact-chip-custom" data-val="18"><span aria-hidden="true" style="user-select: none;">✨</span><input class="custom-min-input" type="number" inputmode="numeric" min="1" max="180" step="1" value="18" aria-label="Custom long break minutes"> min</label>
             </div>
           </div>
           <div class="setting-row">
@@ -645,7 +672,7 @@ import Layout from "../layouts/Layout.astro";
         }
 
         customBtn.dataset.val = valToUse.toString();
-        customBtn.innerHTML = `<span aria-hidden="true" style="user-select: none;">✨</span> ${valToUse} min`;
+        customBtn.querySelector("input")!.value = valToUse.toString();
       });
 
       // Settings binding
@@ -653,21 +680,9 @@ import Layout from "../layouts/Layout.astro";
         const row = document.querySelector(`[data-setting="${setting}"]`);
         if (!row) return;
         
-        // update initial aria-pressed based on config
-        row.querySelectorAll(".compact-chip").forEach(btn => {
-          const initialVal = parseInt((btn as HTMLElement).dataset.val || "0", 10);
-          btn.setAttribute("aria-pressed", (initialVal === (config as any)[setting]).toString());
-          
-          btn.addEventListener("click", () => {
-            const wasPressed = btn.getAttribute("aria-pressed") === "true";
-            let val = parseInt((btn as HTMLElement).dataset.val || "0", 10);
-
-            if (btn.classList.contains("compact-chip-custom") && wasPressed && randomConfigs[setting]) {
-              const { min, max, presets } = randomConfigs[setting];
-              val = getRandomSafeVal(min, max, [...presets, val]);
-              (btn as HTMLElement).dataset.val = val.toString();
-              btn.innerHTML = `<span aria-hidden="true" style="user-select: none;">✨</span> ${val} min`;
-            }
+        const apply = (btn: Element, val: number) => {
+            // Re-selecting the active value is a no-op, so it never restarts a running phase.
+            if (btn.getAttribute("aria-pressed") === "true" && val === (config as any)[setting]) return;
 
             row.querySelectorAll(".compact-chip").forEach(b => b.setAttribute("aria-pressed", "false"));
             btn.setAttribute("aria-pressed", "true");
@@ -689,8 +704,33 @@ import Layout from "../layouts/Layout.astro";
             } else {
               cycleBadge.textContent = `Cycle ${completedFocusSessions + 1} of ${config.longBreakEvery}`;
             }
-          });
+        };
+
+        // update initial aria-pressed based on config
+        row.querySelectorAll(".compact-chip").forEach(btn => {
+          const initialVal = parseInt((btn as HTMLElement).dataset.val || "0", 10);
+          btn.setAttribute("aria-pressed", (initialVal === (config as any)[setting]).toString());
+          btn.addEventListener("click", () => apply(btn, parseInt((btn as HTMLElement).dataset.val || "0", 10)));
         });
+
+        // Typed custom minutes: applied on Enter or when the field loses focus.
+        const customChip = row.querySelector(".compact-chip-custom") as HTMLElement | null;
+        const customInput = customChip?.querySelector("input");
+        if (customChip && customInput) {
+          customInput.addEventListener("change", () => {
+            const val = Math.round(Number(customInput.value));
+            if (!Number.isFinite(val) || val < 1 || val > 180) {
+              customInput.value = customChip.dataset.val || "";
+              return;
+            }
+            customInput.value = val.toString();
+            customChip.dataset.val = val.toString();
+            apply(customChip, val);
+          });
+          customInput.addEventListener("keydown", e => {
+            if (e.key === "Enter") customInput.blur();
+          });
+        }
       });
 
       startBtn.addEventListener("click", () => {
